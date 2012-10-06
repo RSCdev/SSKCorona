@@ -38,8 +38,10 @@ A. Short and Sweet License
    to respect their licenses.
 
 4. It would be nice if everyone who uses SSK were to give me credit, but
-   I understand thay may not always be possible.  So, if you can please
-   give a shout out like: "Made with SSKCorona, by Roaming Gamer LLC."
+   I understand that may not always be possible.  So, if you can please
+   give a shout out like: "Made with SSKCorona, by Roaming Gamer LLC.",
+   super, if not, darn...
+
    Also, if you want to link back to my site that would awesome too:
 
    http://www.roaminggamer.com/
