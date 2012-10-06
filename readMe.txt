@@ -12,7 +12,7 @@ A. Short and Sweet License
 
 ==========================
 
-1. You MAY use anything you find in Corona SSK to:
+1. You MAY use anything you find in SSKCorona to:
 
   - make applications
   - make games 
@@ -23,8 +23,8 @@ A. Short and Sweet License
 
 2. You MAY NOT:
 
-   - sell or distribute Corona SSK or the sampler as your own work
-   - sell or distribute Corona SSK as part of a book, starter kit, etc.
+   - sell or distribute SSKCorona or the sampler as your own work
+   - sell or distribute SSKCorona as part of a book, starter kit, etc.
 
 
 3. If you intend to use the art or external code assets/resources, 
@@ -39,7 +39,7 @@ A. Short and Sweet License
 
 4. It would be nice if everyone who uses SSK were to give me credit, but
    I understand thay may not always be possible.  So, if you can please
-   give a shout out like: "Made with Corona SSK, by Roaming Gamer LLC."
+   give a shout out like: "Made with SSKCorona, by Roaming Gamer LLC."
    Also, if you want to link back to my site that would awesome too:
 
    http://www.roaminggamer.com/
@@ -80,10 +80,10 @@ until such time as that is available please read the following to get
 started:
 
 The example game 'frame' and the 'sampler' will always have the latest 
-version of Corona SSK embeded in them.  
+version of SSKCorona embeded in them.  
 
-However, because you may want to use Corona SSK in your own projects, 
-I am also providing it in a standalone format.  To embed Corona SSK 
+However, because you may want to use SSKCorona in your own projects, 
+I am also providing it in a standalone format.  To embed SSKCorona 
 in your own projects do the following.
 
 1. Download the '\ssk' folder and all of the files under it from the Github
@@ -96,7 +96,7 @@ repository.
    Ex: 'C:\myProject\ssk'
 
 4. Edit main.cs and add this code before you attempt to use any of the 
-   Corona SSK features (so pretty early on in the file).
+   SSKCorona features (so pretty early on in the file).
 
 >> local globals = require( "ssk.globals" ) -- Load Standard Globals
 
@@ -123,11 +123,11 @@ following:
 
 Thats it (for now)!
 
-Once the library is loaded, you may want to start using Corona SSK features
+Once the library is loaded, you may want to start using SSKCorona features
 to set up the collision calculator, behaviors, etc. but that is beyond the
 scope of this readMe.txt file.  As mentioned above, I will be writing
 extensive and detailed documents about all of this.  Also, I will be writing 
-articles about Corona SSK features on my site: 
+articles about SSKCorona features on my site: 
 
 	http://www.roaminggamer.com/
 
