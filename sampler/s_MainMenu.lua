@@ -65,7 +65,8 @@ function scene:createScene( event )
 	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "Super Starter Kit - Sampler", centerX, 30, { fontSize = 24 } )
 	tmpTxt.x = tmpTxt.x + 20
 	local ts = sampleManager:getTotalSamples()
-	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "( " .. ts .. " examples made with Corona SSK)", centerX, 60, { fontSize = 18, color = {0,0,0,255} } )
+	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "( " .. ts .. " examples made with SSK for Corona)", centerX, 60, { fontSize = 18, color = {0,0,0,255} } )
+	tmpTxt.x = tmpTxt.x + 30
 
 	-- ==========================================
 	-- Buttons and Labels
