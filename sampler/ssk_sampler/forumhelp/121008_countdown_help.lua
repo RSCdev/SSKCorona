@@ -115,10 +115,18 @@ createSky = function ( x, y, width, height  )
 
 	function sky:touch (event) 
 		if( event.phase == "began" )then
-			theCountdownTimer:autoCountDown( 0 )
-		elseif( event.phase == "ended" or  event.phase == "cancelled") then
-			theCountdownTimer:stop()
-			theCountdownTimer:set( 42 ) -- Set timer (back) to 42 seconds
+
+			if( theCountdownTimer.counting ) then
+
+				theCountdownTimer:stop()
+				theCountdownTimer:set( 42 ) -- Set timer (back) to 42 seconds
+
+				theCountdownTimer.counting = false
+			else
+				theCountdownTimer:autoCountDown( 0 )
+				theCountdownTimer.counting = true
+			end
+
 		end
 
 		return true
