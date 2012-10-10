@@ -63,21 +63,25 @@ local math2do = {}
 -- **** Vector Addition
 -- **** 
 function math2do.add( objA, objB )
-	return m2d.add(objA.x, objA.y, objB.x, objB.y)
+	local tmpTable = {}
+	tmpTable.x,tmpTable.y = m2d.add(objA.x, objA.y, objB.x, objB.y)
+	return tmpTable
 end
 
 -- **** 
 -- **** Vector Subtraction
 -- **** 
 function math2do.sub( objA, objB )
-	return m2d.sub(objA.x, objA.y, objB.x, objB.y)
+	local tmpTable = {}
+	tmpTable.x,tmpTable.y = m2d.sub(objA.x, objA.y, objB.x, objB.y)
+	return tmpTable
 end
 
 -- **** 
 -- **** Vector dot Product
 -- **** 
 function math2do.dot( objA, objB )
-	return m2d.dot(objA.x, objA.y, objB.x, objB.y)
+	return  m2d.dot(objA.x, objA.y, objB.x, objB.y)
 end
 
 ---EFM ADD VECTOR LERP
@@ -86,16 +90,29 @@ end
 -- **** Vector scale
 -- **** 
 function math2do.scale( obj, s )
-	return m2d.scale(obj.x,obj.y, s)
+	local tmpTable = {}
+	tmpTable.x,tmpTable.y = m2d.scale(obj.x,obj.y, s)
+	return tmpTable
 end
 
 -- **** 
 -- **** Vector normalize
 -- **** 
 function math2do.normalize( obj )
-	return m2d.normalize(obj.x,obj.y)
+	local tmpTable = {}
+	tmpTable.x,tmpTable.y = m2d.normalize(obj.x,obj.y)
+	return tmpTable
 end
 
+
+-- **** 
+-- **** Vector normals
+-- **** 
+function math2do.normals( obj )
+	local tmpTable = {}
+	tmpTable.x,tmpTable.y = m2d.normals(obj.x,obj.y)
+	return tmpTable
+end
 
 -- **** 
 -- **** vector2Angle - Angle between object A and B
@@ -110,6 +127,22 @@ function math2do.vector2Angle( objA, objB )
 
 	return vecAngle
 end
+
+-- **** 
+-- **** Angle to Vector (Operates in Cartesian Coordinate System) --EFM verify this
+-- **** 
+function math2do.angle2Vector( angle )
+	local tmpTable = {}
+	local math = math
+	local screenAngle = mRad(-(angle+90))
+	x = mCos(screenAngle) 
+	y = mSin(screenAngle) 
+
+	tmpTable.x = -x
+	tmpTable.y = y
+	return tmpTable
+end
+
 
 -- **** 
 -- **** tweenAngle - Delta between an objA and vector2Angle(objA, objB)

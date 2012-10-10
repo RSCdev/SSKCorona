@@ -76,12 +76,14 @@ sampleManager = require("sampleMgr")
 --sampleManager:addSample("Template", "Template 2", "ssk_sampler._templates.template2_logic" )
 
 --In Progress
-sampleManager:addSample("Forums Help", "121008 - Countdown Help", "ssk_sampler.forumhelp.121008_countdown_help" )
-
 
 
 -- Finished
 -- Forums Help
+
+sampleManager:addSample("Forums Help", "121008 - Calculating intersecting lines", "ssk_sampler.forumhelp.121008_calculating_intersecting_lines" )
+sampleManager:addSample("Forums Help", "121008 - Countdown Help", "ssk_sampler.forumhelp.121008_countdown_help" )
+
 
 
 -- Inputs

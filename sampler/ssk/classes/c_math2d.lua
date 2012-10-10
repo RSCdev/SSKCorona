@@ -71,7 +71,7 @@ end
 -- **** Vector dot Product
 -- **** 
 function math2d.dot( x1, y1, x2, y2 )
-	return x2 * x1, y2 * y1
+	return x2 * x1 + y2 * y1	
 end
 
 
@@ -98,6 +98,14 @@ function math2d.normalize( x, y )
 	yNorm = y / len
 	return xNorm,yNorm
 end
+
+-- **** 
+-- **** Vector normals
+-- **** 
+function math2d.normals( vx, vy )
+	return -vy,vx,vy,-vx
+end
+
 
 -- **** 
 -- **** Vector to Angle (Operates in Screen Coordinate System)

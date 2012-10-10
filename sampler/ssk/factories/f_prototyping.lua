@@ -27,6 +27,7 @@ backImage()  - Add a background tray (image) to a group.
 
 quitButton() - Add a 'quit' button in upper right corner of screen
 
+arrowhead( group, x, y, width, height, [visualParams])
 rect( group, x, y, [ [visualParams], [ [bodyParams], [behaviorsList] ] ])
 circle( group, x, y, [ [visualParams], [ [bodyParams], [behaviorsList] ] ])
 imageRect( group, x, y, imgSrc, [ [visualParams], [ [bodyParams], [behaviorsList] ] ])
@@ -86,6 +87,105 @@ function protoFactory.quitButton( callback, group )
 	return quitButton
 end
 
+function protoFactory.arrowhead( group, x, y, width, height, visualParams )
+	local halfWidth  = width/2
+	local halfHeight = height/2
+
+	local head = display.newLine( x,            y + halfHeight, 
+	                              x - halfWidth, y + halfHeight )
+
+	head:append( x            , y - halfHeight, 
+                 x + halfWidth, y + halfHeight,
+				 x,            y + halfHeight )
+	
+	head.width = visualParams.width or 1
+	
+	if(visualParams.color) then
+		head:setColor( unpack(visualParams.color))
+	end
+
+	if(visualParams.rotation) then
+		head.rotation = visualParams.rotation
+	end
+
+	group:insert( head )
+
+	return head
+end
+
+function protoFactory.arrow( group, startX, startY, endX, endY, visualParams )
+	local vx,vy  = ssk.m2d.sub(startX, startY, endX, endY)
+
+	local vLen  = ssk.m2d.length(vx,vy)
+
+	local nx,ny = ssk.m2d.normalize(vx,vy)
+
+	local cx,cy = ssk.m2d.scale(nx,ny, vLen/2)
+	cx,cy = ssk.m2d.add(startX, startY, cx, cy)
+	
+	local rotation = ssk.m2d.vector2Angle(vx,vy)	
+	
+	local arrow = display.newLine( startX, startY, endX, endY )
+	
+	local width 
+	local color = _WHITE_
+
+	if( visualParams ) then
+		width = visualParams.width or 1
+	
+		if(visualParams.color) then
+			color = visualParams.color 
+		end
+	end
+
+	arrow:setColor( unpack(color))
+
+	local arrowhead = protoFactory.arrowhead( group, 0, 0, 10, 10, 
+	                                         {color = color, 
+											 rotation = rotation, 
+											 width = width })
+    -- remember, rotate then translate for correct result!
+	arrowhead.x = endX 
+	arrowhead.y = endY 
+
+	arrow.head = arrowhead
+	
+	arrow.angle = rotation
+
+	arrow.vx = vx
+	arrow.vy = vy
+
+	arrow.cx = cx
+	arrow.cy = cy
+
+	-- --[[ EFM - BUG 121009
+	local function custom_removeSelf( self ) 
+		if(self.head and self.head.removeSelf ) then
+			self.head:removeSelf()
+			self.head = nil
+		end
+	end
+
+	ssk.advanced.addCustom_removeSelf( arrow, custom_removeSelf )
+	--]] 
+
+	group:insert( arrow )
+
+	return arrow
+end
+
+function protoFactory.arrow2( group, startX, startY, angle, length, visualParams)
+
+	local endX, endY = ssk.m2d.angle2Vector( angle )
+	endX, endY = ssk.m2d.scale( endX, endY, length )
+	endX, endY = ssk.m2d.add(startX, startY, endX, endY)
+
+	return protoFactory.arrow( group, startX, startY, endX, endY, visualParams )
+
+end
+
+
+
 function protoFactory.rect( group, x, y, visualParams, bodyParams, behaviorsList )
 
 	local width = 40
@@ -136,7 +236,7 @@ function protoFactory.circle( group, x, y, visualParams, bodyParams, behaviorsLi
 			radius = visualParams.radius
 		end
 		if( visualParams.diameter ) then
-			radius = visualParams.diameter
+			radius = visualParams.diameter/2
 		end
 	end
 
@@ -259,7 +359,7 @@ initDPP = function()
 end
 
 function protoFactory.listDPP()
-	print("u_prototyping.lua => dpp (Default Physical Params):")
+	print("g_prototyping.lua => dpp (Default Physical Params):")
 	for k,v in pairs(dpp) do
 		print( tostring(k):rpad(20) .. " == ", tostring(v) )
 	end
@@ -368,6 +468,7 @@ function protoFactory.quickLayers( parentGroup, ... )
 
 	function layers:destroy()
 		for i = #self._db, 1, -1 do
+			dprint(2,"quickLayers(): Removing layer: " .. i)
 			self._db[i]:removeSelf()
 		end
 		self:removeSelf()

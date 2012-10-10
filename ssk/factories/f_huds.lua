@@ -53,8 +53,6 @@ function public:createTimeHUD( x, y, presetName, group, params)
 	theHUD.x, theHUD.y = x,y
 	theHUD.myx, theHUD.myy = x,y
 
-	theHUD.firstPass = true
-
 	function theHUD:get()
 		return self.curTime
 	end
@@ -100,6 +98,12 @@ function public:createTimeHUD( x, y, presetName, group, params)
 		self.myTimer = timer.performWithDelay( 1000, self, 0 )
 	end
 
+	function theHUD:stop()
+		if( self.myTimer ) then
+			timer.cancel(self.myTimer)
+			self.myTimer = nil
+		end
+	end
 
 	function theHUD:destroy()
 	end
@@ -119,8 +123,6 @@ function public:createNumericScoreHUD( x, y, digits, presetName, group, params)
 	theHUD.curValue = 0
 	theHUD.x, theHUD.y = x,y
 	theHUD.myx, theHUD.myy = x,y
-
-	theHUD.firstPass = true
 
 	function theHUD:get()
 		return self.curValue

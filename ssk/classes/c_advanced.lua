@@ -37,8 +37,10 @@ function advanced.addCustom_removeSelf( obj, custom_removeSelf)
 			
 			-- 2. Call the custom removeSelf functions in reverse order
 			for i=#theCache, 1, -1 do
-				local func = theCache[i]
-				self:func()
+				self.func = theCache[i]
+				if(self.func) then
+					self:func()
+				end
 			end
 
 			-- 3. Clear the cache
@@ -52,8 +54,9 @@ function advanced.addCustom_removeSelf( obj, custom_removeSelf)
 			end
 
 			self.removeSelf = dummy
-
 		end
+
+		obj.removeSelf = removeSelf
 	end
 
 	obj._cache_removeSelf[#obj._cache_removeSelf+1] = custom_removeSelf

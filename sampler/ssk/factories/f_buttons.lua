@@ -118,8 +118,8 @@ end
 
 	Instance Methods:
 
-    -- toggle( )              - Toggle the state of a button (does NOT execute callbacks)
-	-- pressed( )                 - Is the button pressed? (For toggle and radio buttons)
+    -- toggle( )					- Toggle the state of a button (executes callbacks)
+	-- pressed( )					- Is the button pressed? (For toggle and radio buttons)
 	-- getText( )                   - Get the current text value for button
 	-- setText( text )              - Change button text
 	-- adjustTextOffset( [offset] ) - Set offset of text (defaults to {0,0})
@@ -396,12 +396,14 @@ if(buttonInstance.selRectEn) then
 
 		local buttonEvent = {}
 		buttonEvent.target = self
-		buttonEvent.id = self.id
+		buttonEvent.id = math.random(10000, 50000) -- must have a numeric id to be propagated
 		buttonEvent.x = self.x
 		buttonEvent.y = self.y
 		buttonEvent.name = "touch"
 		buttonEvent.phase = "began"
 		buttonEvent.forceInBounds = true
+		--print(tostring(buttonEvent) .. SPC .. buttonEvent.id) -- EFM bug: Not actually dispatching event
+		--table.dump(buttonEvent)
 		self:dispatchEvent( buttonEvent )
 		buttonEvent.phase = "ended"
 		self:dispatchEvent( buttonEvent )
@@ -751,30 +753,30 @@ function buttonClass:touch( params )
 			------------------------------------------------------
 				--print "radio button ended" 
 				if isWithinBounds then
-					if( parent.currentRadio ~= theButton ) then
+					--print( "parent.currentRadio ==> " .. tostring(parent.currentRadio))
+					if( not parent.currentRadio ) then
+						--print("First radio press")
+					 
+					elseif( parent.currentRadio ~= theButton ) then
 						local oldRadio = parent.currentRadio
 						if( oldRadio ) then
 							oldRadio.isPressed = false
-							buttonEvent.theButton = oldRadio
-							if( sound ) then audio.play( sound ) end
-							if( releaseSound ) then audio.play( releaseSound ) end
-							if( onRelease ) then result = result and onRelease( buttonEvent ) end
-							if( onEvent ) then result = result and onEvent( buttonEvent ) end
 							oldRadio:setHighlight(false)
-							--oldRadio.sel.isVisible   = false
-							--oldRadio.unsel.isVisible = true
 						end
-						
-						parent.currentRadio = theButton
-						buttonEvent.theButton = theButton
-
-						theButton.isPressed = true
-						buttonEvent.phase = "began"
-						if( sound ) then audio.play( sound ) end
-						if( pressSound ) then audio.play( pressSound ) end
-						if( onPress ) then result = result and onPress( buttonEvent ) end
-						if( onEvent ) then result = result and onEvent( buttonEvent ) end
 					end
+						
+					parent.currentRadio = theButton
+					buttonEvent.theButton = theButton
+
+					theButton.isPressed = true
+					--buttonEvent.phase = "ended"
+					if( sound ) then audio.play( sound ) end
+					if( onEvent ) then result = result and onEvent( buttonEvent ) end
+
+					if( releaseSound ) then audio.play( releaseSound ) end
+					if( onRelease ) then result = result and onRelease( buttonEvent ) end
+
+
 				end
 				
 				theButton:setHighlight(theButton.isPressed)
