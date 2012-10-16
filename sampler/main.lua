@@ -184,18 +184,18 @@ sampleManager:addSample("SSK Feature Testing", "Sampler Template 2 Test", "ssk_s
 -- ==
 -- Camera
 -- ==
-sampleManager:addSample("Mehanics - Camera", "#1 - 3 Layer (random objects; fixed Rate)", "ssk_sampler.mechanics.camera.scrolling1_logic" )
-sampleManager:addSample("Mehanics - Camera", "Left-Right Auto-Scroll", "ssk_sampler.mechanics.camera.lrautoscroll_logic" )
-sampleManager:addSample("Mehanics - Camera", "Legend of Zelda Auto-Scroll", "ssk_sampler.mechanics.camera.zeldascroll_logic" )
+sampleManager:addSample("Mechanics - Camera", "#1 - 3 Layer (random objects; fixed Rate)", "ssk_sampler.mechanics.camera.scrolling1_logic" )
+sampleManager:addSample("Mechanics - Camera", "Left-Right Auto-Scroll", "ssk_sampler.mechanics.camera.lrautoscroll_logic" )
+sampleManager:addSample("Mechanics - Camera", "Legend of Zelda Auto-Scroll", "ssk_sampler.mechanics.camera.zeldascroll_logic" )
 
 -- ==
 -- Movement
 -- ==
-sampleManager:addSample("Mehanics - Movement", "Linear Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.linearMovement_logic" )
-sampleManager:addSample("Mehanics - Movement", "Step Movement (no Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepNoRepeatMovement_logic" )
-sampleManager:addSample("Mehanics - Movement", "Step Movement (w/ Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepwRepeatMovement_logic" )
-sampleManager:addSample("Mehanics - Movement", "Thrust Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.thrustMovement_logic" )
-sampleManager:addSample("Mehanics - Movement", "Asteroids Movement (Buttons)", "ssk_sampler.mechanics.movement.asteroidsMovement_logic" )
+sampleManager:addSample("Mechanics - Movement", "Linear Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.linearMovement_logic" )
+sampleManager:addSample("Mechanics - Movement", "Step Movement (no Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepNoRepeatMovement_logic" )
+sampleManager:addSample("Mechanics - Movement", "Step Movement (w/ Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepwRepeatMovement_logic" )
+sampleManager:addSample("Mechanics - Movement", "Thrust Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.thrustMovement_logic" )
+sampleManager:addSample("Mechanics - Movement", "Asteroids Movement (Buttons)", "ssk_sampler.mechanics.movement.asteroidsMovement_logic" )
 
 -- ==
 -- Platforming (Broken!)
