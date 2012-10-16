@@ -212,11 +212,29 @@ params.unselImgSrc = imagesDir .. "interface/buttonA.png"
 params.selImgSrc   = imagesDir .. "interface/buttonAOver.png"
 mgr:addPreset( "A_Button", params )
 -- ============================
--- ================ 'A' BUTTON
+-- ================ 'B' BUTTON
 -- ============================
 params.unselImgSrc = imagesDir .. "interface/buttonB.png"
 params.selImgSrc   = imagesDir .. "interface/buttonBOver.png"
 mgr:addPreset( "B_Button", params )
+-- ============================
+-- ================ 'C' BUTTON
+-- ============================
+params.unselImgSrc = imagesDir .. "interface/buttonC.png"
+params.selImgSrc   = imagesDir .. "interface/buttonCOver.png"
+mgr:addPreset( "C_Button", params )
+-- ============================
+-- ================ 'D' BUTTON
+-- ============================
+params.unselImgSrc = imagesDir .. "interface/buttonD.png"
+params.selImgSrc   = imagesDir .. "interface/buttonDOver.png"
+mgr:addPreset( "D_Button", params )
+-- ============================
+-- ================ 'E' BUTTON
+-- ============================
+params.unselImgSrc = imagesDir .. "interface/buttonE.png"
+params.selImgSrc   = imagesDir .. "interface/buttonEOver.png"
+mgr:addPreset( "E_Button", params )
 
 
 -- ============================

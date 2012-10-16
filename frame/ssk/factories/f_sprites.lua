@@ -43,7 +43,7 @@ local spritesFactory = {}
 		sprite.add( self.spriteSets[setName], animName, startFrame, frameCount, time, loopParam)
 	end
 
-	function placeSprite( setName, spriteNum, x, y)
+	function spritesFactory:placeSprite( setName, spriteNum, x, y)
 		local x = x or 0
 		local y = y or 1
 
@@ -56,6 +56,8 @@ local spritesFactory = {}
 
 		localSprite.mySetName   = setName
 		localSprite.mySpriteNum = spriteNum
+
+		--EFM add isa()
 
 		return localSprite
 	end
@@ -73,10 +75,12 @@ local spritesFactory = {}
 
 		localSprite.mySetName   = setName
 
+		--EFM add isa()
+
 		return localSprite
 	end
 
-	function changeSprite( theSprite, spriteNum)
+	function spritesFactory:changeSprite( theSprite, spriteNum)
 		local localSprite = theSprite
 
 		localSprite:prepare(localSprite.mySetName  .. spriteNum)

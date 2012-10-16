@@ -21,6 +21,39 @@ local dprint = dp.print
 
 local components = {}
 
+
+-- ================================================================
+-- ================================================================
+-- ==						PATH FOLLOWING
+-- ================================================================
+-- ================================================================
+
+-- ===============================================
+-- ==           FOLLOW PATH
+-- ===============================================
+-- dps => degrees per second
+function components.pathFollowingattach( obj, points, pathSmoothing, easing )
+	obj.myPath = table.deepCopy( points )
+	setmetatable(obj.myPath, getmetatable(points) )
+
+end
+
+function components.pathFollowingstart( obj )
+end
+
+function components.pathFollowingpause( obj )
+end
+
+function components.pathFollowingreset( obj )
+end
+
+function components.pathFollowingstop( obj )
+end
+
+function components.pathFollowingdetach( obj )
+end
+
+
 -- ================================================================
 -- ================================================================
 -- ==						FACING
@@ -168,8 +201,11 @@ function components.aimAtObject( objA, target, period, onLoseCB )
 		return
 	end
 
-	local vecAngle = ssk.m2do.vector2Angle( objA, target )
+	--print(target.x)
 
+	local tweenVec = ssk.m2do.sub( objA, target )
+	local vecAngle = ssk.m2do.vector2Angle( tweenVec )
+	
 	objA.rotation = vecAngle
 
 	local closure = function()
@@ -196,7 +232,8 @@ function components.aimAtObjectMaxDist( objA, target, period, maxDist, onLoseCB,
 		return
 	end
 
-	local vecAngle     = ssk.m2do.vector2Angle( objA, target )
+	local tweenVec = ssk.m2do.sub( objA, target )
+	local vecAngle = ssk.m2do.vector2Angle( tweenVec )
 	local vecLen,vx,vy = ssk.m2do.tweenDist( objA, target )
 	--print("vecLen == " .. vecLen, tostring(reseek)) 
 

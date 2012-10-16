@@ -32,6 +32,31 @@ local params =
 mgr:addPreset( "default", params )
 
 -- ============================
+-- ============== RIGHT LABEL
+-- ============================
+local params = 
+{ 
+	font      = native.systemFont,
+	fontSize  = 12,
+	textColor     = { 255,255,255, 255 },
+	referencePoint = display.CenterRightReferencePoint,
+}
+mgr:addPreset( "rightLabel", params )
+
+-- ============================
+-- ============== LEFT LABEL
+-- ============================
+local params = 
+{ 
+	font      = native.systemFont,
+	fontSize  = 12,
+	textColor     = { 255,255,255, 255 },
+	referencePoint = display.CenterLeftReferencePoint,
+}
+mgr:addPreset( "leftLabel", params )
+
+
+-- ============================
 -- =============== BLACK
 -- ============================
 local params = 

@@ -94,19 +94,23 @@ function table.dump(theTable, padding )
 	local padding = padding or 30
 	print("\Table Dump:")
 	print("-----")
-	for k,v in pairs(theTable) do 
-		local key = tostring(k)
-		local value = tostring(v)
-		local keyType = type(k)
-		local valueType = type(v)
-		local keyString = key .. " (" .. keyType .. ")"
-		local valueString = value .. " (" .. valueType .. ")" 
+	if(theTable) then
+		for k,v in pairs(theTable) do 
+			local key = tostring(k)
+			local value = tostring(v)
+			local keyType = type(k)
+			local valueType = type(v)
+			local keyString = key .. " (" .. keyType .. ")"
+			local valueString = value .. " (" .. valueType .. ")" 
 
-		keyString = keyString:rpad(padding)
-		valueString = valueString:rpad(padding)
+			keyString = keyString:rpad(padding)
+			valueString = valueString:rpad(padding)
 
-		print( keyString .. " == " .. valueString ) 
+			print( keyString .. " == " .. valueString ) 
 		end
+	else
+		print("empty")
+	end
 	print("-----\n")
 end
 

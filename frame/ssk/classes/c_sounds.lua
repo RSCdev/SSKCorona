@@ -15,6 +15,12 @@
 -- Last Modified: 29 AUG 2012
 -- =============================================================
 
+--EFM 
+--[[
+- Add ability to remove and purge sounds
+- Build small library of basic sounds to go with ssk
+--]]
+
 audio.setMinVolume( 0.0 )
 audio.setMaxVolume( 1.0 )
 

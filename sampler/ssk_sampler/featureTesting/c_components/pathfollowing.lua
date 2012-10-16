@@ -1,7 +1,7 @@
 -- =============================================================
 -- Copyright Roaming Gamer, LLC.
 -- =============================================================
--- Aim At Object Demo
+-- Template #1
 -- =============================================================
 -- Short and Sweet License: 
 -- 1. You may use anything you find in the SSK library and sampler to make apps and games for free or $$.
@@ -29,7 +29,6 @@ local layers -- Local reference to display layers
 local overlayImage 
 local backImage
 local thePlayer
-local theSky
 
 -- Fake Screen Parameters (used to create visually uniform demos)
 local screenWidth  = 320 -- smaller than actual to allow for overlay/frame
@@ -45,12 +44,14 @@ local createLayers
 local addInterfaceElements
 
 local createPlayer
+local createPath
 local createSky
-local createTurret
 
-local onShowHide
-
-local onB
+local onUp
+local onDown
+local onGo
+local onPause
+local onStop
 
 local gameLogic = {}
 
@@ -72,19 +73,13 @@ function gameLogic:createScene( screenGroup )
 	physics.setGravity(0,0)
 	--physics.setDrawMode( "hybrid" )
 	screenGroup.isVisible=true
-	
+	 
 	-- 5. Add demo/sample content
-	local shipSize = 30
-	local turretSize = 60
-		
-	theSky = createSky(centerX, centerY, screenWidth, screenHeight )
-	thePlayer = createPlayer( centerX, centerY, shipSize, layers.content, theSky )
+	createSky(centerX, centerY, screenWidth, screenHeight )
 
-	local theTurret =	createTurret( centerX - screenWidth/4, screenBot, turretSize, layers.content, theSky )
-	local theTurret2 =	createTurret( centerX + screenWidth/4, screenBot, turretSize, layers.content, theSky )
+	createPath()
 
-	ssk.component.aimAtObject( theTurret, thePlayer, 100 )
-	ssk.component.aimAtObject( theTurret2, thePlayer, 16 )
+	thePlayer = createPlayer( centerX, centerY, 25 )
 end
 
 -- =======================
@@ -96,7 +91,6 @@ function gameLogic:destroyScene( screenGroup )
 	layers = nil
 	myCC = nil
 	thePlayer = nil
-	theSky = nil
 
 	-- 2. Clean up gravity and physics debug
 	physics.setDrawMode( "normal" )
@@ -119,6 +113,8 @@ end
 createLayers = function( group )
 	layers = ssk.proto.quickLayers( group, 
 		"background", 
+		"scrollers", 
+			{ "scroll3", "scroll2", "scroll1" },
 		"content",
 		"interfaces" )
 end
@@ -129,20 +125,50 @@ addInterfaceElements = function()
 	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "B_Button", screenRight+30, screenBot-25, 42, 42, "", onB )
+	-- Add generic direction and input buttons
+	local tmpButton
+	tmpButton = ssk.buttons:presetPush( layers.interfaces, "upButton", screenLeft-30, screenBot-175, 42, 42, "", onUp )
+	tmpButton = ssk.buttons:presetPush( layers.interfaces, "downButton",  screenLeft-30, screenBot-125, 42, 42, "", onDown )
+	-- Universal Buttons
+	tmpButton = ssk.buttons:presetPush( layers.interfaces, "A_Button", screenRight+30, screenBot-125, 42, 42, "", onGo )
+	tmpButton = ssk.buttons:presetPush( layers.interfaces, "C_Button", screenRight+30, screenBot-75, 42, 42, "", onPause )
+	tmpButton = ssk.buttons:presetPush( layers.interfaces, "B_Button", screenRight+30, screenBot-25, 42, 42, "", onStop )
 
-	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
-	ssk.buttons:presetPush( layers.interfaces, "blueGradient", 64, 20 , 120, 30, "Show Details", onShowHide )
 end	
 
-function createPlayer( x, y, size, contentLayer, inputObj )
-	local player  = ssk.proto.imageRect( contentLayer, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
-		{ size = size,  },
-		{ isFixedRotation = false,  colliderName = "player", calculator= myCC }, 
-		{ {"mover_moveToTouchFixedRate", {inputObj = inputObj, moveSpeed = 150, easing = easing.linear} }, 
-		  {"mover_faceTouchFixedRate", {inputObj = inputObj, aimSpeed = 0, easing = easing.linear} },
-		} )
-		
+createPath = function()
+
+	local points = ssk.points:new()
+--	points:push(screenLeft + 10, screenTop + 20)
+--	points:push(screenLeft + 40, screenTop + 40)
+--	points:push(screenLeft + 80, screenTop + 50)
+--	points:push(screenLeft + 80, screenTop + 90)
+
+	local x,y = screenLeft + 10, screenTop + 20
+
+	points:insert(1, x, y,
+	            x, y + 40,
+				x, y + 80,
+				x + 40, y + 120,
+				x + 80, y + 80,
+				x + 120, y + 160,
+				x + 160, y + 120,
+				x + 200, y + 120,
+				x + 240, y + 160 )
+
+
+
+	--ssk.proto.segmentedLine( layers.content, points, {style = "dotted", width = 6, color = _GREEN_, stroke = _WHITE_ } )
+	ssk.proto.segmentedLine( layers.content, points, {style = "arrowheads", width = 1, size = 6 } )
+	ssk.proto.segmentedLine( layers.content, points, {style = "solid", width = 1 } )
+
+end
+
+
+createPlayer = function ( x, y, size )
+	local player  = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
+		{ size = size, myName = "thePlayer" },
+		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 	return player
 end
 
@@ -152,32 +178,25 @@ createSky = function ( x, y, width, height  )
 	return sky
 end
 
-createTurret = function ( x, y, size, contentLayer, inputObj )
-	local turret  = ssk.proto.imageRect( contentLayer, x, y,imagesDir .. "simpleTurret.png",
-		{ size = size,  },
-		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
-	return turret
-end
-
-
-onShowHide = function ( event )
-	local target = event.target
-	if(event.target:getText() == "Hide Details") then
-		overlayImage.isVisible = true
-		event.target:setText( "Show Details" )
-	else
-		overlayImage.isVisible = false
-		event.target:setText( "Hide Details" )
-	end	
-end
-
 
 -- Movement/General Button Handlers
-onB = function ( event )	
-	theShip.x,theShip.y = centerX, centerY - screenHeight/4
-	theShip.rotation = 0
+onUp = function ( event )
 end
 
+onDown = function ( event )
+end
+
+onRight = function ( event )
+end
+
+onLeft = function ( event )
+end
+
+onGo = function ( event )
+end
+
+onStop = function ( event )	
+end
 
 
 return gameLogic

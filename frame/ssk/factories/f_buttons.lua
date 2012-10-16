@@ -412,17 +412,13 @@ if(buttonInstance.selRectEn) then
 	-- ============= disable() -- Disable button and reduce alpha as visual feedback
 	function buttonInstance:disable( ) 
 		self.isEnabled = false
-		self.labelText.alpha = 0.3			
-		self.sel.alpha = 0.3
-		self.unsel.alpha = 0.3
+		self.alpha = 0.3
 	end
 
 	-- ============= enable() -- Enable button and increase alpha as visual feedback
 	function buttonInstance:enable( ) 
 		self.isEnabled = true
-		self.labelText.alpha = 1.0
-		self.sel.alpha = 1.0
-		self.unsel.alpha = 1.0
+		self.alpha = 1.0
 	end
 
 	-- ============= isEnabled() -- Return true if button is enabled

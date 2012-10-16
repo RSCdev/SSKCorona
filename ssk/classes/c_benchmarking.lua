@@ -15,7 +15,7 @@
 -- Last Modified: 29 AUG 2012
 -- =============================================================
 
-local debugLevel = 2 -- Comment out to get global debugLevel from main.cs
+--local debugLevel = 2 -- Comment out to get global debugLevel from main.cs
 local dp = ssk.debugprinter.newPrinter( debugLevel )
 local dprint = dp.print
 

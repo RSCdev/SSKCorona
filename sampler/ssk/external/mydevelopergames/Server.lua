@@ -1,9 +1,10 @@
+-- This file has been modified slightly from the original to use SSK debug features.
 --[[
 Corona� AutoLAN v 1.2
 Author: M.Y. Developers
 Copyright (C) 2011 M.Y. Developers All Rights Reserved
 Support: mydevelopergames@gmail.com
-Website: http://www.mydevelopersgames.com/AutoLAN/
+Website: http://www.mygamedevelopers.com/Corona--Profiler.html
 License: You are free:
 
 to Share — to copy, distribute and transmit the work
@@ -25,6 +26,16 @@ Rights other persons may have either in the work itself or in how the work is us
 Notice — For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to this web page.
 
 --]]
+----------------------------------------------------------------------
+--						DEBUG (Added by Ed Maurina from SSK      	--
+----------------------------------------------------------------------
+--local debugLevel = 2 -- Comment out to get global debugLevel from main.cs
+local dp = ssk.debugprinter.newPrinter( debugLevel )
+local dprint = dp.print
+----------------------------------------------------------------------
+--						ORIGINAL CODE FOLLOWS				     	--
+----------------------------------------------------------------------
+
 local socket = require "socket"
 local UDPBroadcaster = socket.udp()
 UDPBroadcaster:setoption("broadcast", true)
@@ -34,7 +45,7 @@ local UDPServer = socket.udp()
 UDPServer:setsockname("*", 0) --bind on any availible port and localserver ip address.
 local myIP, myPort = UDPServer:getsockname()
 local json = require "json"
-local applicationName = "Default12"
+local applicationName = "Default"
 local deviceName = system.getInfo("name") 
 local customBroadcast = 1
 local broadcastTable = {"CoronaMultiplayer", applicationName, deviceName, myPort, customBroadcast} --broadcast frame = protocol name, app name, port to server (not broadcaster)  
@@ -174,7 +185,7 @@ end
 local function UDPBroadcast()
 	--local broadcast = json.encode(broadcastTable)
 	UDPBroadcaster:sendto(broadcast, "255.255.255.255", 8080)
-	--print("broadcast")
+	dprint(3,"broadcast")
 end
 --Runtime:addEventListener("enterFrame", UDPBroadcaster)
 
@@ -184,7 +195,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 	message,clientIP,clientPort = UDPBroadcaster:receivefrom() --from handshake client (local)
 	while(message) do
 		message = json.decode(message)
-		----print("adding clients",message[1], message["1"] )
+		dprint(4,"adding clients",message[1], message["1"] )
 		if(message) then
 			if(message[1] and message[1]=="CoronaMultiplayer" and message[2]==applicationName) then --this is the protocol id				
 				if(availibleClients[clientIP] == nil) then
@@ -209,7 +220,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 					UDPBroadcaster:sendto(json.encode(handshakeTable),clientIP,clientPort )
 					UDPClient:settimeout(0)
 					UDPClients[numClients] = UDPClient					
-					----print("client connected", clientIP,clientPort)
+					dprint(4,"client connected", clientIP,clientPort)
 					--create convenience player object
 					local newPlayer = {}
 					newPlayer.clientID = numClients
@@ -262,9 +273,9 @@ local function connectClients() --checks to see if any new clients wish to conne
 	--first check for any new connection requests
 	if(matchmakerTCPclient) then
 		local msg= matchmakerTCPclient:receive("*l")
-		print("tcp",msg)
+		dprint(2,"tcp",msg)
 		if(msg) then
-			print(msg)
+			dprint(2,msg)
 			--resolve message type
 			local decoded = json.decode(msg)
 			if(decoded) then
@@ -275,7 +286,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 						local UDPClient = socket.udp()
 						UDPClient:setsockname("*", 0) --bind on any availible port and localserver ip address.
 						UDPClient:settimeout(0)
-						print("switch to UDP on server",decoded[2], decoded[3],myIP, myPort)
+						dprint(2,"switch to UDP on server",decoded[2], decoded[3],myIP, myPort)
 						local pendingConnection = {}
 						pendingConnection.pendingIP, pendingConnection.pendingPort = decoded[2], decoded[3] --this is where we fire the player connected event
 						pendingConnection.UDPClient = UDPClient
@@ -285,7 +296,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 			end
 		end		
 		for i,pendingConnection in pairs(pendingConnections) do
-			print("pending list", i, pendingConnection)
+			dprint(2,"pending list", i, pendingConnection)
 			local UDPClient = pendingConnection.UDPClient
 			local pendingIP = pendingConnection.pendingIP
 			local pendingPort = pendingConnection.pendingPort
@@ -293,7 +304,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 			UDPClient:sendto(json.encode{"CoronaAutoInternet",applicationName,"cs",pendingIP,pendingPort},peerIP, peerPort+1) --send udp saying I want to connect to this client, the connection is open	
 			UDPClient:sendto(json.encode{"e"},pendingIP, pendingPort) --send udp saying I want to connect to this client, the connection is open	
 			local msg,clientIP,port = UDPClient:receivefrom()
-			--print("from clien", msg)
+			dprint(3,"from clien", msg)
 
 			if(msg and clientIP==pendingIP and port == pendingPort) then --make sure the packet arrives from the right place
 				local message = json.decode(msg)
@@ -311,7 +322,7 @@ local function connectClients() --checks to see if any new clients wish to conne
 					clientInfo.ip = clientIP
 					UDPClient:setpeername(pendingIP, pendingPort)
 					UDPClients[numClients] = UDPClient					
-					----print("client connected", clientIP,clientPort)
+					dprint(4,"client connected", clientIP,clientPort)
 					--create convenience player object
 					local newPlayer = {}
 					--create convenience player object
@@ -364,7 +375,7 @@ local function receive()
 			local noError = false
 			while(message) do
 				noError=true
-		----print("recieved", #message)
+		dprint(4,"recieved", #message)
 				message = json.decode(message)
 				if(message[1] == "e") then
 					return
@@ -382,7 +393,7 @@ local function receive()
 						clientInfo.HighPriorityRecieved[numHighPriorityRecieved+1] = message[2][3] --log to send ack in a future packet (pooling)
 					else
 						--low priority, dont send ack
-						------print(json.encode(message[3]))
+						--dprint(4,json.encode(message[3]))
 						
 					end
 					
@@ -399,7 +410,7 @@ local function receive()
 
 						end		
 					end			
-					----print("credits", sendCredits,message[2][2])					
+					dprint(4,"credits", sendCredits,message[2][2])					
 					addCredits(message[2][2])		
 					
 					
@@ -407,7 +418,7 @@ local function receive()
 					local userMessage = message[1]
 
 					if(userMessage[1]==2) then --file transfer
-						----print(userMessage[1],userMessage[2],userMessage[3],userMessage[4], #userMessage[5])		
+						dprint(4,userMessage[1],userMessage[2],userMessage[3],userMessage[4], #userMessage[5])		
 						--write file
 						local filename = userMessage[2]
 					
@@ -426,7 +437,7 @@ local function receive()
 						pendingFile.buffer[packetindex] = userMessage[5]
 						local currentBuffer = pendingFile.buffer[pendingFile.index]
 						while(currentBuffer ~= nil) do --if we reiceve packets out of order wait ultil we have a writable chunk
-							----print("writing",pendingFile.index)
+							dprint(4,"writing",pendingFile.index)
 							pendingFile.file:write(currentBuffer)
 							currentBuffer = nil
 							pendingFile.index = pendingFile.index+1
@@ -434,7 +445,7 @@ local function receive()
 						end
 						if(pendingFile.index == userMessage[4]+1) then
 							--file transfer finished, trigger event
-							----print("FILE DONE")
+							dprint(4,"FILE DONE")
 							Runtime:dispatchEvent({name = "autolanFileReceived", filename = filename, clientID = i})
 							pendingFile.file:close()
 							pendingFiles[filename]	 = nil
@@ -470,7 +481,7 @@ local function receive()
 								pendingFile[i] = nil
 							end
 						end
-						----print("connection timeout") --------send player dropped event
+						dprint(4,"connection timeout") --------send player dropped event
 						Runtime:dispatchEvent({name = "autolanPlayerDropped",   client = clientsInfo[i].clientObject, clientID = i, message = "timeout"})
 						clientsInfo[i] = nil
 					end
@@ -489,7 +500,7 @@ local function receive()
 						end					
 					Runtime:dispatchEvent({name = "autolanPlayerDropped",  client = clientsInfo[i].clientObject, clientID = i,message = "closed"})
 					clientsInfo[i] = nil
-					--print("closed")
+					dprint(3,"closed")
 				end
 			else
 				clientInfo.timeoutTime = timeoutTime --reset timeouts
@@ -499,7 +510,7 @@ local function receive()
 		local heartbeatTimer = clientInfo.heartbeatTimer
 		clientInfo.heartbeatTimer = heartbeatTimer-1
 			if(heartbeatTimer==0) then
-				----print("sendHearbeat")
+				dprint(4,"sendHearbeat")
 				send({0}, i, 1) 	
 				
 			end
@@ -546,7 +557,7 @@ local function mainLoop() --handles both data transfer, ACKS, disconnecting clie
 						sendCredits = sendCredits-1
 	--					HighPriorityCounters[i]= nil
 	--					sendQueueHigh[i] = nil
-					----print("resending", packet)
+					dprint(4,"resending", packet)
 				else
 					HighPriorityCounters[i] = count - 1
 				end

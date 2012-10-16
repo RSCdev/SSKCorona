@@ -117,12 +117,11 @@ end
 -- **** 
 -- **** vector2Angle - Angle between object A and B
 -- **** 
-function math2do.vector2Angle( objA, objB )
-	local vx,vy      = m2d.sub( objA.x, objA.y, objB.x, objB.y )
-	vx,vy            = m2d.normalize(vx,vy)
-	local vecAngle   = m2d.vector2Angle(vx,vy)
+function math2do.vector2Angle( objA )
+	local nx,ny     = m2d.normalize(objA.x, objA.y)
+	local vecAngle  = m2d.vector2Angle(nx,ny)
 
-	dprint(3,"     vx,vy == " .. vx,vy)
+	dprint(3,"     nx,ny == " .. nx,ny)
 	dprint(3,"  vecAngle == " .. vecAngle)
 
 	return vecAngle
@@ -162,7 +161,7 @@ function math2do.tweenAngle( objA, objB )
 end
 
 -- **** 
--- **** tweenDist - Distance between objA and objB
+-- **** tweenDist - Distance between objA and objB (EFM fix this and others that return 'extras' to use objects not scalars)
 -- ****           - Returns sub( objA, objB ) as second, third value (for cases where you need them too) :)
 -- **** 
 function math2do.tweenDist( objA, objB )

@@ -70,93 +70,161 @@ require("ssk.loadSSK")
 sampleManager = require("sampleMgr")
 
 --
--- EFM - 'Register' SSK Samples
+-- 'Register' SSK Samples (EFM need secondary subcategory or better indexing method)
 --
+
+-- =============================================
+-- Current WIP (move to proper location after testing)
+-- =============================================
 --sampleManager:addSample("Template", "Template 1", "ssk_sampler._templates.template1_logic" )
 --sampleManager:addSample("Template", "Template 2", "ssk_sampler._templates.template2_logic" )
 
---In Progress
 
-
--- Finished
--- Forums Help
-
+-- =============================================
+-- Forums Help (EFM add forum entry links in each example)
+-- =============================================
+sampleManager:addSample("Forums Help", "121015 - Display ellipse with an angle", "ssk_sampler.forumhelp.121015_display_ellipse_with_angle" )
 sampleManager:addSample("Forums Help", "121008 - Calculating intersecting lines", "ssk_sampler.forumhelp.121008_calculating_intersecting_lines" )
 sampleManager:addSample("Forums Help", "121008 - Countdown Help", "ssk_sampler.forumhelp.121008_countdown_help" )
+sampleManager:addSample("Forums Help", "120815 - Looking to make drawer", "ssk_sampler.forumhelp.120815_sliding_drawer" )
 
 
+-- =============================================
+-- SSK Feature Testing (i.e. Validation)
+-- =============================================
+-- ==
+-- Behavior Tests
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Drag-n-Drop", "ssk_sampler.featureTesting.c_components.dragNDrop_logic" )
 
+-- ==
+-- Component Tests
+-- ==
+-- Facing
+sampleManager:addSample("SSK Feature Testing", "Face Point (Touch)", "ssk_sampler.featureTesting.c_components.faceTouch_logic" )
+sampleManager:addSample("SSK Feature Testing", "Face Point (Touch) @ Fixed Rate", "ssk_sampler.featureTesting.c_components.faceTouchFixedRate_logic" ) 
+
+-- Moving
+sampleManager:addSample("SSK Feature Testing", "Move To Point (Touch)", "ssk_sampler.featureTesting.c_components.moveToTouch_logic" )
+sampleManager:addSample("SSK Feature Testing", "Move To Point (Touch) @ Fixed Rate", "ssk_sampler.featureTesting.c_components.moveToTouchFixedRate_logic" )
+
+-- Aiming (EFM broken; math?; behaviors?)
+sampleManager:addSample("SSK Feature Testing", "Aim At Object #1", "ssk_sampler.featureTesting.c_components.aimAtObject_logic" ) 
+sampleManager:addSample("SSK Feature Testing", "Aim At Object #2 (Distance Limit)", "ssk_sampler.featureTesting.c_components.aimAtObject2_logic" )
+
+-- Wrapping
+sampleManager:addSample("SSK Feature Testing", "Wrap Point (Screen Wrap)", "ssk_sampler.featureTesting.c_components.wrapping1_logic" )
+
+-- Path Following (EFM - WIP)
+--sampleManager:addSample("SSK Feature Testing", "Path Following", "ssk_sampler.featureTesting.c_components.pathfollowing" )
+
+-- ==
+-- Networking Utilities & External Networking Classes Tests
+-- ==
+sampleManager:addSample("SSK Feature Testing", "UDP Auto-Connect", "ssk_sampler.featureTesting.u_networking.autoconnect" )
+sampleManager:addSample("SSK Feature Testing", "UDP Manual Connect", "ssk_sampler.featureTesting.u_networking.manualconnect" )
+
+-- ==
+-- Button Factory Tests
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Push Buttons", "ssk_sampler.featureTesting.f_buttons.pushButtonsTest_logic" )
+sampleManager:addSample("SSK Feature Testing", "Toggle Buttons", "ssk_sampler.featureTesting.f_buttons.toggleButtonsTest_logic" )
+sampleManager:addSample("SSK Feature Testing", "Radio Buttons", "ssk_sampler.featureTesting.f_buttons.radioButtonsTest_logic" )
+sampleManager:addSample("SSK Feature Testing", "Sliders", "ssk_sampler.featureTesting.f_buttons.slidersTest_logic" )
+sampleManager:addSample("SSK Feature Testing", "Standard Button Callbacks", "ssk_sampler.featureTesting.f_buttons.buttonCallbacksTest_logic" )
+
+-- ==
+-- Label Factory Tests
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Labels", "ssk_sampler.featureTesting.f_labels.labels_logic" )
+
+-- ==
+-- HUDs (EFM need more snazzy huds soon)
+-- ==
+sampleManager:addSample("SSK Feature Testing", "HUDs 1 - Numeric Meters", "ssk_sampler.featureTesting.f_huds.numericmeter_logic" )
+
+-- ==
 -- Inputs
-sampleManager:addSample("Inputs", "Joystick (Normal)", "ssk_sampler.inputs.joystick1_logic" )
-sampleManager:addSample("Inputs", "Horizontal Snap (Normal)", "ssk_sampler.inputs.horizSnap1_logic" )
-sampleManager:addSample("Inputs", "Vertical Snap (Normal)", "ssk_sampler.inputs.vertSnap1_logic" )
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Inputs - Joystick (Normal)", "ssk_sampler.featureTesting.f_inputs.joystick1_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs - Horizontal Snap (Normal)", "ssk_sampler.featureTesting.f_inputs.horizSnap1_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs - Vertical Snap (Normal)", "ssk_sampler.featureTesting.f_inputs.vertSnap1_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs - Joystick (Virtual)", "ssk_sampler.featureTesting.f_inputs.joystick2_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs - Horizontal Snap (Virtual)", "ssk_sampler.featureTesting.f_inputs.horizSnap2_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs - Vertical Snap (Virtual)", "ssk_sampler.featureTesting.f_inputs.vertSnap2_logic" )
 
-sampleManager:addSample("Inputs", "Joystick (Virtual)", "ssk_sampler.inputs.joystick2_logic" )
-sampleManager:addSample("Inputs", "Horizontal Snap (Virtual)", "ssk_sampler.inputs.horizSnap2_logic" )
-sampleManager:addSample("Inputs", "Vertical Snap (Virtual)", "ssk_sampler.inputs.vertSnap2_logic" )
+-- ==
+-- Inputs (Applied)
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Inputs Applied - Horizontal Snap", "ssk_sampler.featureTesting.f_inputs.applied.horizSnap1_logic" )
+sampleManager:addSample("SSK Feature Testing", "Inputs Applied - Joystick", "ssk_sampler.featureTesting.f_inputs.applied.joystick1_logic" )
 
--- Inputs Applied
-sampleManager:addSample("Inputs Applied", "Horizontal Snap", "ssk_sampler.inputs_applied.horizSnap1_logic" )
-sampleManager:addSample("Inputs Applied", "Joystick", "ssk_sampler.inputs_applied.joystick1_logic" )
+-- ==
+-- Prototyping (Objects)
+-- ==
+--sampleManager:addSample("SSK Feature Testing", "Sampler Template 1 Test", "ssk_sampler.featureTesting._templates.template1_logic" )
+--sampleManager:addSample("SSK Feature Testing", "Sampler Template 2 Test", "ssk_sampler.featureTesting._templates.template2_logic" )
 
--- Camera
-sampleManager:addSample("Camera", "#1 - Wrapping", "ssk_sampler.camera.wrapping1_logic" )
-sampleManager:addSample("Camera", "#1 - 3 Layer (random objects; fixed Rate)", "ssk_sampler.camera.scrolling1_logic" )
-sampleManager:addSample("Camera", "Left-Right Auto-Scroll", "ssk_sampler.camera.lrautoscroll_logic" )
-sampleManager:addSample("Camera", "Legend of Zelda Auto-Scroll", "ssk_sampler.camera.zeldascroll_logic" )
+-- ==
+-- Sprites
+-- ==
+--sampleManager:addSample("SSK Feature Testing", "Sampler Template 1 Test", "ssk_sampler.featureTesting._templates.template1_logic" )
+--sampleManager:addSample("SSK Feature Testing", "Sampler Template 2 Test", "ssk_sampler.featureTesting._templates.template2_logic" )
 
--- Movement
-sampleManager:addSample("Movement", "Linear Movement (L/R/U/D; Buttons)", "ssk_sampler.movement.linearMovement_logic" )
-sampleManager:addSample("Movement", "Step Movement (no Repeat; Buttons)", "ssk_sampler.movement.stepNoRepeatMovement_logic" )
-sampleManager:addSample("Movement", "Step Movement (w/ Repeat; Buttons)", "ssk_sampler.movement.stepwRepeatMovement_logic" )
-sampleManager:addSample("Movement", "Thrust Movement (L/R/U/D; Buttons)", "ssk_sampler.movement.thrustMovement_logic" )
-sampleManager:addSample("Movement", "Asteroids Movement (Buttons)", "ssk_sampler.movement.asteroidsMovement_logic" )
-
-
---Touch
-sampleManager:addSample("Touch", "Drag-n-Drop", "ssk_sampler.touch.dragNDrop_logic" )
-sampleManager:addSample("Touch", "Move-to-Touch", "ssk_sampler.touch.moveToTouch_logic" )
-sampleManager:addSample("Touch", "Move-to-Touch @ Fixed Rate", "ssk_sampler.touch.moveToTouchFixedRate_logic" )
-sampleManager:addSample("Touch", "Face Touch", "ssk_sampler.touch.faceTouch_logic" )
-sampleManager:addSample("Touch", "Face Touch @ Fixed Rate", "ssk_sampler.touch.faceTouchFixedRate_logic" ) 
-
---Aiming
-sampleManager:addSample("Aiming", "Aim At Object #1", "ssk_sampler.aiming.aimAtObject_logic" ) 
-sampleManager:addSample("Aiming", "Aim At Object #2 (Distance Limit)", "ssk_sampler.aiming.aimAtObject2_logic" )
-
---Platforming
-sampleManager:addSample("Platforming", "One-Way Platform", "ssk_sampler.platforming.1wayplatform_logic" )
-
--- Interface Elements
-sampleManager:addSample("Interface Elements", "Sliding Drawer", "ssk_sampler.interface_elements.sliding_drawer_logic" )
-sampleManager:addSample("Interface Elements", "Numeric Meter", "ssk_sampler.interface_elements.numericmeter_logic" )
-
-
---Games - not updated
---sampleManager:addSample("Games", "Ni", "ssk_sampler.games.ni" )
-sampleManager:addSample("Games", "4-in-a-row", "ssk_sampler.games.4inarow" )
-
-
--- Game Prototypes/Experiments - not updated
---sampleManager:addSample("Prototypes", "Something Green", "ssk_sampler.prototypes.something_green" )
-
--- SSK and Sampler Validation
--- Labels
-sampleManager:addSample("Validation", "Label Testing", "ssk_sampler._testing.labels.labels_logic" )
-
--- Buttons & Sliders
-sampleManager:addSample("Validation", "Push Button Testing", "ssk_sampler._testing.buttons.pushButtonsTest_logic" )
-sampleManager:addSample("Validation", "Toggle Button Testing", "ssk_sampler._testing.buttons.toggleButtonsTest_logic" )
-sampleManager:addSample("Validation", "Radio Button Testing", "ssk_sampler._testing.buttons.radioButtonsTest_logic" )
-sampleManager:addSample("Validation", "Sliders Testing", "ssk_sampler._testing.buttons.slidersTest_logic" )
-sampleManager:addSample("Validation", "Standard Button Callbacks Testing", "ssk_sampler._testing.buttons.buttonCallbacksTest_logic" )
-
+-- ==
 -- Templates
-sampleManager:addSample("Validation", "Sampler Template 1 Test", "ssk_sampler._testing.templates.template1_logic" )
-sampleManager:addSample("Validation", "Sampler Template 2 Test", "ssk_sampler._testing.templates.template2_logic" )
+-- ==
+sampleManager:addSample("SSK Feature Testing", "Sampler Template 1 Test", "ssk_sampler.featureTesting._templates.template1_logic" )
+sampleManager:addSample("SSK Feature Testing", "Sampler Template 2 Test", "ssk_sampler.featureTesting._templates.template2_logic" )
 
+
+-- =============================================
+-- Mechanics
+-- =============================================
+-- ==
+-- Camera
+-- ==
+sampleManager:addSample("Mehanics - Camera", "#1 - 3 Layer (random objects; fixed Rate)", "ssk_sampler.mechanics.camera.scrolling1_logic" )
+sampleManager:addSample("Mehanics - Camera", "Left-Right Auto-Scroll", "ssk_sampler.mechanics.camera.lrautoscroll_logic" )
+sampleManager:addSample("Mehanics - Camera", "Legend of Zelda Auto-Scroll", "ssk_sampler.mechanics.camera.zeldascroll_logic" )
+
+-- ==
+-- Movement
+-- ==
+sampleManager:addSample("Mehanics - Movement", "Linear Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.linearMovement_logic" )
+sampleManager:addSample("Mehanics - Movement", "Step Movement (no Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepNoRepeatMovement_logic" )
+sampleManager:addSample("Mehanics - Movement", "Step Movement (w/ Repeat; Buttons)", "ssk_sampler.mechanics.movement.stepwRepeatMovement_logic" )
+sampleManager:addSample("Mehanics - Movement", "Thrust Movement (L/R/U/D; Buttons)", "ssk_sampler.mechanics.movement.thrustMovement_logic" )
+sampleManager:addSample("Mehanics - Movement", "Asteroids Movement (Buttons)", "ssk_sampler.mechanics.movement.asteroidsMovement_logic" )
+
+-- ==
+-- Platforming (Broken!)
+-- ==
+sampleManager:addSample("Mechanics - Platforming", "One-Way Platform", "ssk_sampler.mechanics.platforming.1wayplatform_logic" )
+
+-- =============================================
 -- Benchmarks
-sampleManager:addSample("Benchmarks", "Template", "ssk_sampler.benchmarks.template" )
+-- =============================================
+--sampleManager:addSample("Benchmarks", "Template", "ssk_sampler.benchmarks.template" )
+
+-- =============================================
+-- Games
+-- =============================================
+-- ==
+-- Prototypes (May be incomplete and/or semi-functional)
+-- ==
+--sampleManager:addSample("Games (prototype)", "Ni", "ssk_sampler.games.prototypes.ni" )
+--sampleManager:addSample("Games (prototype)", "4-in-a-row", "ssk_sampler.games.prototypes.4inarow" )
+--sampleManager:addSample("Games (prototype)", "Something Green", "ssk_sampler.games.prototypes.something_green" )
+--sampleManager:addSample("Games (prototype)", "Something Green2", "ssk_sampler.games.prototypes.something_green_w_collision" )
+
+-- ==
+-- Functional
+-- ==
+
+
+
+
 
 
 
@@ -323,6 +391,7 @@ ssk.misc.dumpScreenMetrics()
 --collisionCalculator:dump()
 
 --ssk.proto.listDPP()
+
 
 print("\n****************************************************************")
 print("*********************** /\\/\\ main.cs /\\/\\ **********************")

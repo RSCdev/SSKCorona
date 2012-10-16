@@ -1,9 +1,10 @@
+-- This file has been modified slightly from the original to use SSK debug features.
 --[[
 Corona� AutoLAN v 1.2
 Author: M.Y. Developers
 Copyright (C) 2011 M.Y. Developers All Rights Reserved
 Support: mydevelopergames@gmail.com
-Website: http://www.mydevelopersgames.com/AutoLAN/
+Website: http://www.mygamedevelopers.com/Corona--Profiler.html
 License:
 You are free to:
 to Share — to copy, distribute and transmit the work
@@ -25,6 +26,16 @@ Rights other persons may have either in the work itself or in how the work is us
 Notice — For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to this web page.
 
 --]]
+
+----------------------------------------------------------------------
+--						DEBUG (Added by Ed Maurina from SSK      	--
+----------------------------------------------------------------------
+--local debugLevel = 2 -- Comment out to get global debugLevel from main.cs
+local dp = ssk.debugprinter.newPrinter( debugLevel )
+local dprint = dp.print
+----------------------------------------------------------------------
+--						ORIGINAL CODE FOLLOWS				     	--
+----------------------------------------------------------------------
 
 local socket = require "socket"
 local json = require "json"
@@ -171,7 +182,7 @@ end
 local function failedConnection()
 	timer.cancel(timers.connectionAttempt)
 	timers.connectionAttempt = nil
-	----print("connection attempt failed")
+	dprint(4,"connection attempt failed")
 	Runtime:dispatchEvent({name = "autolanConnectionFailed", serverIP = serverIP})
 end
 
@@ -182,11 +193,11 @@ local function receive()
 
 		local noError = false
 		while(message) do
-		print("message", message)
+		dprint(2,"message", message)
 		noError = true
 
 			numMessagesRecieved = numMessagesRecieved+1
-			--print(#message,numMessagesRecieved)
+			dprint(3,#message,numMessagesRecieved)
 			message = json.decode(message)
 		if(message[1] == "e" or message[1] == "c") then
 			return
@@ -197,7 +208,7 @@ local function receive()
 				HighPriorityRecieved[numHighPriorityRecieved] = message[2][3] --log to send ack in a future packet (pooling)
 			else
 				--low priority, dont send ack
-				------print(json.encode(message[3]))
+				--dprint(4,json.encode(message[3]))
 			end
 			
 			if(message[3][1] ~= 0) then --contains a high priorit ack
@@ -212,14 +223,14 @@ local function receive()
 					end
 				end
 			end
-			------print("credits", sendCredits,message[2][2])					
+			--dprint(4,"credits", sendCredits,message[2][2])					
 			addCredits(message[2][2])	
 
 			-------------------on top of transport layer, figure out message type
 			local userMessage = message[1]
 	
 			if(userMessage[1]==2) then --file transfer
-				----print(userMessage[1],userMessage[2],userMessage[3],userMessage[4], #userMessage[5])		
+				dprint(4,userMessage[1],userMessage[2],userMessage[3],userMessage[4], #userMessage[5])		
 				--write file
 				local filename = userMessage[2]
 			
@@ -237,7 +248,7 @@ local function receive()
 				pendingFile.buffer[packetindex] = userMessage[5]
 				local currentBuffer = pendingFile.buffer[pendingFile.index]
 				while(currentBuffer ~= nil) do --if we reiceve packets out of order wait ultil we have a writable chunk
-					----print("writing",pendingFile.index)
+					dprint(4,"writing",pendingFile.index)
 					pendingFile.file:write(currentBuffer)
 					currentBuffer = nil
 					pendingFile.index = pendingFile.index+1
@@ -245,13 +256,13 @@ local function receive()
 				end
 				if(pendingFile.index == userMessage[4]+1) then
 					--file transfer finished, trigger event
-					----print("FILE DONE")
+					dprint(4,"FILE DONE")
 					Runtime:dispatchEvent({name = "autolanFileReceived", filename = filename})
 					pendingFile.file:close()
 					pendingFiles[filename]	 = nil
 				end
 			elseif userMessage[1]==1 then
-				print("client recieved")
+				dprint(2,"client recieved")
 				Runtime:dispatchEvent({name = "autolanReceived",  message = userMessage[2]})	
 			end
 			
@@ -271,7 +282,7 @@ local function receive()
 					Runtime:dispatchEvent({name = "autolanDisconnected",  serverIP = serverIP, message = "closed"})					
 					UDPClient:close()
 					UDPClient = nil
-					----print("closed")
+					dprint(4,"closed")
 				end
 		else
 			timeoutsLeft = timeoutPeriod --reset timeouts
@@ -343,12 +354,12 @@ local sendPhase = true
 
 local function connectToServer()
 	if(timers.failedToConnect == nil) then
-		--print("create timers")
+		dprint(3,"create timers")
 		timers.failedToConnect = timer.performWithDelay(connectionTimeout,failedConnection)--stop handshaking and fail
 		timers.connectionAttempt = timer.performWithDelay(connectionAttemptTime,connectToServer,-1)--try to handshake
 	end
 	if(HandshakeClient == nil) then
-		--print("creating handshake client")
+		dprint(3,"creating handshake client")
 		HandshakeClient = socket.udp()
 		HandshakeClient:setsockname("*", 0) --bind on any availible port and localserver ip address.
 		HandshakeClient:settimeout(0)
@@ -363,9 +374,9 @@ local function connectToServer()
 		HandshakeClient:sendto(handshake,serverIP,serverPort)
 		--recieve a confirmation packet telling us all is good for transmission
 		local message = HandshakeClient:receive()
-		--print("handshake", message)
+		dprint(3,"handshake", message)
 		while(message) do
-			------print("recieved broadcast,", message)	
+			--dprint(4,"recieved broadcast,", message)	
 			message = json.decode(message)
 			if(message) then
 				if(message[1] and message[1]=="CoronaMultiplayer" and message[2] == applicationName) then --this is the protocol id				
@@ -376,13 +387,15 @@ local function connectToServer()
 
 					tempClient:setpeername(serverIP, message[4])
 					UDPClient,tempClient = 	tempClient,nil
-				
-					timer.cancel(timers.connectionAttempt)
+					
+					if(timers.connectionAttempt) then -- EFM fix for weird bug
+						timer.cancel(timers.connectionAttempt)
+					end
 					timers.connectionAttempt = nil
 					timer.cancel(timers.failedToConnect)
 					timers.failedToConnect = nil
 					myClientID = message[5]
-					----print("Connected!",serverIP, message[4]) --this is where we fire off connected event
+					dprint(4,"Connected!",serverIP, message[4]) --this is where we fire off connected event
 					Runtime:dispatchEvent({name = "autolanConnected",  myClientID = myClientID, serverIP = serverIP, customBroadcast = availibleServers[serverIP].customBroadcast})					
 					timeoutsLeft = timeoutPeriod
 					--timer.performWithDelay(500,sendtest,-1)
@@ -404,10 +417,10 @@ local function stopListening() --we cant just listen forever or else we will hav
 		broadcastListener = nil
 		end
 		--here is where we would call the done scanning event listener
-		--print("done scanning.")
+		dprint(3,"done scanning.")
 		Runtime:dispatchEvent({name = "autolanDoneScanning",  servers = availibleServers})
 	else
-		----print("already not scanning...")
+		dprint(4,"already not scanning...")
 	end	
 end
 
@@ -424,7 +437,7 @@ local function UDPBroadcastListen()
 					if(availibleServers[serverIP] == nil) then
 						availibleServers[serverIP] = {name = broadcastMessage[3], broadcastPort = serverPort, port = serverPort, customBroadcast = broadcastMessage[5]}
 						Runtime:dispatchEvent({name = "autolanServerFound",  serverIP = serverIP, port = serverPort, customBroadcast = broadcastMessage[5], serverName = broadcastMessage[3]})				
-						----print("found server adding...") --this is where we fire off server found event					
+						dprint(4,"found server adding...") --this is where we fire off server found event					
 					end				
 				end
 			end
@@ -438,7 +451,7 @@ end
 
 local function scanServers(scanTime)
 	if(scanTimer) then
-		----print("already scanning...")
+		dprint(1,"already scanning...")
 	else
 		if(broadcastListener==nil) then
 			broadcastListener = socket.udp()
@@ -448,6 +461,10 @@ local function scanServers(scanTime)
 		availibleServers = {}
 		timers.scanTimer = timer.performWithDelay(listenTime,UDPBroadcastListen,-1)
 			if(scanTime) then
+				--EFM modified to make sure scanTime >= listenTime
+				if(scanTime < listenTime) then
+					scanTime = scanTime + listenTime
+				end
 				timers.scanStopTimer = timer.performWithDelay(scanTime,stopListening) --only scan for a certian amount of time and then stop and report what servers were found
 			end
 		end
@@ -467,13 +484,13 @@ local function connectToServerInternet()
 		pendingConnection = udpclient
 	end
 --assumes a valid pending connection is established
-	print("establish connection")
+	dprint(2,"establish connection")
 	if(pendingConnection) then
-		print("internet Handshake at", serverIP)
+		dprint(2,"internet Handshake at", serverIP)
 		pendingConnection:sendto(json.encode{"CoronaAutoInternet",applicationName,"cc",serverIP},peerIP, peerPort+1) --send to server saying I am ready to connect, tell server to create socket, send the server(tcp) ip and port
 		local msg,ip,port = pendingConnection:receivefrom()
 		while(msg) do
-		print("udp", msg)
+		dprint(2,"udp", msg)
 			local decoded = json.decode(msg)
 			if(decoded and decoded[1]=="c") then
 				pendingConnection:sendto(json.encode{"e"},decoded[2], decoded[3])		
@@ -491,7 +508,7 @@ local function connectToServerInternet()
 		end
 	end
 
-	print("sending", currentServer[1], currentServer[2])
+	dprint(2,"sending", currentServer[1], currentServer[2])
 
 		
 end
@@ -500,7 +517,7 @@ local function MatchmakerServerListen() --listens for a reponse from the matchma
 
 	local msg = matchmakerTCPclient:receive("*l")
 	if(msg) then
-		print(msg)
+		dprint(2,msg)
 		--resolve message type for the tcp it is only a list of servers.
 		local decoded = json.decode(msg)
 		if(decoded) then
@@ -509,7 +526,7 @@ local function MatchmakerServerListen() --listens for a reponse from the matchma
 				for i=1,#decoded[2] do
 					--add each to list
 					currentServer = decoded[2][i]
-					print(currentServer[1].." added")
+					dprint(2,currentServer[1].." added")
 					local serverIP = currentServer[1]..currentServer[2] --this is the key we refer the internet server by
 					availibleServers[serverIP] = {name = currentServer[2], port = currentServer[2], customBroadcast = currentServer[2], internet = true}
 					Runtime:dispatchEvent({name = "autolanServerFound",  serverIP = serverIP, port = currentServer[2], customBroadcast = currentServer[4], serverName = currentServer[3], internet = true})				
@@ -526,9 +543,9 @@ function client:scanServersInternet(scanTime)
 	matchmakerTCPclient = socket.tcp()
 	matchmakerTCPclient:settimeout(1) --this is the only blocking operation	
 	local err = matchmakerTCPclient:connect(peerIP, peerPort) --bind on any availible port and localserver ip address.
-	print(err)
+	dprint(2,err)
 	if(err==nil) then
-		print("server timeout")
+		dprint(2,"server timeout")
 		return
 	end
 	matchmakerTCPclient:send(json.encode({"CoronaAutoInternet",applicationName,"c"}).."\n") --send client token
@@ -575,8 +592,8 @@ timers.mainLoop = timer.performWithDelay(networkRate,mainLoop,-1)
 --Runtime:addEventListener("enterFrame", mainLoop)
 timers.receive = timer.performWithDelay(1,receive,-1)
 end
-function client:scanServers()
-	scanServers()
+function client:scanServers( scanTime ) --EFM changed to allow passing of scan time
+	scanServers( scanTime )
 end
 client.RTT = nil
 local RTTTime
@@ -586,7 +603,7 @@ local function pingListener(e)
 		RTTTime = system.getTimer()
 	elseif(e.phase == "complete") then
 		client.RTT = system.getTimer() - RTTTime
-		print("pingACK",client.RTT)
+		dprint(2,"pingACK",client.RTT)
 		sendPing()
 	else
 
@@ -613,7 +630,7 @@ function client:connect(ip)
 end	
 local function autoConnectListener(e)
 	
-	print(e.serverIP)
+	dprint(2,e.serverIP)
 	client:connect(e.serverIP)
 	Runtime:removeEventListener("autolanServerFound",autoConnectListener)
 end

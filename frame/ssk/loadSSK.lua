@@ -41,11 +41,14 @@ require( "ssk.addons.a_math")
 require( "ssk.addons.a_string")
 require( "ssk.addons.a_table")
 
+
+--EFM split below into game object factories and other?
 -- ==
 --    Factories - 'Classes' that produce one or more object types.
 -- ==
 ssk.buttons		= require( "ssk.factories.f_buttons" )					-- Buttons & Sliders Factory
 ssk.labels		= require( "ssk.factories.f_labels" )					-- Labels Factory
+ssk.points		= require( "ssk.factories.f_points" )					-- Simple Points Factory (table of points)
 ssk.proto		= require( "ssk.factories.f_prototyping" )  			-- Prototyping Game Objects Factory
 ssk.inputs		= require( "ssk.factories.f_inputs" )					-- Joysticks and Self-Centering Sliders Factory
 ssk.huds		= require( "ssk.factories.f_huds" )						-- HUDs Factory
@@ -57,7 +60,7 @@ ssk.sprites		= require( "ssk.factories.f_sprites" )					-- (Easy) Sprite Factory
 -- ==
 ssk.behaviors	= require( "ssk.classes.c_behaviors" )					-- Behaviors Manager
 ssk.bench		= require( "ssk.classes.c_benchmarking" )				-- Benchmarking Utilities
-ssk.ccmgr		= require( "ssk.classes.c_collisionCalculator" )		-- Collision Calculator
+ssk.ccmgr		= require( "ssk.classes.c_collisionCalculator" )		-- Collision Calculator (EFM actually a factory now)
 ssk.component	= require( "ssk.classes.c_components" )					-- Misc Game Components (Mechanics, etc.)
 ssk.gem			= require( "ssk.classes.c_gem")							-- Game Event Manager
 ssk.m2d			= require( "ssk.classes.c_math2d" )						-- 2D Math (scalars as inputs)
@@ -72,11 +75,9 @@ ssk.sounds		= require( "ssk.classes.c_sounds" )						-- Sounds Manager
 -- ==
 --    Networking (M.Y. Developers - AutoLan + Roaming Gamer Easy Networking Utilities)
 -- ==
-ssk.Client		= require( "ssk.external.mydevelopergames.Client" )		-- Client (External: http://www.mydevelopersgames.com/AutoLAN/)
-ssk.Server		= require( "ssk.external.mydevelopergames.Server" )		-- Server (External: http://www.mydevelopersgames.com/AutoLAN/)
-
 -- Easy Networking (Uses mydevelopersgames free AutoLan to do heavy lifting, but written by Ed M.)
 ssk.networking	= require( "ssk.utilities.u_networking" )  
+ssk.networking:registerCallbacks()
 
 -- =============================================================
 --	PAID CONTENT - Sorry, not included. 8(

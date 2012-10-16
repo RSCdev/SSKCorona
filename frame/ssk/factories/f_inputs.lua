@@ -66,15 +66,13 @@ function inputsFactory:createJoystick( x, y, outerRadius, deadZoneRadius, stickR
 		local target  = event.target
 		local eventID = event.id
 
-
 		if(event.phase == "began") then
 			display.getCurrentStage():setFocus( target, eventID )
 			target.isFocus = true
 			stick.x,stick.y = event.x, event.y
 		end
 
-
-		local vx,vy = ssk.m2do.sub(outerRing,event)
+		local vx,vy = ssk.m2d.sub(outerRing.x, outerRing.y, event.x, event.y)
 		local nx,ny = ssk.m2d.normalize(vx,vy)
 
 		if(vx == 0 ) then
@@ -230,7 +228,7 @@ function inputsFactory:createVirtualJoystick( x, y, outerRadius, deadZoneRadius,
 			virtualJoystick.isVisible = true
 		end
 
-		local vx,vy = ssk.m2do.sub(outerRing,event)
+		local vx,vy = ssk.m2d.sub(outerRing.x, outerRing.y, event.x, event.y)
 		local nx,ny = ssk.m2d.normalize(vx,vy)
 
 		if(vx == 0 ) then

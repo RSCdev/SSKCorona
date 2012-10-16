@@ -30,6 +30,8 @@ local overlayImage
 local backImage
 local thePlayer
 
+local Corona_build = tonumber(system.getInfo( "build" ))
+
 -- Fake Screen Parameters (used to create visually uniform demos)
 local screenWidth  = 320 -- smaller than actual to allow for overlay/frame
 local screenHeight = 240 -- smaller than actual to allow for overlay/frame
@@ -173,6 +175,8 @@ createPlatform = function ( x, y, width, height )
 	platform.collision = onCollision
 	platform.preCollision = onPreCollision
 
+	--EFMplatform.isSensor = true
+
 	platform:addEventListener( "preCollision", platform )
 	platform:addEventListener( "collision", platform )
 
@@ -187,21 +191,34 @@ end
 
 onCollision = function ( self, event )
 	if(event.phase == "ended") then
-		event.target.isSensor = false
+		if(Corona_build < 2012.890 ) then
+			event.target.isSensor = false --(for versions before 890)
+		else
+			event.contact.isEnabled = true  --(for versions 890 and after)
+		end
 	end
 	return true
 end
 
 onPreCollision = function ( self, event )
+
 	-- Note: This is simple in the sense that the center of objects are used.
 	-- To make this more exact, calculate foot/head positions and use them
 	-- instead.  This will help handle case where the player is collding from 
 	-- the side while rising/falling.
 	--
 	if(event.target.y < event.other.y) then
-		event.target.isSensor = true
-	else 
-		event.target.isSensor = false
+		if(Corona_build < 2012.890 ) then
+			event.target.isSensor = true   --(for versions before 890)
+		else
+			event.contact.isEnabled = false  --(for versions 890 and after)
+		end
+	else
+		if(Corona_build < 2012.890 ) then
+			event.target.isSensor = false --(for versions before 890)
+		else
+			event.contact.isEnabled = true  --(for versions 890 and after)
+		end
 	end
 	return true
 end
