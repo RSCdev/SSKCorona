@@ -24,6 +24,50 @@ function fnn( ... )
 	return nil
 end
 
+---============================================================
+-- Calculate Pascal's triangle to 'n' rows and return as a sequence
+-- Modified: http://rosettacode.org/wiki/Pascal's_triangle#Lua
+function _G.PascalsTriangle_row(t)
+  local ret = {}
+  t[0], t[#t+1] = 0, 0
+  for i = 1, #t do ret[i] = t[i-1] + t[i] end
+  return ret
+end
+
+function _G.PascalsTriangle(n)
+  local t = {1}
+  local full = nil
+
+  for i = 1, n do
+	if full then
+		full = table.copy(full,t)
+	else
+		full = table.copy(t)
+	end
+    t = _G.PascalsTriangle_row(t)
+  end
+  return full
+end
+
+function _G.PascalsTriangle_lastRow(n)
+  local t = {1}
+  for i = 1, n do
+    t = _G.PascalsTriangle_row(t)
+  end
+  return t
+end
+
+
+---============================================================
+-- Calculate fibbonaci out to nth place (with caching for speedup)
+-- http://en.literateprograms.org/Fibonacci_numbers_(Lua)
+_G.fibs={[0]=0, 1, 1} 
+function _G.fastfib(n)
+	for i=3,n do
+		_G.fibs[i]=_G.fibs[i-1]+_G.fibs[i-2]
+	end
+	return _G.fibs[n]
+end
 
 ---============================================================
 -- rounds a number to the nearest decimal places

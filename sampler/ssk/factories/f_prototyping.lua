@@ -505,7 +505,6 @@ function protoFactory.segmentedLine( group, points, visualParams )
 end
 
 
-
 function protoFactory.rect( group, x, y, visualParams, bodyParams, behaviorsList )
 
 	local width = 40
@@ -532,7 +531,10 @@ function protoFactory.rect( group, x, y, visualParams, bodyParams, behaviorsList
 
 	if(visualParams) then
 		if(visualParams.fill) then dObj:setFillColor( unpack(visualParams.fill) ) end
-		if(visualParams.stroke) then dObj:setStrokeColor( unpack(visualParams.stroke) ) end
+		if(visualParams.stroke) then 
+			dObj:setStrokeColor( unpack(visualParams.stroke) ) 
+			dObj.strokeWidth = 1
+		end
 		if( visualParams.strokeWidth ) then dObj.strokeWidth = visualParams.strokeWidth end
 
 		if( visualParams.myName ) then dObj.myName = visualParams.myName end -- debug params
@@ -609,7 +611,10 @@ function protoFactory.imageRect( group, x, y, imgSrc, visualParams, bodyParams, 
 
 	if(visualParams) then
 		if(visualParams.fill) then dObj:setFillColor( unpack(visualParams.fill) ) end
-		if(visualParams.stroke) then dObj:setStrokeColor( unpack(visualParams.stroke) ) end
+		if(visualParams.stroke) then 
+			dObj:setStrokeColor( unpack(visualParams.stroke) ) 
+			dObj.strokeWidth = 1
+		end
 		if( visualParams.strokeWidth ) then dObj.strokeWidth = visualParams.strokeWidth end
 
 		if( visualParams.myName ) then dObj.myName = visualParams.myName end -- debug params
@@ -643,7 +648,10 @@ function protoFactory.imageCircle( group, x, y, imgSrc, visualParams, bodyParams
 
 	if(visualParams) then
 		if(visualParams.fill) then dObj:setFillColor( unpack(visualParams.fill) ) end
-		if(visualParams.stroke) then dObj:setStrokeColor( unpack(visualParams.stroke) ) end
+		if(visualParams.stroke) then 
+			dObj:setStrokeColor( unpack(visualParams.stroke) ) 
+			dObj.strokeWidth = 1
+		end
 		if( visualParams.strokeWidth ) then dObj.strokeWidth = visualParams.strokeWidth end
 
 		if( visualParams.myName ) then dObj.myName = visualParams.myName end -- debug params

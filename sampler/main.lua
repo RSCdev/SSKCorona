@@ -76,9 +76,8 @@ sampleManager = require("sampleMgr")
 -- =============================================
 -- Current WIP (move to proper location after testing)
 -- =============================================
---sampleManager:addSample("Template", "Template 1", "ssk_sampler._templates.template1_logic" )
---sampleManager:addSample("Template", "Template 2", "ssk_sampler._templates.template2_logic" )
-
+--sampleManager:addSample("Template", "Template 1", "ssk_sampler._templates.template1_logic", true )
+--sampleManager:addSample("Template", "Template 2", "ssk_sampler._templates.template2_logic", true )
 
 -- =============================================
 -- Forums Help (EFM add forum entry links in each example)
@@ -217,6 +216,10 @@ sampleManager:addSample("Mechanics - Platforming", "One-Way Platform", "ssk_samp
 --sampleManager:addSample("Games (prototype)", "4-in-a-row", "ssk_sampler.games.prototypes.4inarow" )
 --sampleManager:addSample("Games (prototype)", "Something Green", "ssk_sampler.games.prototypes.something_green" )
 --sampleManager:addSample("Games (prototype)", "Something Green2", "ssk_sampler.games.prototypes.something_green_w_collision" )
+
+sampleManager:addSample("Puzzle Games #1", "Tic-Tac-Toe", "ssk_sampler.games.puzzle1.tictactoe.tictactoe" )
+sampleManager:addSample("Puzzle Games #1", "4-in-a-row", "ssk_sampler.games.puzzle1.4inarow.4inarow" )
+sampleManager:addSample("Puzzle Games #1", "Connect-3", "ssk_sampler.games.puzzle1.connect3.connect3" )
 
 -- ==
 -- Functional

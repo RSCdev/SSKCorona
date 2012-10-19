@@ -18,6 +18,43 @@
 local json = require( "json" )
 
 -- ======================================================================
+-- combineUnique - Combines n tables into a single table containing only 
+-- unique members from each source table.
+-- Warning: Resulting table is not integer indexed.
+-- Warning: Order is not maintained
+-- ======================================================================
+function table.combineUnique( ... )
+	local newTable = {}
+	
+	for i=1, #arg do
+		for k,v in pairs( arg[i] ) do
+			newTable[v] = v
+		end
+	end
+
+	return newTable
+end
+
+-- ======================================================================
+-- combineUnique_i - Combines n tables into a single integer indexed table 
+-- containing only unique members from each source table.  
+-- Warning: Order is not maintained
+-- ======================================================================
+function table.combineUnique_i( ... )
+	local newTable = {}
+	local tmpTable = table.combineUnique( unpack(arg) )
+	
+	local i = 1
+
+	for k,v in pairs( tmpTable ) do
+		newTable[i] = tmpTable[k]
+		i = i+1
+	end
+
+	return newTable
+end
+
+-- ======================================================================
 -- join - Join indexed table entries into string with specified seprator
 -- ======================================================================
 function table.join( aTable, sep)

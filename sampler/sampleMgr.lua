@@ -34,7 +34,11 @@ theMgr.samples = {}
 
 theMgr.totalSamples = 0
 
-function theMgr:addSample( category, subcategory, samplePath )
+function theMgr:addSample( category, subcategory, samplePath, debugMode)
+
+	if(debugMode == true) then
+		local errorCheck = require(samplePath)
+	end
 
 	theMgr.totalSamples = theMgr.totalSamples +1
 

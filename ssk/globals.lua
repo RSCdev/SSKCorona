@@ -31,7 +31,7 @@ _G.debugLevel = 1
 _G.isTutorialDistro = true -- I can't distribute some 'paid' assets with the kit, so this
                          -- flag is used to select alternative assets for the source distro version.
 _G.liteVersion = false
-_G.releaseDate  = "15 OCT 2012"
+_G.releaseDate  = "18 OCT 2012"
 
 -- Resource directories (images, sounds, etc.)
 _G.imagesDir = "images/"
@@ -71,22 +71,24 @@ _G.onSimulator = system.getInfo( "environment" ) == "simulator"
 _G.platformVersion = system.getInfo( "platformVersion" )
 _G.olderVersion = tonumber(string.sub( platformVersion, 1, 1 )) < 4
 
--- easy color codes
-_G._TRANSPARENT_ = {0, 0, 0, 0}
+-- easy color codes and string translations
+_G.colorNames = {}
+_G._TRANSPARENT_ = {0, 0, 0, 0}; _G.colorNames[_TRANSPARENT_] = "TRANSPARENT"
 
-_G._WHITE_ = {255, 255, 255, 255}
-_G._BLACK_ = {  0,   0,   0, 255}
+_G._WHITE_ = {255, 255, 255, 255}; _G.colorNames[_WHITE_] = "WHITE"
+_G._BLACK_ = {  0,   0,   0, 255}; _G.colorNames[_BLACK_] = "BLACK"
 
-_G._GREY_      = {128, 128, 128, 255}
-_G._DARKGREY_  = { 64,  64,  64, 255}
-_G._LIGHTGREY_ = {192, 192, 192, 255}
+_G._GREY_      = {128, 128, 128, 255}; _G.colorNames[_GREY_] = "GREY"
+_G._DARKGREY_  = { 64,  64,  64, 255}; _G.colorNames[_DARKGREY_] = "DARKGREY"
+_G._LIGHTGREY_ = {192, 192, 192, 255}; _G.colorNames[_LIGHTGREY_] = "LIGHTGREY"
 
-_G._RED_   = {255,   0,   0, 255}
-_G._GREEN_ = {  0, 255,   0, 255}
-_G._BLUE_  = {  0,   0, 255, 255}
+_G._RED_   = {255,   0,   0, 255}; _G.colorNames[_RED_] = "RED"
+_G._GREEN_ = {  0, 255,   0, 255}; _G.colorNames[_GREEN_] = "GREEN"
+_G._BLUE_  = {  0,   0, 255, 255}; _G.colorNames[_BLUE_] = "BLUE"
 
-_G._YELLOW_       = {0xff, 0xff,    0, 255}
-_G._ORANGE_       = {0xff, 0x66,    0, 255}
-_G._BRIGHTORANGE_ = {0xff, 0x99,    0, 255}
-_G._PURPLE_       = {0xa0, 0x20, 0xf0, 255}
-_G._PINK_         = {0xff, 0x6e, 0xc7, 255}
+_G._YELLOW_       = {0xff, 0xff,    0, 255}; _G.colorNames[_YELLOW_] = "YELLOW"
+_G._ORANGE_       = {0xff, 0x66,    0, 255}; _G.colorNames[_ORANGE_] = "ORANGE"
+_G._BRIGHTORANGE_ = {0xff, 0x99,    0, 255}; _G.colorNames[_BRIGHTORANGE_] = "BRIGHTORANGE"
+_G._PURPLE_       = {0xa0, 0x20, 0xf0, 255}; _G.colorNames[_PURPLE_] = "PURPLE"
+_G._PINK_         = {0xff, 0x6e, 0xc7, 255}; _G.colorNames[_PINK_] = "PINK"
+

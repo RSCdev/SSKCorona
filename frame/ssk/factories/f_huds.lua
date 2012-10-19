@@ -124,14 +124,28 @@ function public:createNumericScoreHUD( x, y, digits, presetName, group, params)
 	theHUD.x, theHUD.y = x,y
 	theHUD.myx, theHUD.myy = x,y
 
+	theHUD.digits = digits or 0
+
 	function theHUD:get()
 		return self.curValue
 	end
 
 	function theHUD:set( value )
 		self.curValue = value
-		self:setText( string.lpad( tostring(value) , digits,'0') )
-		--self.x, self.y = self.myx, self.myy
+		if(self.digits) then
+			self:setText( string.lpad( tostring(self.curValue) , self.digits,'0') )
+		else
+			self:setText( tostring(value) )
+		end
+	end
+
+	function theHUD:increment( value )
+		self.curValue = self.curValue + value
+		if(self.digits) then
+			self:setText( string.lpad( tostring(self.curValue) , self.digits,'0') )
+		else
+			self:setText( tostring(value) )
+		end
 	end
 
 	function theHUD:destroy()

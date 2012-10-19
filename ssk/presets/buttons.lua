@@ -69,7 +69,7 @@ mgr:addPreset( "red", params )
 local params = 
 { 
 	textColor          = { 0, 0, 0, 255 },
-	fontSize           = 21,
+	fontSize           = 18,
 	textFont           = gameFont,
 	unselRectGradient  = graphics.newGradient ( { 170, 170, 255, 255  }, { 64, 64, 255, 255 }, "down" ),
 	selRectGradient    = graphics.newGradient ( { 200, 200, 220, 255  }, { 94, 94, 220, 255 }, "down" ),
@@ -235,7 +235,12 @@ mgr:addPreset( "D_Button", params )
 params.unselImgSrc = imagesDir .. "interface/buttonE.png"
 params.selImgSrc   = imagesDir .. "interface/buttonEOver.png"
 mgr:addPreset( "E_Button", params )
-
+-- ============================
+-- ================ 'F' BUTTON
+-- ============================
+params.unselImgSrc = imagesDir .. "interface/buttonF.png"
+params.selImgSrc   = imagesDir .. "interface/buttonFOver.png"
+mgr:addPreset( "F_Button", params )
 
 -- ============================
 -- ================== MP BUTTON

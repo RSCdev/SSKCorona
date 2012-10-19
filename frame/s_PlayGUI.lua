@@ -133,7 +133,7 @@ onBack = function ( event )
 	local options =
 	{
 		effect = "slideRight",
-		time = 400,
+		time = 1500,
 		params =
 		{
 			logicSource = nil
