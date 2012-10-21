@@ -29,6 +29,8 @@ function math2do.vector2Angle( objA, objB )
 function math2do.tweenAngle( objA, objB )
 function math2do.tweenDist( objA, objB )
 function math2do.tweenData( objA, objB )
+
+function math2do.getFacingVector( displayObject  )
 --]]
 
 --[[
@@ -199,4 +201,10 @@ function math2do.tweenData( objA, objB )
 
 	return vx,vy,nx,ny,vecLen,vecAngle,tweenAngle
 end
+
+function math2do.getFacingVector( displayObject  )
+	local x,y =  m2d.angle2Vector( displayObject.rotation )
+	return { x = x, y = y }
+end
+
 return math2do

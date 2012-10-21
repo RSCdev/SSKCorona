@@ -25,6 +25,15 @@ function fnn( ... )
 end
 
 ---============================================================
+-- Determine if an object is in fact a displayObject
+-- 
+function _G.isDisplayObject( obj )
+	if( obj._class and obj._proxy) then return true end
+	return false
+end
+
+
+---============================================================
 -- Calculate Pascal's triangle to 'n' rows and return as a sequence
 -- Modified: http://rosettacode.org/wiki/Pascal's_triangle#Lua
 function _G.PascalsTriangle_row(t)

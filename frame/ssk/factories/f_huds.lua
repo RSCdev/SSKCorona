@@ -154,4 +154,60 @@ function public:createNumericScoreHUD( x, y, digits, presetName, group, params)
 	return theHUD
 end
 
+-- =================================================
+--  Horizonal Image Counter 
+-- =================================================
+function public:createHorizImageCounter( group, x, y, imgSrc, imgW, imgH, maxValue, intialValue )
+	
+	local initialValue = initialValue or 0
+
+	local theHUD = display.newGroup()
+	group:insert(theHUD)
+
+	theHUD.myx, theHUD.myy = x,y
+	theHUD.curValue = 0
+	theHUD.maxValue = maxValue
+
+	for i=1, maxValue do
+		local img = display.newImageRect( theHUD, imgSrc, imgW, imgH )
+		img.x = (i-1) * imgW
+		img.y = 0
+	end
+
+	theHUD:setReferencePoint(display.CenterReferencePoint)
+	theHUD.x, theHUD.y = x,y
+
+
+	function theHUD:set( value )
+		self.curValue = value
+		if(self.curValue < 0) then self.curValue = 0 end
+		if(self.curValue > self.maxValue) then self.curValue = self.maxValue end
+
+		for i=1, self.maxValue do
+			if(i > self.curValue) then
+				self[i].isVisible = false
+			else
+				self[i].isVisible = true
+			end
+		end
+
+		print(self.width, self.height,self.x, self.y, self.myx)
+	end
+
+	theHUD:set( intialValue )
+
+	function theHUD:get()
+		return self.curValue
+	end
+	function theHUD:increment( value )
+		self.curValue = self.curValue + value
+		self:set( self.curValue )
+	end
+
+	function theHUD:destroy()
+	end
+
+	return theHUD
+end
+
 return public

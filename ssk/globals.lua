@@ -28,10 +28,10 @@
 _G.debugLevel = 1
 
 -- Version details and flags
-_G.isTutorialDistro = true -- I can't distribute some 'paid' assets with the kit, so this
+_G.isTutorialDistro = false -- I can't distribute some 'paid' assets with the kit, so this
                          -- flag is used to select alternative assets for the source distro version.
 _G.liteVersion = false
-_G.releaseDate  = "18 OCT 2012"
+_G.releaseDate  = "20 OCT 2012"
 
 -- Resource directories (images, sounds, etc.)
 _G.imagesDir = "images/"
@@ -67,6 +67,7 @@ _G.unusedHeight   = _G.displayHeight - _G.h
 _G.deviceWidth  = math.floor((displayWidth/display.contentScaleX) + 0.5)
 _G.deviceHeight = math.floor((displayHeight/display.contentScaleY) + 0.5)
 
+_G.luaVersion = _G._VERSION
 _G.onSimulator = system.getInfo( "environment" ) == "simulator"
 _G.platformVersion = system.getInfo( "platformVersion" )
 _G.olderVersion = tonumber(string.sub( platformVersion, 1, 1 )) < 4
