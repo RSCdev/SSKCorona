@@ -116,7 +116,7 @@ createLabels = function ( )
 
 	local yOffset = 20
 
-	tmpLabel = ssk.labels:presetLabel( layers.content, "default", "preset label - default", centerX, yOffset + 20 )
+	tmpLabel = ssk.labels:presetLabel( layers.content, "default", "preset label", centerX, yOffset + 20 )
 
 	tmpLabel = ssk.labels:presetLabel( layers.content, "default", "preset label - default + mods #1", centerX, yOffset + 45, 
 									   { fontSize = 32, textColor = _ORANGE_ } )
@@ -127,7 +127,8 @@ createLabels = function ( )
 
 
 	tmpLabel = ssk.labels:quickLabel( layers.content, "quick label #1", centerX, yOffset + 135 )
-	tmpLabel = ssk.labels:quickLabel( layers.content, "quick label #2", centerX, yOffset + 170, gameFont, 40, _BRIGHTORANGE_ )
+	tmpLabel = ssk.labels:quickLabel( layers.content, "quick label #2 ( width:000  height:00 )", centerX, yOffset + 170, gameFont, 20, _BRIGHTORANGE_ )
+	tmpLabel:setText( "quick label #2" .. " ( width: " .. tmpLabel.width .. "  height: " .. tmpLabel.height .. " )")
 
 	tmpLabel = ssk.labels:quickEmbossedLabel( layers.content, "quick embossed label #1", centerX, yOffset + 215, nil, nil, _PINK_ )
 	tmpLabel = ssk.labels:quickEmbossedLabel( layers.content, "quick embossed label #2", centerX, yOffset + 250, gameFont, 40 )

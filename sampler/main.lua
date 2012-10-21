@@ -47,7 +47,7 @@ enableRandomOpenCloseTesting = false
 -- Automatically open first example in list (useful while editing that sample)
 -- Above settings take precedence
 enableAutoLoad = true
-enableAutoLoad = false
+--enableAutoLoad = false
 -- ================= OPEN CLOSE TESTING (END)
 
 ----------------------------------------------------------------------
@@ -78,6 +78,10 @@ sampleManager = require("sampleMgr")
 -- =============================================
 --sampleManager:addSample("Template", "Template 1", "ssk_sampler._templates.template1_logic", true )
 --sampleManager:addSample("Template", "Template 2", "ssk_sampler._templates.template2_logic", true )
+
+--sampleManager:addSample("SSK Feature Testing", "Path Following", "ssk_sampler.featureTesting.c_components.pathfollowing" )
+
+sampleManager:addSample("Action Games #1", "Asteroids", "ssk_sampler.games.action1.asteroids", true )
 
 -- =============================================
 -- Forums Help (EFM add forum entry links in each example)
@@ -220,6 +224,8 @@ sampleManager:addSample("Mechanics - Platforming", "One-Way Platform", "ssk_samp
 sampleManager:addSample("Puzzle Games #1", "Tic-Tac-Toe", "ssk_sampler.games.puzzle1.tictactoe.tictactoe" )
 sampleManager:addSample("Puzzle Games #1", "4-in-a-row", "ssk_sampler.games.puzzle1.4inarow.4inarow" )
 sampleManager:addSample("Puzzle Games #1", "Connect-3", "ssk_sampler.games.puzzle1.connect3.connect3" )
+--sampleManager:addSample("Action Games #1", "Asteroids", "ssk_sampler.games.action1.asteroids", true )
+
 
 -- ==
 -- Functional
