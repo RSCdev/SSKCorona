@@ -28,7 +28,8 @@ local myCC   -- Local reference to collisions Calculator
 local layers -- Local reference to display layers 
 local overlayImage 
 local backImage
-local thePlayer
+local myFrog
+local jumpTime = 600
 
 -- Fake Screen Parameters (used to create visually uniform demos)
 local screenWidth  = 320 -- smaller than actual to allow for overlay/frame
@@ -43,17 +44,9 @@ local createCollisionCalculator
 local createLayers
 local addInterfaceElements
 
-local createPlayer
 local createSprite
-local createSky
 
-local onShowHide
 
-local onUp
-local onDown
-local onRight
-local onLeft
-local onA
 local onB
 
 local gameLogic = {}
@@ -78,13 +71,7 @@ function gameLogic:createScene( screenGroup )
 	screenGroup.isVisible=true
 	
 	-- 5. Add demo/sample content
-	createSky(centerX, centerY, screenWidth, screenHeight )
-	thePlayer = createPlayer( centerX, centerY- 60, 99 * 2, 34 * 2 )
-
-	createSprite( centerX - 50 , centerY + 60, 2 )
-	createSprite( centerX, centerY + 60, 1 )
-	createSprite( centerX + 50, centerY + 60, 0.8 )
-	createSprite( centerX + 100, centerY + 60, 0.5 )
+	createSprite( screenLeft + 15 , screenBot - 10, 0.5 )
 end
 
 -- =======================
@@ -95,7 +82,7 @@ function gameLogic:destroyScene( screenGroup )
 	layers:destroy()
 	layers = nil
 	myCC = nil
-	thePlayer = nil
+	myFrog = nil
 
 	-- 2. Clean up gravity and physics debug
 	physics.setDrawMode( "normal" )
@@ -118,62 +105,23 @@ end
 createLayers = function( group )
 	layers = ssk.proto.quickLayers( group, 
 		"background", 
-		"scrollers", 
-			{ "scroll3", "scroll2", "scroll1" },
 		"content",
 		"interfaces" )
 end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
+	backImage = ssk.proto.backImage( layers.background, "backImage.jpg") 
 	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons
 	local tmpButton
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "upButton", screenLeft-30, screenBot-175, 42, 42, "", onUp )
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "downButton",  screenLeft-30, screenBot-125, 42, 42, "", onDown )
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "leftButton", screenLeft-30, screenBot-75, 42, 42, "", onLeft )
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "rightButton", screenLeft-30, screenBot-25, 42, 42, "", onRight )
-	-- Universal Buttons
-	tmpButton = ssk.buttons:presetPush( layers.interfaces, "A_Button", screenRight+30, screenBot-75, 42, 42, "", onA )
 	tmpButton = ssk.buttons:presetPush( layers.interfaces, "B_Button", screenRight+30, screenBot-25, 42, 42, "", onB )
 
-	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
-	ssk.buttons:presetPush( layers.interfaces, "blueGradient", 64, 20 , 120, 30, "Show Details", onShowHide )
 end	
 
 function createSprite( x, y, scale ) 
-	local sheetData = { 
-		width = 32,   --the width of each frame
-		height = 32,  --the height of each frame
-		numFrames = 3, --the total number of frames on the sheet
-		sheetContentWidth = 96, --the total width of the image sheet (see note below)
-		sheetContentHeight = 32 --the total height of the image sheet (see note below)
-	}
-
-	local mySheet = graphics.newImageSheet( imagesDir .. "AriFeldman/enemyPlaneBlue.png", sheetData )
-
-	local sequenceData = {
-		{ 
-			name = "normalRun",  --name of animation sequence
-			start = 1,  --starting frame index
-			count = 3,  --total number of frames to animate consecutively before stopping or looping
-			time = 150,  --optional, in milliseconds; if not supplied, the sprite is frame-based
-			loopCount = 0,  --optional. 0 (default) repeats forever; a positive integer specifies the number of loops
-			loopDirection = "forward"  --optional, either "forward" (default) or "bounce" which will play forward then backwards through the sequence of frames
-		}  --if defining more sequences, place a comma here and proceed to the next sequence sub-table	
-	}
-
-	local animation = display.newSprite( mySheet, sequenceData )
-	animation:scale(scale,scale)
-	animation.x = x
-	animation.y = y
-	animation:play()
-
-	layers.content:insert(animation)
-
 
 	local oldStyleSpriteSheetData = require( "images.misc.animFrog.frog").getSpriteSheetData()
 
@@ -184,68 +132,44 @@ function createSprite( x, y, scale )
 
 	local imageSheet = graphics.newImageSheet( imagesDir .. "misc/animFrog/frog.png", options )
 
-
-	local sequenceData2 = {
+	local frogSequenceData = {
 		{ 
 			name = "normalRun",  --name of animation sequence
 			start = 1,
 			count = 6,
-			time = 1000,  --optional, in milliseconds; if not supplied, the sprite is frame-based
-			loopCount = 0,  --optional. 0 (default) repeats forever; a positive integer specifies the number of loops
+			time = jumpTime,  --optional, in milliseconds; if not supplied, the sprite is frame-based
+			loopCount = 1,  --optional. 0 (default) repeats forever; a positive integer specifies the number of loops
 			loopDirection = "forward"  --optional, either "forward" (default) or "bounce" which will play forward then backwards through the sequence of frames
 		}  --if defining more sequences, place a comma here and proceed to the next sequence sub-table	
 	}
 
-	local animation2 = display.newSprite( imageSheet, sequenceData2 )
-	animation2.x = 150
-	animation2.y = centerY
-	animation2:play()
+	myFrog = display.newSprite( imageSheet, frogSequenceData )
+	myFrog.x = x
+	myFrog.y = y
+	myFrog.initialX = x
+	myFrog.initialY = y
+	myFrog:scale(scale,scale)
+
+	layers.content:insert( myFrog )
+
+	myFrog.touch = function( self, event )
+		if(event.phase == "ended" or event.phase == "cancelled") then
+			if( myFrog.x < (screenRight - 50) ) then
+				myFrog:play()
+				transition.to( myFrog, {x = myFrog.x + 40, time = jumpTime-100, transition = transition.linear })
+			end
+		end
+	end
+
+	myFrog:addEventListener( "touch", myFrog ) 
+
 
 end
-
-function createPlayer( x, y, w, h )
-	local player = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "AriFeldman/enemyPlaneBlue.png",
-										{ width = w, height = h, myName = "thePlayer" },
-		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
-	return player
-end
-
-createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
-		{ width = width, height = height, myName = "theSky" } )
-	return sky
-end
-
-
-onShowHide = function ( event )
-	local target = event.target
-	if(event.target:getText() == "Hide Details") then
-		overlayImage.isVisible = true
-		event.target:setText( "Show Details" )
-	else
-		overlayImage.isVisible = false
-		event.target:setText( "Hide Details" )
-	end	
-end
-
 
 -- Movement/General Button Handlers
-onUp = function ( event )
-end
-
-onDown = function ( event )
-end
-
-onRight = function ( event )
-end
-
-onLeft = function ( event )
-end
-
-onA = function ( event )
-end
-
 onB = function ( event )	
+	myFrog.x = myFrog.initialX
+	myFrog.y = myFrog.initialY
 end
 
 

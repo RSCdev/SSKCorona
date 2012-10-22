@@ -85,6 +85,7 @@ sampleManager = require("sampleMgr")
 -- =============================================
 -- Forums Help (EFM add forum entry links in each example)
 -- =============================================
+sampleManager:addSample("Forums Help", "121020 - Getting Sprite to Jump Forward", "ssk_sampler.forumhelp.121020_sprite_jump_forward", true )
 sampleManager:addSample("Forums Help", "121015 - Display ellipse with an angle", "ssk_sampler.forumhelp.121015_display_ellipse_with_angle" )
 sampleManager:addSample("Forums Help", "121008 - Calculating intersecting lines", "ssk_sampler.forumhelp.121008_calculating_intersecting_lines" )
 sampleManager:addSample("Forums Help", "121008 - Countdown Help", "ssk_sampler.forumhelp.121008_countdown_help" )
@@ -231,10 +232,10 @@ sampleManager:addSample("Action Games #1", "Asteroids", "ssk_sampler.games.actio
 -- ==
 
 
-
-
-
-
+-- =============================================
+-- Misc
+-- =============================================
+--sampleManager:addSample("WIP", "Sprites Work", "ssk_sampler.sprites", true )
 
 
 ----------------------------------------------------------------------

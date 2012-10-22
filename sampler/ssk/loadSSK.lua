@@ -53,7 +53,7 @@ ssk.proto		= require( "ssk.factories.f_prototyping" )  			-- Prototyping Game Ob
 ssk.inputs		= require( "ssk.factories.f_inputs" )					-- Joysticks and Self-Centering Sliders Factory
 ssk.huds		= require( "ssk.factories.f_huds" )						-- HUDs Factory
 ssk.dbmgr		= require( "ssk.factories.f_dbmgr" )					-- (Rudimentary) DB Manager Factory
-ssk.sprites		= require( "ssk.factories.f_sprites" )					-- (Easy) Sprite Factory
+--ssk.sprites		= require( "ssk.factories.f_sprites" )					-- (Easy) Sprite Factory
 
 -- ==
 --    Classes
