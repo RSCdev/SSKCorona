@@ -12,8 +12,9 @@
 -- Credit?:  Mentioning SSK and/or Roaming Gamer, LLC. in your credits is not required, but it would be nice.  Thanks!
 --
 -- =============================================================
--- Last Modified: 29 AUG 2012
+-- Last Modified: 22 OCT 2012
 -- =============================================================
+--EFM integrate with future 'deferred' loading manager?
 
 local sprite = require( "sprite" )
 
@@ -27,6 +28,43 @@ function changeSprite( theSprite, spriteNum)
 
 local spritesFactory = {}
 	spritesFactory.spriteSheets = {}
+
+	-- ==
+	-- Sprite Sheets
+	-- ==
+
+	function spritesFactory:sheetExists( sheetName )
+		if( self.spriteSheets[sheetName] ) then return true end
+		return false
+	end
+
+	function spritesFactory:getSheet( sheetName )
+		return self.spriteSheets[sheetName]
+	end
+
+	function spritesFactory:destroySheet( sheetName )
+		if( self.spriteSheets[sheetName] ) then 
+			local theSheet = self.spriteSheets[sheetName]
+			self.spriteSheets[sheetName] = nil
+			return true 
+		end
+		return false
+	end
+
+	function spritesFactory:createSheet( sheetName, sheetImg, sheetParams )
+		if( not self.spriteSheets[sheetName] ) then 
+
+			self.spriteSheets[sheetName] = graphics.newImageSheet( sheetImg, sheetParams )
+
+			return self.spriteSheets[sheetName]
+		end
+		print("ERROR: f_sprites: spritesFactory:createSheet( " .. sheetName .. " ) -- Already exists! " )
+		return nil
+	end
+
+
+
+--[[
 	spritesFactory.spriteSets = {}
 	spritesFactory.animations = {}
 
@@ -88,4 +126,5 @@ local spritesFactory = {}
 
 		return localSprite
 	end
+--]]
 return spritesFactory

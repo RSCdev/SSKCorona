@@ -31,7 +31,7 @@ _G.debugLevel = 1
 _G.isTutorialDistro = false -- I can't distribute some 'paid' assets with the kit, so this
                          -- flag is used to select alternative assets for the source distro version.
 _G.liteVersion = false
-_G.releaseDate  = "20 OCT 2012"
+_G.releaseDate  = "23 OCT 2012"
 
 -- Resource directories (images, sounds, etc.)
 _G.imagesDir = "images/"

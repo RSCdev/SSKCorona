@@ -69,9 +69,12 @@ require("ssk.loadSSK")
 -- Game Specific Modules
 sampleManager = require("sampleMgr")
 
+sampleManager:addSample("Forums Help", "121023 - Dragging objects ... like a puzzle", "ssk_sampler.forumhelp.121023_dragging-objects-specific-location-puzzle", true )
+
 --
 -- 'Register' SSK Samples (EFM need secondary subcategory or better indexing method)
 --
+--sampleManager:addSample("WIP", "Sprites Mrg", "ssk_sampler.sprites", true )
 
 -- =============================================
 -- Current WIP (move to proper location after testing)
@@ -235,7 +238,7 @@ sampleManager:addSample("Action Games #1", "Asteroids", "ssk_sampler.games.actio
 -- =============================================
 -- Misc
 -- =============================================
---sampleManager:addSample("WIP", "Sprites Work", "ssk_sampler.sprites", true )
+
 
 
 ----------------------------------------------------------------------

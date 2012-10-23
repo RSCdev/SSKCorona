@@ -73,6 +73,18 @@ function protoFactory.backImage( group, imageFile )
 	return image
 end
 
+function display.backImage( group, imageFile )
+	local imageFile = imageFile or "protoBack.png"
+	local image = display.newImage( imagesDir .. "interface/" .. imageFile )
+	group:insert( image, true )
+	image.x = w/2
+	image.y = h/2
+	if(system.orientation == "landscapeRight") then
+		image.rotation = 90
+	end
+	return image
+end
+
 
 function protoFactory.quitButton( callback, group )
 	local quitButton = ssk.buttons:new 

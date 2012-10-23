@@ -53,7 +53,7 @@ ssk.proto		= require( "ssk.factories.f_prototyping" )  			-- Prototyping Game Ob
 ssk.inputs		= require( "ssk.factories.f_inputs" )					-- Joysticks and Self-Centering Sliders Factory
 ssk.huds		= require( "ssk.factories.f_huds" )						-- HUDs Factory
 ssk.dbmgr		= require( "ssk.factories.f_dbmgr" )					-- (Rudimentary) DB Manager Factory
---ssk.sprites		= require( "ssk.factories.f_sprites" )					-- (Easy) Sprite Factory
+ssk.spritemgr	= require( "ssk.factories.f_sprites" )					-- (Easy) Sprite Factory
 
 -- ==
 --    Classes
@@ -69,15 +69,18 @@ ssk.misc		= require( "ssk.classes.c_miscellaneous" )				-- Miscellaneous Utiliti
 ssk.sbc			= require( "ssk.classes.c_standardButtonCallbacks" )	-- Standard Button & Slider Callbacks
 ssk.sounds		= require( "ssk.classes.c_sounds" )						-- Sounds Manager
 
--- =============================================================
---	EXTERNALLY PRODUCED (and accredited) CONTENT
--- =============================================================
+
 -- ==
---    Networking (M.Y. Developers - AutoLan + Roaming Gamer Easy Networking Utilities)
+--    Utilities
 -- ==
 -- Easy Networking (Uses mydevelopersgames free AutoLan to do heavy lifting, but written by Ed M.)
 ssk.networking	= require( "ssk.utilities.u_networking" )  
 ssk.networking:registerCallbacks()
+
+-- =============================================================
+--	EXTERNALLY PRODUCED (and accredited) CONTENT
+-- =============================================================
+ssk.pnglib		= require( "ssk.external.pngLib.pngLib" )				-- Utility lib for extracting PNG image metrics
 
 -- =============================================================
 --	PAID CONTENT - Sorry, not included. 8(

@@ -78,10 +78,10 @@ function gameLogic:createScene( screenGroup )
 	screenGroup.isVisible=true
 	
 	-- 5. Add demo/sample content
-	createSky(centerX, centerY, screenWidth, screenHeight )
+	--createSky(centerX, centerY, screenWidth, screenHeight )
 	thePlayer = createPlayer( centerX, centerY- 60, 99 * 2, 34 * 2 )
 
-	createSprite( centerX - 50 , centerY + 60, 2 )
+	createSprite( centerX - 70 , centerY + 60, 2 )
 	createSprite( centerX, centerY + 60, 1 )
 	createSprite( centerX + 50, centerY + 60, 0.8 )
 	createSprite( centerX + 100, centerY + 60, 0.5 )
@@ -126,7 +126,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
+	--backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
+	backImage = display.backImage( layers.background, "protoBack.png") 
 	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
@@ -149,11 +150,15 @@ function createSprite( x, y, scale )
 		width = 32,   --the width of each frame
 		height = 32,  --the height of each frame
 		numFrames = 3, --the total number of frames on the sheet
-		sheetContentWidth = 96, --the total width of the image sheet (see note below)
-		sheetContentHeight = 32 --the total height of the image sheet (see note below)
 	}
 
-	local mySheet = graphics.newImageSheet( imagesDir .. "AriFeldman/enemyPlaneBlue.png", sheetData )
+	--local mySheet = graphics.newImageSheet( imagesDir .. "AriFeldman/enemyPlaneBlue.png", sheetData )
+
+	if( not ssk.spritemgr:sheetExists( "enemyPlane1" ) ) then
+		ssk.spritemgr:createSheet( "enemyPlane1", imagesDir .. "AriFeldman/enemyPlaneBlue.png", sheetData )
+	end
+
+	local mySheet = ssk.spritemgr:getSheet( "enemyPlane1" )
 
 	local sequenceData = {
 		{ 
@@ -174,32 +179,7 @@ function createSprite( x, y, scale )
 
 	layers.content:insert(animation)
 
-
-	local oldStyleSpriteSheetData = require( "images.misc.animFrog.frog").getSpriteSheetData()
-
-	local options =
-	{
-		spriteSheetFrames = oldStyleSpriteSheetData.frames
-	}
-
-	local imageSheet = graphics.newImageSheet( imagesDir .. "misc/animFrog/frog.png", options )
-
-
-	local sequenceData2 = {
-		{ 
-			name = "normalRun",  --name of animation sequence
-			start = 1,
-			count = 6,
-			time = 1000,  --optional, in milliseconds; if not supplied, the sprite is frame-based
-			loopCount = 0,  --optional. 0 (default) repeats forever; a positive integer specifies the number of loops
-			loopDirection = "forward"  --optional, either "forward" (default) or "bounce" which will play forward then backwards through the sequence of frames
-		}  --if defining more sequences, place a comma here and proceed to the next sequence sub-table	
-	}
-
-	local animation2 = display.newSprite( imageSheet, sequenceData2 )
-	animation2.x = 150
-	animation2.y = centerY
-	animation2:play()
+	ssk.spritemgr:destroySheet( "enemyPlane1" )
 
 end
 
