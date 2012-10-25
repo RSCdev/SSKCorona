@@ -118,7 +118,7 @@ createCollisionCalculator = function()
 end
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"theDrawer", 
 		"content",
@@ -127,7 +127,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 end	
 
 onDrawerButton = function ( event )	

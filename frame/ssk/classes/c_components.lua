@@ -71,7 +71,7 @@ function components.transition_facePoint( obj, x, y, dps, easing )
 	dps = dps/1000
 	local easing = easing or transition.linear
 
-	local tweenAngle, vecAngle = ssk.m2do.tweenAngle( obj, {x=px,y=py} )
+	local tweenAngle, vecAngle = ssk.math2d.tweenAngle( obj, {x=px,y=py} )
 
 	-- Instant Turn
 	if(dps <=0 ) then
@@ -123,7 +123,7 @@ function components.transition_moveToPoint( obj, x, y, pps, easing )
 
 	-- Timed Move
 	else
-		local vecLen,vx,vy = ssk.m2do.tweenDist( obj, {x=px,y=py} ) 
+		local vecLen,vx,vy = ssk.math2d.tweenDist( obj, {x=px,y=py} ) 
 		local moveTime = round(vecLen / pps)
 		transition.to( obj, { x = px, y = py, time = moveTime, transition = easing } )
 	end
@@ -153,7 +153,7 @@ end
 -- is always 'found'
 function components.seekTest(objA, objB, maxDist, maxAngle )
 
-	local vx,vy,nx,ny,vecLen,vecAngle,tweenAngle = ssk.m2do.tweenData( objA, objB )
+	local vx,vy,nx,ny,vecLen,vecAngle,tweenAngle = ssk.math2d.tweenData( objA, objB )
 
 	if(maxDist) then
 		if(vecLen >= maxDist) then
@@ -203,8 +203,8 @@ function components.aimAtObject( objA, target, period, onLoseCB )
 
 	--print(target.x)
 
-	local tweenVec = ssk.m2do.sub( objA, target )
-	local vecAngle = ssk.m2do.vector2Angle( tweenVec )
+	local tweenVec = ssk.math2d.sub( objA, target )
+	local vecAngle = ssk.math2d.vector2Angle( tweenVec )
 	
 	objA.rotation = vecAngle
 
@@ -232,9 +232,9 @@ function components.aimAtObjectMaxDist( objA, target, period, maxDist, onLoseCB,
 		return
 	end
 
-	local tweenVec = ssk.m2do.sub( objA, target )
-	local vecAngle = ssk.m2do.vector2Angle( tweenVec )
-	local vecLen,vx,vy = ssk.m2do.tweenDist( objA, target )
+	local tweenVec = ssk.math2d.sub( objA, target )
+	local vecAngle = ssk.math2d.vector2Angle( tweenVec )
+	local vecLen,vx,vy = ssk.math2d.tweenDist( objA, target )
 	--print("vecLen == " .. vecLen, tostring(reseek)) 
 
 	local closure = function()

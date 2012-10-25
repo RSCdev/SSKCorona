@@ -51,9 +51,9 @@ function scene:createScene( event )
 	screenGroup = self.view
 
 	if(system.orientation == "portrait") then		
-		backImage   = ssk.proto.backImage( screenGroup, "RGSplash2_Portrait.jpg", true ) 
+		backImage   = ssk.display.backImage( screenGroup, "RGSplash2_Portrait.jpg", true ) 
 	elseif(system.orientation == "landscapeRight") then
-		backImage   = ssk.proto.backImage( screenGroup, "RGSplash2_Landscape.jpg", true ) 
+		backImage   = ssk.display.backImage( screenGroup, "RGSplash2_Landscape.jpg", true ) 
 	end
 	
 

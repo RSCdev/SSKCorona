@@ -35,13 +35,13 @@ function public:onAttach( obj, params )
 
 	local forceX   = params.forceX or 0
 	local forceY   = params.forceY or 0
-	local forceLen = ssk.m2d.length( forceX, forceY )
+	local forceLen = ssk.math2d.length( forceX, forceY )
 	local inputObj = params.inputObj
 
 	local function apply_ForwardForce( event )
 
-		local vx,vy = ssk.m2d.angle2Vector( obj.rotation )
-		vx,vy = ssk.m2d.scale( vx,vy, forceLen)
+		local vx,vy = ssk.math2d.angle2Vector( obj.rotation )
+		vx,vy = ssk.math2d.scale( vx,vy, forceLen)
 		obj:applyForce(vx, vy, obj.x, obj.y)		
 		return false
 	end

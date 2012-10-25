@@ -99,7 +99,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -107,11 +107,11 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 end	
 
 createBeetleShip = function ( x, y, contentLayer, inputObj )
-	local aShip  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "Lost Garden/SpaceCute/beetleship.png",
+	local aShip  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "Lost Garden/SpaceCute/beetleship.png",
 		{ width = 120, height = 120 },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
 		  colliderName = "player", calculator= myCC },

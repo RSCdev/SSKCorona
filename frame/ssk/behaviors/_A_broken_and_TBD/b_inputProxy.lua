@@ -66,7 +66,7 @@ function public:onAttach( obj, params )
 			ip.lastX, ip.lastY       = ip.curX, ip.curY
 			ip.curX, ip.curY         = event.x, event.y
 			ip.deltaX, ip.deltaY     = (ip.curX - ip.lastX), (ip.curY - ip.lastY)
-			ip.delta                 = ssk.m2d.length(ip.deltaX, ip.deltaY)
+			ip.delta                 = ssk.math2d.length(ip.deltaX, ip.deltaY)
 			
 			ip.activeTime            = event.time - ip.startTime
 			ip.lastInputTime         = ip.inputTime
@@ -79,9 +79,9 @@ function public:onAttach( obj, params )
 			ip.vel                   = round(1000 * ip.delta/ip.deltaTime,2)
 
 			ip.touchVecX, ip.touchVecY = ip.curX - ip.startX, ip.curY - ip.startY
-			ip.touchVecLen             = ssk.m2d.length(ip.touchVecX, ip.touchVecY)
+			ip.touchVecLen             = ssk.math2d.length(ip.touchVecX, ip.touchVecY)
 			ip.lastAngle               = ip.angle
-			ip.angle                   = ssk.m2d.vector2Angle(ip.touchVecX, ip.touchVecY)
+			ip.angle                   = ssk.math2d.vector2Angle(ip.touchVecX, ip.touchVecY)
 			ip.deltaAngle              = ip.angle - ip.lastAngle
 			ip.angularVel              = round((ip.angularVel + 1000 * ip.deltaAngle/ip.deltaTime) / 2,2)
 

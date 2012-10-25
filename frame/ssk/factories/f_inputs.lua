@@ -46,17 +46,17 @@ function inputsFactory:createJoystick( x, y, outerRadius, deadZoneRadius, stickR
 	end
 	
 
-	local outerRing  = ssk.proto.circle( joystick, x, y,
+	local outerRing  = ssk.display.circle( joystick, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 4, 
 		  radius = outerRadius, myName = "aJoystick" }, nil, nil ) 
 	outerRing.alpha = 0.50
 	
-	local innerRing  = ssk.proto.circle( joystick, x, y,
+	local innerRing  = ssk.display.circle( joystick, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  radius = deadZoneRadius, myName = "aJoystick" }, nil, nil ) 
 	innerRing.alpha = 0.50
 
-	local stick  = ssk.proto.circle( joystick, x, y,
+	local stick  = ssk.display.circle( joystick, x, y,
 		{ fill = _GREY_, stroke = _GREY_, strokeWidth = 0, 
 		  radius = stickRadius, myName = "aJoystick" }, nil, nil ) 
 
@@ -72,8 +72,8 @@ function inputsFactory:createJoystick( x, y, outerRadius, deadZoneRadius, stickR
 			stick.x,stick.y = event.x, event.y
 		end
 
-		local vx,vy = ssk.m2d.sub(outerRing.x, outerRing.y, event.x, event.y)
-		local nx,ny = ssk.m2d.normalize(vx,vy)
+		local vx,vy = ssk.math2d.sub(outerRing.x, outerRing.y, event.x, event.y)
+		local nx,ny = ssk.math2d.normalize(vx,vy)
 
 		if(vx == 0 ) then
 			nx = 0
@@ -92,10 +92,10 @@ function inputsFactory:createJoystick( x, y, outerRadius, deadZoneRadius, stickR
 		if(nx == 0 and ny == 0 ) then
 			angle = 0
 		else
-			angle = ssk.m2d.vector2Angle(vx,vy)
+			angle = ssk.math2d.vector2Angle(vx,vy)
 		end
 
-		local vLen  = ssk.m2d.length(vx,vy)
+		local vLen  = ssk.math2d.length(vx,vy)
 		
 		local iLen  = vLen - deadZoneRadius
 
@@ -126,9 +126,9 @@ function inputsFactory:createJoystick( x, y, outerRadius, deadZoneRadius, stickR
 				if(vLen <= outerRadius ) then
 					stick.x,stick.y = event.x, event.y
 				else
-					local dx,dy = ssk.m2d.angle2Vector(angle)
-					dx,dy = ssk.m2d.scale(dx,dy,outerRadius)
-					stick.x,stick.y = ssk.m2d.add( outerRing.x, outerRing.y, dx,dy)
+					local dx,dy = ssk.math2d.angle2Vector(angle)
+					dx,dy = ssk.math2d.scale(dx,dy,outerRadius)
+					stick.x,stick.y = ssk.math2d.add( outerRing.x, outerRing.y, dx,dy)
 				end
 				if(iLen < 0) then
 					percent = 0
@@ -178,16 +178,16 @@ function inputsFactory:createVirtualJoystick( x, y, outerRadius, deadZoneRadius,
 		interfaceLayer:insert(virtualJoystick)
 	end
 
-	local outerRing  = ssk.proto.circle( virtualJoystick, x, y,
+	local outerRing  = ssk.display.circle( virtualJoystick, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 4, 
 		  radius = outerRadius, myName = "aJoystick" }, nil, nil ) 
 	outerRing.alpha = 0.50
 	
-	local innerRing  = ssk.proto.circle( virtualJoystick, x, y,
+	local innerRing  = ssk.display.circle( virtualJoystick, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  radius = deadZoneRadius, myName = "aJoystick" }, nil, nil ) 
 
-	local stick  = ssk.proto.circle( virtualJoystick, x, y,
+	local stick  = ssk.display.circle( virtualJoystick, x, y,
 		{ fill = _GREY_, stroke = _GREY_, strokeWidth = 0, 
 		  radius = stickRadius, myName = "aJoystick" }, nil, nil ) 
 	innerRing.alpha = 0.50
@@ -228,8 +228,8 @@ function inputsFactory:createVirtualJoystick( x, y, outerRadius, deadZoneRadius,
 			virtualJoystick.isVisible = true
 		end
 
-		local vx,vy = ssk.m2d.sub(outerRing.x, outerRing.y, event.x, event.y)
-		local nx,ny = ssk.m2d.normalize(vx,vy)
+		local vx,vy = ssk.math2d.sub(outerRing.x, outerRing.y, event.x, event.y)
+		local nx,ny = ssk.math2d.normalize(vx,vy)
 
 		if(vx == 0 ) then
 			nx = 0
@@ -248,10 +248,10 @@ function inputsFactory:createVirtualJoystick( x, y, outerRadius, deadZoneRadius,
 		if(nx == 0 and ny == 0 ) then
 			angle = 0
 		else
-			angle = ssk.m2d.vector2Angle(vx,vy)
+			angle = ssk.math2d.vector2Angle(vx,vy)
 		end
 
-		local vLen  = ssk.m2d.length(vx,vy)
+		local vLen  = ssk.math2d.length(vx,vy)
 		
 		local iLen  = vLen - deadZoneRadius
 
@@ -284,9 +284,9 @@ function inputsFactory:createVirtualJoystick( x, y, outerRadius, deadZoneRadius,
 				if(vLen <= outerRadius ) then
 					stick.x,stick.y = event.x, event.y
 				else
-					local dx,dy = ssk.m2d.angle2Vector(angle)
-					dx,dy = ssk.m2d.scale(dx,dy,outerRadius)
-					stick.x,stick.y = ssk.m2d.add( outerRing.x, outerRing.y, dx,dy)
+					local dx,dy = ssk.math2d.angle2Vector(angle)
+					dx,dy = ssk.math2d.scale(dx,dy,outerRadius)
+					stick.x,stick.y = ssk.math2d.add( outerRing.x, outerRing.y, dx,dy)
 				end
 				if(iLen < 0) then
 					percent = 0
@@ -333,17 +333,17 @@ function inputsFactory:createHorizontalSnap( x, y, snapHeight, snapWidth, deadZo
 		interfaceLayer:insert(horizSnap)
 	end
 
-	local horizSnapOutline  = ssk.proto.rect( horizSnap, x, y,
+	local horizSnapOutline  = ssk.display.rect( horizSnap, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  width = snapWidth, height = snapHeight, myName = "ahorizSnap" }, nil, nil ) 
 	horizSnapOutline.alpha = 0.50
 
-	local horizSnapDeadZone  = ssk.proto.rect( horizSnap, x, y,
+	local horizSnapDeadZone  = ssk.display.rect( horizSnap, x, y,
 		{ fill = _LIGHTGREY_, stroke = _LIGHTGREY_, strokeWidth = 0, 
 		   width = deadZoneWidth, height = snapHeight-2, myName = "ahorizSnap" }, nil, nil ) 
 	horizSnapDeadZone.alpha = 0.50
 
-	local stick  = ssk.proto.rect( horizSnap, x, y,
+	local stick  = ssk.display.rect( horizSnap, x, y,
 		{ fill = _DARKGREY_, 
 		  width = stickSize, height = snapHeight-2, myName = "ahorizSnap" }, nil, nil ) 
 		
@@ -439,17 +439,17 @@ function inputsFactory:createVirtualHorizontalSnap( x, y, snapHeight, snapWidth,
 		interfaceLayer:insert(virtualhorizSnap)
 	end
 
-	local horizSnapOutline  = ssk.proto.rect( virtualhorizSnap, x, y,
+	local horizSnapOutline  = ssk.display.rect( virtualhorizSnap, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  width = snapWidth, height = snapHeight, myName = "avirtualhorizSnap" }, nil, nil ) 
 	horizSnapOutline.alpha = 0.50
 
-	local horizSnapDeadZone  = ssk.proto.rect( virtualhorizSnap, x, y,
+	local horizSnapDeadZone  = ssk.display.rect( virtualhorizSnap, x, y,
 		{ fill = _LIGHTGREY_, stroke = _LIGHTGREY_, strokeWidth = 0, 
 		   width = deadZoneWidth, height = snapHeight-2, myName = "avirtualhorizSnap" }, nil, nil ) 
 	horizSnapDeadZone.alpha = 0.50
 
-	local stick  = ssk.proto.rect( virtualhorizSnap, x, y,
+	local stick  = ssk.display.rect( virtualhorizSnap, x, y,
 		{ fill = _DARKGREY_, 
 		  width = stickSize, height = snapHeight-2, myName = "avirtualhorizSnap" }, nil, nil ) 
 
@@ -569,17 +569,17 @@ function inputsFactory:createVerticalSnap( x, y, snapWidth, snapHeight, deadZone
 		interfaceLayer:insert(vertSnap)
 	end
 
-	local vertSnapOutline  = ssk.proto.rect( vertSnap, x, y,
+	local vertSnapOutline  = ssk.display.rect( vertSnap, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  width = snapWidth, height = snapHeight, myName = "avertSnap" }, nil, nil ) 
 	vertSnapOutline.alpha = 0.50
 
-	local vertSnapDeadZone  = ssk.proto.rect( vertSnap, x, y,
+	local vertSnapDeadZone  = ssk.display.rect( vertSnap, x, y,
 		{ fill = _LIGHTGREY_, stroke = _LIGHTGREY_, strokeWidth = 0, 
 		   width = snapWidth-2, height = deadZoneHeight, myName = "avertSnap" }, nil, nil ) 
 	vertSnapDeadZone.alpha = 0.50
 
-	local stick  = ssk.proto.rect( vertSnap, x, y,
+	local stick  = ssk.display.rect( vertSnap, x, y,
 		{ fill = _DARKGREY_, 
 		  width = snapWidth, height = stickSize, myName = "avertSnap" }, nil, nil ) 
 
@@ -676,17 +676,17 @@ function inputsFactory:createVirtualVerticalSnap( x, y, snapWidth, snapHeight, d
 		interfaceLayer:insert(virtualVertSnap)
 	end
 
-	local vertSnapOutline  = ssk.proto.rect( virtualVertSnap, x, y,
+	local vertSnapOutline  = ssk.display.rect( virtualVertSnap, x, y,
 		{ fill = _TRANSPARENT_, stroke = _GREY_, strokeWidth = 2, 
 		  width = snapWidth, height = snapHeight, myName = "avertSnap" }, nil, nil ) 
 	vertSnapOutline.alpha = 0.50
 
-	local vertSnapDeadZone  = ssk.proto.rect( virtualVertSnap, x, y,
+	local vertSnapDeadZone  = ssk.display.rect( virtualVertSnap, x, y,
 		{ fill = _LIGHTGREY_, stroke = _LIGHTGREY_, strokeWidth = 0, 
 		   width = snapWidth-2, height = deadZoneHeight, myName = "avertSnap" }, nil, nil ) 
 	vertSnapDeadZone.alpha = 0.50
 
-	local stick  = ssk.proto.rect( virtualVertSnap, x, y,
+	local stick  = ssk.display.rect( virtualVertSnap, x, y,
 		{ fill = _DARKGREY_, 
 		  width = snapWidth, height = stickSize, myName = "avertSnap" }, nil, nil ) 
 

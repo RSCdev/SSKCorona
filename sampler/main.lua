@@ -20,6 +20,8 @@ print("*********************** \\/\\/ main.cs \\/\\/ **********************")
 print("****************************************************************\n\n")
 io.output():setvbuf("no") -- Don't use buffer for console messages
 
+--require("ssk.autodoc")                            -- Auto documents SSK library as they are loaded (NORMALLY NOT LOADED)
+
 ----------------------------------------------------------------------
 --	1.							GLOBALS								--
 ----------------------------------------------------------------------
@@ -69,12 +71,10 @@ require("ssk.loadSSK")
 -- Game Specific Modules
 sampleManager = require("sampleMgr")
 
-sampleManager:addSample("Forums Help", "121023 - Dragging objects ... like a puzzle", "ssk_sampler.forumhelp.121023_dragging-objects-specific-location-puzzle", true )
-
 --
 -- 'Register' SSK Samples (EFM need secondary subcategory or better indexing method)
 --
---sampleManager:addSample("WIP", "Sprites Mrg", "ssk_sampler.sprites", true )
+--sampleManager:addSample("WIP", "Sprites Mgr", "ssk_sampler.sprites", true )
 
 -- =============================================
 -- Current WIP (move to proper location after testing)
@@ -88,6 +88,7 @@ sampleManager:addSample("Forums Help", "121023 - Dragging objects ... like a puz
 -- =============================================
 -- Forums Help (EFM add forum entry links in each example)
 -- =============================================
+sampleManager:addSample("Forums Help", "121023 - Dragging objects ... like a puzzle", "ssk_sampler.forumhelp.121023_dragging-objects-specific-location-puzzle", true )
 sampleManager:addSample("Forums Help", "121020 - Getting Sprite to Jump Forward", "ssk_sampler.forumhelp.121020_sprite_jump_forward", true )
 sampleManager:addSample("Forums Help", "121015 - Display ellipse with an angle", "ssk_sampler.forumhelp.121015_display_ellipse_with_angle" )
 sampleManager:addSample("Forums Help", "121008 - Calculating intersecting lines", "ssk_sampler.forumhelp.121008_calculating_intersecting_lines" )
@@ -402,8 +403,18 @@ ssk.misc.dumpScreenMetrics()
 -- Print the collision matrix data
 --collisionCalculator:dump()
 
---ssk.proto.listDPP()
+--ssk.display.listDPP()
 
+local monitorMem = function()
+
+    collectgarbage()
+    print( "MemUsage: " .. round(collectgarbage("count"),4))
+
+    local textMem = system.getInfo( "textureMemoryUsed" ) / (1024 * 1024)
+    print( "TexMem:   " .. textMem )
+end
+
+monitorMem()
 
 print("\n****************************************************************")
 print("*********************** /\\/\\ main.cs /\\/\\ **********************")

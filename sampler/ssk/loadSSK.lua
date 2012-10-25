@@ -41,7 +41,6 @@ require( "ssk.addons.a_math")
 require( "ssk.addons.a_string")
 require( "ssk.addons.a_table")
 
-
 --EFM split below into game object factories and other?
 -- ==
 --    Factories - 'Classes' that produce one or more object types.
@@ -49,7 +48,7 @@ require( "ssk.addons.a_table")
 ssk.buttons		= require( "ssk.factories.f_buttons" )					-- Buttons & Sliders Factory
 ssk.labels		= require( "ssk.factories.f_labels" )					-- Labels Factory
 ssk.points		= require( "ssk.factories.f_points" )					-- Simple Points Factory (table of points)
-ssk.proto		= require( "ssk.factories.f_prototyping" )  			-- Prototyping Game Objects Factory
+ssk.display		= require( "ssk.factories.f_prototyping" )  			-- Prototyping Game Objects Factory
 ssk.inputs		= require( "ssk.factories.f_inputs" )					-- Joysticks and Self-Centering Sliders Factory
 ssk.huds		= require( "ssk.factories.f_huds" )						-- HUDs Factory
 ssk.dbmgr		= require( "ssk.factories.f_dbmgr" )					-- (Rudimentary) DB Manager Factory
@@ -63,8 +62,7 @@ ssk.bench		= require( "ssk.classes.c_benchmarking" )				-- Benchmarking Utilitie
 ssk.ccmgr		= require( "ssk.classes.c_collisionCalculator" )		-- Collision Calculator (EFM actually a factory now)
 ssk.component	= require( "ssk.classes.c_components" )					-- Misc Game Components (Mechanics, etc.)
 ssk.gem			= require( "ssk.classes.c_gem")							-- Game Event Manager
-ssk.m2d			= require( "ssk.classes.c_math2d" )						-- 2D Math (scalars as inputs)
-ssk.m2do		= require( "ssk.classes.c_math2do" )					-- 2D Math (objects as inputs)
+ssk.math2d		= require( "ssk.classes.c_math2d" )						-- 2D (vector) Math 
 ssk.misc		= require( "ssk.classes.c_miscellaneous" )				-- Miscellaneous Utilities
 ssk.sbc			= require( "ssk.classes.c_standardButtonCallbacks" )	-- Standard Button & Slider Callbacks
 ssk.sounds		= require( "ssk.classes.c_sounds" )						-- Sounds Manager

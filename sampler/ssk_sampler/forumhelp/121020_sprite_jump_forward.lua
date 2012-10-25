@@ -103,7 +103,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -111,8 +111,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "backImage.jpg") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "backImage.jpg") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons

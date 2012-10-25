@@ -104,7 +104,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scrollers", 
 			{ "scroll3", "scroll2", "scroll1" },
@@ -114,8 +114,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
@@ -123,7 +123,7 @@ addInterfaceElements = function()
 end	
 
 createPlayer = function ( x, y, size, inputObj )
-	local player  = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/guard_omega.png",
+	local player  = ssk.display.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/guard_omega.png",
 		{ size = size, myName = "thePlayer" },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC },
 		{ {"mover_faceTouchFixedRate", {inputObj = inputObj, aimSpeed = 250, easing = easing.inOutQuad} }, } )
@@ -131,7 +131,7 @@ createPlayer = function ( x, y, size, inputObj )
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end

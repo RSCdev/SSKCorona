@@ -86,7 +86,7 @@ end
 -- ====================== Local Function & Callback Definitions
 -- =======================
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scrollers", 
 			{ "scroll3", "scroll2", "scroll1" },
@@ -96,7 +96,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "backImage.jpg")
+	backImage = ssk.display.backImage( layers.background, "backImage.jpg")
 end	
 
 createButtons = function ( )

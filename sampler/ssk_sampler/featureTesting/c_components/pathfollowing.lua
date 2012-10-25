@@ -111,7 +111,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scrollers", 
 			{ "scroll3", "scroll2", "scroll1" },
@@ -121,8 +121,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons
@@ -158,22 +158,22 @@ createPath = function()
 
 
 
-	--ssk.proto.segmentedLine( layers.content, points, {style = "dotted", width = 6, color = _GREEN_, stroke = _WHITE_ } )
-	ssk.proto.segmentedLine( layers.content, points, {style = "arrowheads", width = 1, size = 6 } )
-	ssk.proto.segmentedLine( layers.content, points, {style = "solid", width = 1 } )
+	--ssk.display.segmentedLine( layers.content, points, {style = "dotted", width = 6, color = _GREEN_, stroke = _WHITE_ } )
+	ssk.display.segmentedLine( layers.content, points, {style = "arrowheads", width = 1, size = 6 } )
+	ssk.display.segmentedLine( layers.content, points, {style = "solid", width = 1 } )
 
 end
 
 
 createPlayer = function ( x, y, size )
-	local player  = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
+	local player  = ssk.display.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
 		{ size = size, myName = "thePlayer" },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 	return player
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end

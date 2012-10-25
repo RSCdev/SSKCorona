@@ -151,7 +151,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -159,7 +159,7 @@ end
 
 addInterfaceElements = function()
 
-	ssk.proto.line2( layers.interfaces, centerX, -80, 180, h+160, 10, 10, { color = _WHITE_ , width = 4, style = "dashed"} )
+	ssk.display.line2( layers.interfaces, centerX, -80, 180, h+160, 10, 10, { color = _WHITE_ , width = 4, style = "dashed"} )
 
 	ssk.labels:presetLabel( layers.interfaces, "default", "SERVER", 
 	                                   centerX - w/4 , 20, 
@@ -186,17 +186,17 @@ addInterfaceElements = function()
 	ssk.labels:presetLabel( layers.interfaces, "rightLabel", "Running", 
 	                                   w/4 - 15, 80, 
 									   { fontSize = 20 }  )
-	serverIndicators["running"] = ssk.proto.circle( layers.interfaces, w/4 + 20, 80, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	serverIndicators["running"] = ssk.display.circle( layers.interfaces, w/4 + 20, 80, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
 
 	-- Connected Clients Indicator
 	ssk.labels:presetLabel( layers.interfaces, "rightLabel", "Clients", 
 	                                   w/4 - 15, 110, 
 									   { fontSize = 20 }  )
 	
-	connectedClients[1] = ssk.proto.circle( layers.interfaces, w/4 + 20, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
-	connectedClients[2] = ssk.proto.circle( layers.interfaces, w/4 + 45, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
-	connectedClients[3] = ssk.proto.circle( layers.interfaces, w/4 + 70, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
-	connectedClients[4] = ssk.proto.circle( layers.interfaces, w/4 + 95, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	connectedClients[1] = ssk.display.circle( layers.interfaces, w/4 + 20, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	connectedClients[2] = ssk.display.circle( layers.interfaces, w/4 + 45, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	connectedClients[3] = ssk.display.circle( layers.interfaces, w/4 + 70, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	connectedClients[4] = ssk.display.circle( layers.interfaces, w/4 + 95, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
 
 
 	-- Client Elements (on right)
@@ -237,14 +237,14 @@ addInterfaceElements = function()
 	ssk.labels:presetLabel( layers.interfaces, "rightLabel", "Running", 
 	                                   centerX + w/4 - 15, 80, 
 									   { fontSize = 20 }  )
-	clientIndicators["running"] = ssk.proto.circle( layers.interfaces, centerX + w/4 + 20, 80, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	clientIndicators["running"] = ssk.display.circle( layers.interfaces, centerX + w/4 + 20, 80, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
 
 	-- Scanning Indicator
 	ssk.labels:presetLabel( layers.interfaces, "rightLabel", "Scanning", 
 	                                   centerX + w/4 - 15, 110, 
 									   { fontSize = 20 }  )
 	
-	clientIndicators["scanning"] = ssk.proto.circle( layers.interfaces, centerX + w/4 + 20, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	clientIndicators["scanning"] = ssk.display.circle( layers.interfaces, centerX + w/4 + 20, 110, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
 
 
 	-- Scanning Indicator
@@ -252,7 +252,7 @@ addInterfaceElements = function()
 	                                   centerX + w/4 - 15, 140, 
 									   { fontSize = 20 }  )
 	
-	clientIndicators["connected"] = ssk.proto.circle( layers.interfaces, centerX + w/4 + 20, 140, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
+	clientIndicators["connected"] = ssk.display.circle( layers.interfaces, centerX + w/4 + 20, 140, { radius = 8, fill = _RED_, stroke = _LIGHTGREY_, strokeWidth = 2} )
 
 
 

@@ -116,21 +116,21 @@ createCollisionCalculator = function()
 end
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
 end
 
 addInterfaceElements = function()
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 
 	ssk.inputs:createVirtualJoystick( centerX, centerY, 60, 25, 20, 
 										"myJoystickEvent", backImage, screenGroup )
 end	
 
 createTrigger = function ( x, y, width, height, myName  )
-	local aTrigger  = ssk.proto.rect( layers.content, x, y,
+	local aTrigger  = ssk.display.rect( layers.content, x, y,
 		{ fill = _GREEN_, width = width, height = height  },
 		{ isSensor=true, colliderName = "wrapTrigger", calculator= myCC  }, 
 		{ 
@@ -154,7 +154,7 @@ triggerCallback = function( theTrigger, theCollider, event )
 end
 
 function createPlayer( x, y, size )
-	local player = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone3.png",
+	local player = ssk.display.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone3.png",
 										{ size = size },
 										{ isFixedRotation = false, friction = 0.0, bounce = 0.0,
 										linearDamping=0.45, colliderName = "player", calculator= myCC } )
@@ -179,8 +179,8 @@ function createPlayer( x, y, size )
 
 		-- 2. Thrust if set
 		if(player.thrustMagnitude ~= 0) then
-			local vx,vy  = ssk.m2d.angle2Vector( player.rotation )
-			local vx,vy  = ssk.m2d.scale( vx,vy, player.thrustMagnitude )
+			local vx,vy  = ssk.math2d.angle2Vector( player.rotation )
+			local vx,vy  = ssk.math2d.scale( vx,vy, player.thrustMagnitude )
 	
 			player:applyForce( vx, vy, player.x, player.y )
 		end

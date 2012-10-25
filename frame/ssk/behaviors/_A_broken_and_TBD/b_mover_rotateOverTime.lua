@@ -53,10 +53,10 @@ function public:onAttach( obj, params )
 				local deltaX = event.x - self.startX
 				local deltaY = event.y - self.startY
 
-				local vLen  = ssk.m2d.length(deltaX, deltaY)
-				local angle = ssk.m2d.vector2Angle(deltaX, deltaY)
+				local vLen  = ssk.math2d.length(deltaX, deltaY)
+				local angle = ssk.math2d.vector2Angle(deltaX, deltaY)
 
-				local forceX,forceY = ssk.m2d.scale(deltaX, deltaY, self.forceMult)
+				local forceX,forceY = ssk.math2d.scale(deltaX, deltaY, self.forceMult)
 				
 				print( vLen, angle, forceX, forceY )
 

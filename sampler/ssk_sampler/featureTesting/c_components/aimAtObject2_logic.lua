@@ -122,7 +122,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -130,8 +130,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
@@ -139,7 +139,7 @@ addInterfaceElements = function()
 end	
 
 function createPlayer( x, y, size, contentLayer, inputObj )
-	local player  = ssk.proto.imageRect( contentLayer, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
+	local player  = ssk.display.imageRect( contentLayer, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
 		{ size = size,  },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC }, 
 		{ {"mover_moveToTouchFixedRate", {inputObj = inputObj, moveSpeed = 150, easing = easing.linear} }, 
@@ -150,13 +150,13 @@ function createPlayer( x, y, size, contentLayer, inputObj )
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end
 
 createZoneMarker = function ( x, y, radius, contentLayer, color  )
-	zoneMarker  = ssk.proto.circle( contentLayer, x, y, 
+	zoneMarker  = ssk.display.circle( contentLayer, x, y, 
 		{ radius = radius, myName = "thePlayerzoneMarker",
 		  fill = color, stroke = _WHITE_, strokeWidth = 2 } )
 	zoneMarker.alpha = 0.20
@@ -167,7 +167,7 @@ end
 
 
 createTurret = function ( x, y, size, contentLayer, inputObj )
-	local turret  = ssk.proto.imageRect( contentLayer, x, y,imagesDir .. "simpleTurret.png",
+	local turret  = ssk.display.imageRect( contentLayer, x, y,imagesDir .. "simpleTurret.png",
 		{ size = size,  },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 	return turret

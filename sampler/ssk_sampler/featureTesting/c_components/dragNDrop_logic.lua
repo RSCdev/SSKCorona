@@ -113,7 +113,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -121,7 +121,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "feltBack.png") 
+	backImage = ssk.display.backImage( layers.background, "feltBack.png") 
 end	
 
 function onDropCB( dropObj, event )
@@ -154,12 +154,12 @@ end
 
 function createCardPile( x, y, contentLayer )
 
-	cardPile  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "cards/cardback.png",
+	cardPile  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "cards/cardback.png",
 		{ width = cardWidth, height = cardHeight, myName = "theCardPile" },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
 		  colliderName = "player", calculator= myCC })
 
-	local topCard  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "cards/cardback.png",
+	local topCard  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "cards/cardback.png",
 		{ width = cardWidth, height = cardHeight, myName = "theCardPile" },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
 		  colliderName = "player", calculator= myCC },
@@ -184,7 +184,7 @@ function createRandomCard( x, y, contentLayer )
 
 	local cardName = cardNames[math.random(1,52)]
 
-	local aCard  = ssk.proto.imageRect( contentLayer, x, y, 
+	local aCard  = ssk.display.imageRect( contentLayer, x, y, 
 	    imagesDir .. "cards/ClassicShrunk/" .. cardName,
 		{ width = cardWidth, height = cardHeight, myName = "theCardPile" },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
@@ -196,7 +196,7 @@ end
 -- ====================== Create Player Card Tray
 -- =======================
 function createPlayerCardTray( x, y, contentLayer  )
-	cardTray  = ssk.proto.rect( contentLayer, x, y,
+	cardTray  = ssk.display.rect( contentLayer, x, y,
 		{ width = (cardWidth * 5) + 22 , height = cardHeight * 1.5 , myName = "thePlayerCardTray",
 		  fill = _DARKGREY_, stroke = _WHITE_, strokeWidth = 2 } )
 	cardTray.alpha = 0.25

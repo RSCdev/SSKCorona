@@ -115,7 +115,7 @@ createCollisionCalculator = function()
 end
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -123,8 +123,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
@@ -132,20 +132,20 @@ addInterfaceElements = function()
 end	
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end
 
 createPlayer = function ( x, y, size )
-	local player  = ssk.proto.imageRect( layers.content, x, y, imagesDir .. "DaveToulouse_ships/drone2.png",
+	local player  = ssk.display.imageRect( layers.content, x, y, imagesDir .. "DaveToulouse_ships/drone2.png",
 		{ size = size, myName = "thePlayer" },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 	return player
 end
 
 createTrigger = function ( x, y, width, height  )
-	local aTrigger  = ssk.proto.rect( layers.content, x, y,
+	local aTrigger  = ssk.display.rect( layers.content, x, y,
 									{ fill = _GREEN_, width = width, height = height,  },
 									{ isSensor=true, colliderName = "wrapTrigger", calculator= myCC  }, 
 									{ 

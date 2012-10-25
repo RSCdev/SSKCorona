@@ -50,7 +50,7 @@ local gameLogic = {}
 -- ====================== GRID BLOCKS
 -- =======================
 function createGridBlock( x, y, size, contentLayer )
-	local obj  = ssk.proto.rect( contentLayer, x, y,
+	local obj  = ssk.display.rect( contentLayer, x, y,
 		{ size = size-2, fill = _TRANSPARENT_, stroke = _DARKGREY_, strokeWidth = 1 } )
 	obj.alpha = 0.5 
 	return obj
@@ -60,7 +60,7 @@ end
 -- ====================== NORMAL BLOCKS (NO RESPONSE)
 -- =======================
 function createNormalBlock( x, y, size, contentLayer )
-	local obj  = ssk.proto.rect( contentLayer, x, y,
+	local obj  = ssk.display.rect( contentLayer, x, y,
 		{ size = size-2, fill = _TRANSPARENT_, stroke = _BLUE_, strokeWidth = 2 },
 		{ bodyType = "static", bounce = 0.0, friction = 0.0, isFixedRotation = true, colliderName = "block", calculator= myCC } ) 
 	return obj
@@ -70,7 +70,7 @@ end
 -- ====================== JUMP BLOCKS 
 -- =======================
 function createJumpBlock( x, y, size, contentLayer )
-	local obj  = ssk.proto.rect( contentLayer, x, y,
+	local obj  = ssk.display.rect( contentLayer, x, y,
 		{ size = size-2, fill = _TRANSPARENT_, stroke = _YELLOW_, strokeWidth = 2},
 		{ bodyType = "static", bounce = 0.0, friction = 0.0, isFixedRotation = true, colliderName = "jumpblock", calculator= myCC } ) 
 	return obj
@@ -81,7 +81,7 @@ end
 -- ====================== BOUNCE BLOCKS
 -- =======================
 function createBounceBlock( x, y, size, contentLayer )
-	local obj  = ssk.proto.rect( contentLayer, x, y,
+	local obj  = ssk.display.rect( contentLayer, x, y,
 		{ size = size-2, fill = _TRANSPARENT_, stroke = _GREEN_, strokeWidth = 2},
 		{ bodyType = "static", bounce = 0.0, friction = 0.0, isFixedRotation = true, colliderName = "bounceblock", calculator= myCC } ) 
 	return obj
@@ -91,7 +91,7 @@ end
 -- ====================== KILL BLOCKS
 -- =======================
 function createKillBlock( x, y, size, contentLayer )
-	local obj  = ssk.proto.imageRect( contentLayer, x, y,imagesDir .. "redTriangle2.png",
+	local obj  = ssk.display.imageRect( contentLayer, x, y,imagesDir .. "redTriangle2.png",
 		{ size = size, },
 		{ bodyType = "static", bounce = 0.0, friction = 0.0, isFixedRotation = true, colliderName = "killblock", calculator= myCC } ) 
 	return obj
@@ -128,7 +128,7 @@ function myCollisionHandler( event )
 end
 
 function createPlayer( x, y, radius, contentLayer  )
-	local obj  = ssk.proto.circle( contentLayer, x, y,
+	local obj  = ssk.display.circle( contentLayer, x, y,
 		{ radius = radius, myName = "thePlayer", fill = _YELLOW_, },
 		{ bounce = 0.0, friction = 0.0, isFixedRotation = true, colliderName = "player", calculator= myCC }, 
 		{ 
@@ -145,7 +145,7 @@ end
 -- ====================== SKY
 -- =======================
 function createSky( x, y, width, height, contentLayer  )
-	local sky  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end
@@ -201,13 +201,13 @@ function gameLogic:createScene( screenGroup )
 	myCC:dump()
 
 	-- 2. Set up any rendering layers we need
-	layers = ssk.proto.quickLayers( screenGroup, 
+	layers = ssk.display.quickLayers( screenGroup, 
 		"background", 
 		"contents",
 		"interfaces" )
 
 	-- 3. Add a background
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 
 	-- 4. Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
 	--ssk.buttons:presetPush( layers.interfaces, "blueGradient", 64, 20 , 120, 30, "Show Details", onShowHide )

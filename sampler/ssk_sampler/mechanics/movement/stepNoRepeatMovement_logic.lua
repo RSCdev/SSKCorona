@@ -126,7 +126,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -134,8 +134,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons
@@ -153,7 +153,7 @@ addInterfaceElements = function()
 end	
 
 createPlayer = function ( x, y, size )
-	local player  = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
+	local player  = ssk.display.imageRect( layers.content, x, y,imagesDir .. "DaveToulouse_ships/drone2.png",
 		{ size = size, myName = "thePlayer" },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 
@@ -169,7 +169,7 @@ createPlayer = function ( x, y, size )
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end
@@ -177,7 +177,7 @@ end
 createTrigger = function ( contentLayer, x, y, width, height, myName  )
 	local fill = _GREEN_
 
-	local aTrigger  = ssk.proto.rect( contentLayer, x, y,
+	local aTrigger  = ssk.display.rect( contentLayer, x, y,
 		{ fill = fill, width = width, height = height, myName = myName },
 		{ isSensor=true, colliderName = "wrapTrigger", calculator= myCC  }, 
 		{ 

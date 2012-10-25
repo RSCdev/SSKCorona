@@ -107,20 +107,20 @@ function misc.processEvent( obj, event, doDeltas, doTouchVec, doTouchAngle )
 
 		-- Calculate deltas between last input and current input
 		if(doDeltas) then
-			obj.deltaX,obj.deltaY = ssk.m2d.sub(obj.lastX, obj.lastY, obj.curX, obj.curY )
-			obj.deltaLen          = ssk.m2d.length(obj.deltaX,obj.deltaY)
+			obj.deltaX,obj.deltaY = ssk.math2d.sub(obj.lastX, obj.lastY, obj.curX, obj.curY )
+			obj.deltaLen          = ssk.math2d.length(obj.deltaX,obj.deltaY)
 		end
 
 		-- Calculate touch vector:  startXY ------> curXY
 		if(doTouchVec) then
-			obj.touchVecX,obj.touchVecY = ssk.m2d.sub(obj.startX, obj.startY, obj.curX, obj.curY )
-			obj.touchVecLen             = ssk.m2d.length(obj.touchVecX,obj.touchVecY)
+			obj.touchVecX,obj.touchVecY = ssk.math2d.sub(obj.startX, obj.startY, obj.curX, obj.curY )
+			obj.touchVecLen             = ssk.math2d.length(obj.touchVecX,obj.touchVecY)
 		end
 
 		-- Calculate angle of touch vector:  startXY ------> curXY
 		if(doTouchAngle) then
-			local nx,ny    = ssk.m2d.normalize(obj.touchVecX,obj.touchVecY) -- EFM necessary?
-			obj.touchAngle = ssk.m2d.vector2Angle(nx,ny)
+			local nx,ny    = ssk.math2d.normalize(obj.touchVecX,obj.touchVecY) -- EFM necessary?
+			obj.touchAngle = ssk.math2d.vector2Angle(nx,ny)
 		end
 	end
 end

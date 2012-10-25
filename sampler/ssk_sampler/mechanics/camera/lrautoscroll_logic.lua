@@ -79,14 +79,14 @@ function gameLogic:createScene( screenGroup )
 	
 	-- 5. Add demo/sample content
 	-- Create sky
-	local sky  = ssk.proto.imageRect( layers.background, centerX, centerY, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, centerX, centerY, imagesDir .. "starBack_320_240.png",
 		{ width = 320, height = 240, myName = "theSky" } )
 
 	-- Create Ground blocks
 	local width = screenWidth/ 10
 	for i = -20, 20 do
 		local tmpBlock
-		local tmpBlock = ssk.proto.rect( layers.scroller, screenLeft - width/2 + i * width, screenBot-10,
+		local tmpBlock = ssk.display.rect( layers.scroller, screenLeft - width/2 + i * width, screenBot-10,
 			{ width = width, height = 20, fill = _GREEN_, stroke = _WHITE_, strokeWidth = 2, size = size, } ) 
 		--tmpBlock.alpha = 0.75 
 		tmpBlock:toFront()
@@ -94,7 +94,7 @@ function gameLogic:createScene( screenGroup )
 
 	-- create Player
 	local playerSize = 30
-	thePlayer = ssk.proto.rect( layers.content, centerX, screenBot-20-playerSize/2-2, 
+	thePlayer = ssk.display.rect( layers.content, centerX, screenBot-20-playerSize/2-2, 
 		{ size = playerSize, myName = "thePlayer", fill = _BLUE_, stroke = _WHITE_, strokeWidth = 2, } ) 
 
 end
@@ -128,7 +128,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scroller", 
 		"content",
@@ -137,8 +137,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons

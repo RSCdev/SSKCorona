@@ -112,7 +112,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -120,7 +120,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 end	
 
 createPuzzle = function ( )
@@ -282,7 +282,7 @@ testCompleted = function ()
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end

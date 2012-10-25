@@ -100,7 +100,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -108,7 +108,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "backImage2.jpg")
+	backImage = ssk.display.backImage( layers.background, "backImage2.jpg")
 end	
 
 createLabels = function ( )

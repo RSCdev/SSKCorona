@@ -154,7 +154,7 @@ createCollisionCalculator = function()
 end
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background",
 		"skylayer", 
 		"scrollers", 
@@ -166,8 +166,8 @@ end
 addInterfaceElements = function()
 	-- Add background and overlay
 	
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png")
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png")
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
@@ -181,7 +181,7 @@ createGroundBlock = function ( x, y, scrollLayer, scrollSpeed )
 							  20,  35, 
 							 -20,  35 }
 
-	local block  = ssk.proto.imageRect( scrollLayer, x, y, groundImagePath,
+	local block  = ssk.display.imageRect( scrollLayer, x, y, groundImagePath,
 		{ width = 40, height = 70, myName = "aGroundBlock" },
 		{ bodyType = "kinematic", shape = collisionShape, colliderName = "ground", calculator= myCC, friction = 0.0, bounce = 0.0  } )
 
@@ -191,7 +191,7 @@ end
 
 createRandomObject = function ( x, y, scrollLayer, scrollSpeed, imageNum )
 	if(scrollLayer == nil) then return end			
-	local obj  = ssk.proto.imageRect( scrollLayer, x, y, randomObjectImagePath[imageNum],
+	local obj  = ssk.display.imageRect( scrollLayer, x, y, randomObjectImagePath[imageNum],
 		{ width = 50, height = 85, myName = "aRandomObject" },
 		{ bodyType = "kinematic",  colliderName = "other", calculator= myCC, friction = 0.0, bounce = 0.0  } )
 
@@ -201,14 +201,14 @@ createRandomObject = function ( x, y, scrollLayer, scrollSpeed, imageNum )
 end
 
 createSky = function ( x, y, width, height, contentLayer  )
-	local sky  = ssk.proto.imageRect( contentLayer, x, y, skyImagePath,
+	local sky  = ssk.display.imageRect( contentLayer, x, y, skyImagePath,
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end
 
 
 createStar = function ( x, y, scrollLayer, scrollSpeed )
-	local obj  = ssk.proto.imageRect( scrollLayer, x, y, starImagePath,
+	local obj  = ssk.display.imageRect( scrollLayer, x, y, starImagePath,
 		{ width = 50, height = 85, myName = "aStar" },
 		{ bodyType = "kinematic",  colliderName = "other", calculator= myCC, friction = 0.0, bounce = 0.0  } )
 
@@ -224,7 +224,7 @@ createTrigger = function ( contentLayer, x, y, width, height, myName  )
 		fill = _RED_
 	end
 
-	local aTrigger  = ssk.proto.rect( contentLayer, x, y,
+	local aTrigger  = ssk.display.rect( contentLayer, x, y,
 		{ fill = fill, width = width, height = height, myName = myName },
 		{ isSensor=true, colliderName = "trigger", calculator= myCC  }, 
 		{ 

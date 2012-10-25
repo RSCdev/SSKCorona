@@ -141,16 +141,16 @@ function protoFactory.arrow( group, startX, startY, endX, endY, visualParams )
 	
 	group:insert(arrow)
 
-	local vx,vy  = ssk.m2d.sub(startX, startY, endX, endY)
+	local vx,vy  = ssk.math2d.sub(startX, startY, endX, endY)
 
-	local vLen  = ssk.m2d.length(vx,vy)
+	local vLen  = ssk.math2d.length(vx,vy)
 
-	local nx,ny = ssk.m2d.normalize(vx,vy)
+	local nx,ny = ssk.math2d.normalize(vx,vy)
 
-	local cx,cy = ssk.m2d.scale(nx,ny, vLen/2)
-	cx,cy = ssk.m2d.add(startX, startY, cx, cy)
+	local cx,cy = ssk.math2d.scale(nx,ny, vLen/2)
+	cx,cy = ssk.math2d.add(startX, startY, cx, cy)
 	
-	local rotation = ssk.m2d.vector2Angle(vx,vy)	
+	local rotation = ssk.math2d.vector2Angle(vx,vy)	
 	
 	local arrowLine = display.newLine( startX, startY, endX, endY )
 	
@@ -199,9 +199,9 @@ end
 
 function protoFactory.arrow2( group, startX, startY, angle, length, visualParams)
 
-	local endX, endY = ssk.m2d.angle2Vector( angle )
-	endX, endY = ssk.m2d.scale( endX, endY, length )
-	endX, endY = ssk.m2d.add(startX, startY, endX, endY)
+	local endX, endY = ssk.math2d.angle2Vector( angle )
+	endX, endY = ssk.math2d.scale( endX, endY, length )
+	endX, endY = ssk.math2d.add(startX, startY, endX, endY)
 
 	return protoFactory.arrow( group, startX, startY, endX, endY, visualParams )
 
@@ -212,12 +212,12 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 	local theLine = display.newGroup()
 	group:insert( theLine )
 
-	local vx,vy    = ssk.m2d.sub(startX, startY, endX, endY)
-	local vLen     = ssk.m2d.length(vx,vy)
-	local nx,ny    = ssk.m2d.normalize(vx,vy)
-	local cx,cy    = ssk.m2d.scale(nx,ny, vLen/2)
-	      cx,cy    = ssk.m2d.add(startX, startY, cx, cy)
-	local rotation = ssk.m2d.vector2Angle(vx,vy)	
+	local vx,vy    = ssk.math2d.sub(startX, startY, endX, endY)
+	local vLen     = ssk.math2d.length(vx,vy)
+	local nx,ny    = ssk.math2d.normalize(vx,vy)
+	local cx,cy    = ssk.math2d.scale(nx,ny, vLen/2)
+	      cx,cy    = ssk.math2d.add(startX, startY, cx, cy)
+	local rotation = ssk.math2d.vector2Angle(vx,vy)	
 
 	theLine.vx = vx
 	theLine.vy = vy
@@ -250,11 +250,11 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 
 
 	elseif(theLine.style == "dashed") then
-		local dash_dx,dash_dy = ssk.m2d.normalize(vx, vy)
+		local dash_dx,dash_dy = ssk.math2d.normalize(vx, vy)
 		local gap_dx,gap_dy   = dash_dx,dash_dy
 	
-		dash_dx,dash_dy       = ssk.m2d.scale(dash_dx,dash_dy, dashLen)
-		gap_dx,gap_dy         = ssk.m2d.scale(gap_dx,gap_dy, gapLen)
+		dash_dx,dash_dy       = ssk.math2d.scale(dash_dx,dash_dy, dashLen)
+		gap_dx,gap_dy         = ssk.math2d.scale(gap_dx,gap_dy, gapLen)
 
 		local lineLen = 0
 		local curX, curY = startX,startY
@@ -275,7 +275,7 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 			-- Attempt to draw a dash
 			lineLen = lineLen + dashLen
 			if( lineLen < vLen ) then
-				newX,newY = ssk.m2d.add( curX, curY, dash_dx, dash_dy )
+				newX,newY = ssk.math2d.add( curX, curY, dash_dx, dash_dy )
 				local aDash = display.newLine( curX, curY, newX, newY )
 				theLine:insert(aDash)
 				aDash.width = width
@@ -287,11 +287,11 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 
 			-- Add a gap
 			lineLen = lineLen + gapLen
-			curX,curY = ssk.m2d.add( curX, curY, gap_dx, gap_dy )
+			curX,curY = ssk.math2d.add( curX, curY, gap_dx, gap_dy )
 		end
 
 	elseif(theLine.style == "dotted") then
-		local dot_dx,dot_dy = ssk.m2d.normalize(vx, vy)
+		local dot_dx,dot_dy = ssk.math2d.normalize(vx, vy)
 		local gap_dx,gap_dy   = dot_dx,dot_dy
 	
 		local lineLen = 0
@@ -318,14 +318,14 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 		end
 
 
-		dot_dx,dot_dy       = ssk.m2d.scale(dot_dx,dot_dy, radius*2)
-		gap_dx,gap_dy         = ssk.m2d.scale(gap_dx,gap_dy, gapLen)
+		dot_dx,dot_dy       = ssk.math2d.scale(dot_dx,dot_dy, radius*2)
+		gap_dx,gap_dy         = ssk.math2d.scale(gap_dx,gap_dy, gapLen)
 
 		while( lineLen < vLen ) do
 			-- Attempt to draw a dot
 			lineLen = lineLen + radius*2
 			if( lineLen < vLen ) then
-				newX,newY = ssk.m2d.add( curX, curY, dot_dx, dot_dy )
+				newX,newY = ssk.math2d.add( curX, curY, dot_dx, dot_dy )
 				local adot = display.newCircle( theLine, curX, curY, radius )
 
 				adot:setFillColor( unpack(color) )
@@ -339,16 +339,16 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 
 			-- Add a gap
 			lineLen = lineLen + gapLen
-			curX,curY = ssk.m2d.add( curX, curY, gap_dx, gap_dy )
+			curX,curY = ssk.math2d.add( curX, curY, gap_dx, gap_dy )
 		end
 
 
 	elseif(theLine.style == "arrows") then
-		local dash_dx,dash_dy = ssk.m2d.normalize(vx, vy)
+		local dash_dx,dash_dy = ssk.math2d.normalize(vx, vy)
 		local gap_dx,gap_dy   = dash_dx,dash_dy
 	
-		dash_dx,dash_dy       = ssk.m2d.scale(dash_dx,dash_dy, dashLen)
-		gap_dx,gap_dy         = ssk.m2d.scale(gap_dx,gap_dy, gapLen)
+		dash_dx,dash_dy       = ssk.math2d.scale(dash_dx,dash_dy, dashLen)
+		gap_dx,gap_dy         = ssk.math2d.scale(gap_dx,gap_dy, gapLen)
 
 		local lineLen = 0
 		local curX, curY = startX,startY
@@ -358,7 +358,7 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 			-- Attempt to draw a dash
 			lineLen = lineLen + dashLen
 			if( lineLen < vLen ) then
-				newX,newY = ssk.m2d.add( curX, curY, dash_dx, dash_dy )
+				newX,newY = ssk.math2d.add( curX, curY, dash_dx, dash_dy )
 				local aDash = protoFactory.arrow( group, curX, curY, newX,newY, visualParams )
 				theLine:insert(aDash)
 			
@@ -368,7 +368,7 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 
 			-- Add a gap
 			lineLen = lineLen + gapLen
-			curX,curY = ssk.m2d.add( curX, curY, gap_dx, gap_dy )
+			curX,curY = ssk.math2d.add( curX, curY, gap_dx, gap_dy )
 		end
 	end
 
@@ -376,9 +376,9 @@ function protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, 
 end
 
 function protoFactory.line2( group, startX, startY, angle, length, dashLen, gapLen, visualParams )
-	local endX, endY = ssk.m2d.angle2Vector( angle )
-	endX, endY = ssk.m2d.scale( endX, endY, length )
-	endX, endY = ssk.m2d.add(startX, startY, endX, endY)
+	local endX, endY = ssk.math2d.angle2Vector( angle )
+	endX, endY = ssk.math2d.scale( endX, endY, length )
+	endX, endY = ssk.math2d.add(startX, startY, endX, endY)
 	return protoFactory.line( group, startX, startY, endX, endY, dashLen, gapLen, visualParams )
 end
 
@@ -502,9 +502,9 @@ function protoFactory.segmentedLine( group, points, visualParams )
 			if(#points >= i+1) then
 				local b = points:get(i+1)
 
-				local nVec = ssk.m2do.sub(a,b)
-				nVec = ssk.m2do.normalize( nVec )
-				local angle = ssk.m2do.vector2Angle(nVec)
+				local nVec = ssk.math2d.sub(a,b)
+				nVec = ssk.math2d.normalize( nVec )
+				local angle = ssk.math2d.vector2Angle(nVec)
 				visualParams.rotation = angle
 			end
 

@@ -119,7 +119,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -127,7 +127,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	backImage = ssk.proto.backImage( layers.background, "feltBack.png") 
+	backImage = ssk.display.backImage( layers.background, "feltBack.png") 
 end	
 
 function onDropCB( dropObj, event )
@@ -172,12 +172,12 @@ end
 function createChipPile( x, y, contentLayer )
 
 	print("edo")
-	chipPile  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "chip80.png",
+	chipPile  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "chip80.png",
 		{ width = chipWidth, height = chipHeight, myName = "thechipPile" },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
 		  colliderName = "player", calculator= myCC })
 
-	local topchip  = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "chip80.png",
+	local topchip  = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "chip80.png",
 		{ width = chipWidth, height = chipHeight, myName = "thechipPile" },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
 		  colliderName = "player", calculator= myCC },
@@ -188,7 +188,7 @@ end
 
 function createNewChip( x, y, contentLayer )
 
-	local aChip  = ssk.proto.imageRect( contentLayer, x, y, 
+	local aChip  = ssk.display.imageRect( contentLayer, x, y, 
 	    imagesDir .. "chip80.png",
 		{ width = chipWidth, height = chipHeight, myName = "thechipPile", fill = _ORANGE_ },
 		{ isFixedRotation = true, friction = 0.0, bounce = 0.0,
@@ -201,7 +201,7 @@ end
 -- ====================== Create Places to Drop Chips
 -- =======================
 function createChipColumn( x, y, col, contentLayer  )
-	chipColumns[col]  = ssk.proto.rect( contentLayer, x, y,
+	chipColumns[col]  = ssk.display.rect( contentLayer, x, y,
 		{ width = chipWidth, height = (chipHeight * chipRows) + 10 , myName = "aChipTray",
 		  fill = _DARKGREY_, stroke = _WHITE_, strokeWidth = 2 } )
 	chipColumns[col].alpha = 0.05
@@ -211,7 +211,7 @@ function createChipColumn( x, y, col, contentLayer  )
 end
 
 function createBoard( x, y, contentLayer  )
-	chipTray  = ssk.proto.rect( contentLayer, x, y,
+	chipTray  = ssk.display.rect( contentLayer, x, y,
 		{ width = (chipWidth * chipCols) + 22 , height = (chipHeight * chipRows) + 10 , myName = "aChipTray",
 		  fill = _DARKGREY_, stroke = _WHITE_, strokeWidth = 2 } )
 	chipTray.alpha = 0.25

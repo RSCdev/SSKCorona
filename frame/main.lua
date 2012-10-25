@@ -182,7 +182,7 @@ ssk.misc.dumpScreenMetrics()
 -- Print the collision matrix data
 --collisionCalculator:dump()
 
---ssk.proto.listDPP()
+--ssk.display.listDPP()
 
 print("\n****************************************************************")
 print("*********************** /\\/\\ main.cs /\\/\\ **********************")

@@ -121,7 +121,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces", 
@@ -130,7 +130,7 @@ end
 
 addInterfaceElements = function()
 	-- Add background 
-	--backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	--backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 
 	-- Add Example Selection Radios and Text
 	local tmpLabel
@@ -234,26 +234,26 @@ ex_step[1][1] = function ()
 	local B_angle  = -35
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 230, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 230, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 6
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 230, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 230, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 6
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 
@@ -277,14 +277,14 @@ ex_step[1][2] = function(currentExample)
 	print("Pa = ", Pa.x, Pa.y)
 	print("Pb = ", Pb.x, Pb.y,NL)
 
-	local Va = ssk.m2do.angle2Vector( anArrow1.angle )
-	Va = ssk.m2do.scale(Va, aCircle.pps)
+	local Va = ssk.math2d.angle2Vector( anArrow1.angle )
+	Va = ssk.math2d.scale(Va, aCircle.pps)
 	Va.x = round(Va.x, 4)
 	Va.y = round(Va.y, 4)
 	print("Va = ", Va.x, Va.y)
 
-	local Vb = ssk.m2do.angle2Vector( anArrow2.angle )
-	Vb = ssk.m2do.scale(Vb, aPoint.pps)
+	local Vb = ssk.math2d.angle2Vector( anArrow2.angle )
+	Vb = ssk.math2d.scale(Vb, aPoint.pps)
 	Vb.x = round(Vb.x, 4)
 	Vb.y = round(Vb.y, 4)
 
@@ -296,12 +296,12 @@ ex_step[1][2] = function(currentExample)
 	print("Ra = ", Ra)
 	print("Rb = ", Rb,NL)
 
-    local Pab = ssk.m2do.sub(Pb, Pa)
+    local Pab = ssk.math2d.sub(Pb, Pa)
 	Pab.x = round(Pab.x, 4)
 	Pab.y = round(Pab.y, 4)
 	print("Pab = ", Pab.x, Pab.y,NL)
 
-	local Vab = ssk.m2do.sub(Vb, Va)
+	local Vab = ssk.math2d.sub(Vb, Va)
 	Vab.x = round(Vab.x, 4)
 	Vab.y = round(Vab.y, 4)
 	print("Vab = ", Vab.x, Vab.y,NL)
@@ -309,21 +309,21 @@ ex_step[1][2] = function(currentExample)
 
 	-- Step 2 -> Set up functions for quadratic roots and discriminant
 	local function root_a()
-		return ssk.m2do.dot( Vab, Vab )
+		return ssk.math2d.dot( Vab, Vab )
 	end
 
 	local function root_b()
-		return 2 * ssk.m2do.dot( Pab, Vab )
+		return 2 * ssk.math2d.dot( Pab, Vab )
 	end
 
 	local function root_c()
-		local Pab = ssk.m2do.sub(Pb, Pa)
+		local Pab = ssk.math2d.sub(Pb, Pa)
 		local Rab2 = (Ra + Rb)
 
 		Rab2 = Rab2 * Rab2
 		print("Rab2 = ", Rab2)
 
-		return ssk.m2do.dot( Pab, Pab ) - Rab2
+		return ssk.math2d.dot( Pab, Pab ) - Rab2
 	end
 
 	local function d_0_time(a,b)
@@ -345,9 +345,9 @@ ex_step[1][2] = function(currentExample)
 
 	local function calcCollisionPoint( t )
 		local startX, startY = aPoint.x, aPoint.y
-		local dx,dy = ssk.m2d.angle2Vector( anArrow2.angle )
-		dx,dy = ssk.m2d.scale( dx, dy, aPoint.pps * t )
-		local colX, colY = ssk.m2d.add( startX, startY, dx, dy )
+		local dx,dy = ssk.math2d.angle2Vector( anArrow2.angle )
+		dx,dy = ssk.math2d.scale( dx, dy, aPoint.pps * t )
+		local colX, colY = ssk.math2d.add( startX, startY, dx, dy )
 		return colX, colY
 	end
 
@@ -408,7 +408,7 @@ ex_step[1][2] = function(currentExample)
 		                                      "Single Intersection @ " .. t .. " seconds", 
 											  centerX, 20, { fontSize = 16, textColor = _GREEN_ }  )
 
-		collisionPoint   = ssk.proto.circle( layers.content, colX, colY, 
+		collisionPoint   = ssk.display.circle( layers.content, colX, colY, 
 											 { radius = 4, fill = _RED_, 
 											 stroke = _GREEN_, strokeWidth = 2 } )
 
@@ -419,7 +419,7 @@ ex_step[1][2] = function(currentExample)
 		                                      "Dual Intersection, first at @ " .. t .. " seconds", 
 											  centerX, 20, { fontSize = 16, textColor = _GREEN_ }  )
 
-		collisionPoint   = ssk.proto.circle( layers.content, colX, colY, 
+		collisionPoint   = ssk.display.circle( layers.content, colX, colY, 
 											 { radius = 4, fill = _RED_, 
 											 stroke = _GREEN_, strokeWidth = 2 } )
 	end
@@ -431,7 +431,7 @@ end
 ex_step[1][3] = function ()
 	print("Ex 1 Step 3" )
 	local avx, avy = anArrow1.vx, anArrow1.vy
-	local vLen = ssk.m2d.length(avx, avy)
+	local vLen = ssk.math2d.length(avx, avy)
 	local A_endX = aCircle.x + avx
 	local A_endY = aCircle.y + avy
 
@@ -441,7 +441,7 @@ ex_step[1][3] = function ()
 
 
 	local bvx, bvy = anArrow2.vx, anArrow2.vy
-	local vLen = ssk.m2d.length(avx, avy)
+	local vLen = ssk.math2d.length(avx, avy)
 	local B_endX = aPoint.x + bvx
 	local B_endY = aPoint.y + bvy
 
@@ -469,26 +469,26 @@ ex_step[2][1] = function ()
 	local B_angle  = -35
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 230, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 230, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 4
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 230, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 230, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 2
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 
@@ -519,26 +519,26 @@ ex_step[3][1] = function ()
 	local B_angle  = 0
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 160, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 160, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 9
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 7
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 
@@ -569,26 +569,26 @@ ex_step[4][1] = function ()
 	local B_angle  = 0
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 3
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 3
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 
@@ -620,26 +620,26 @@ ex_step[5][1] = function ()
 	local B_angle  = 0
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 3
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 3
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 
@@ -670,26 +670,26 @@ ex_step[6][1] = function ()
 	local B_angle  = 0
 	local B_radius = 1
 
-	anArrow1 = ssk.proto.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
-	aCircle  = ssk.proto.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow1 = ssk.display.arrow2( layers.content, A_startX, A_startY, A_angle, 210, { color = _BLUE_ , width = 2} )
+	aCircle  = ssk.display.circle( layers.content, A_startX, A_startY, { radius = A_radius, fill = _TRANSPARENT_, stroke = _WHITE_, strokeWidth = 1 } )
 	aCircle.moveTime = 4
 	aCircle.radius = A_radius
 
-	anArrow2 = ssk.proto.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
-	aPoint   = ssk.proto.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
+	anArrow2 = ssk.display.arrow2( layers.content, B_startX, B_startY, B_angle, 210, { color = _BLUE_ , width = 2} )
+	aPoint   = ssk.display.circle( layers.content, B_startX, B_startY, { radius = B_radius, fill = _WHITE_, stroke = _WHITE_, strokeWidth = 1 } )
 	aPoint.moveTime = 1
 	aPoint.radius = B_radius
 
---	local nx,ny = ssk.m2d.angle2Vector( anArrow2.angle - 90)
---	nx,ny = ssk.m2d.scale(nx, ny, 15)
---	nx,ny = ssk.m2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
---	anArrow3 = ssk.proto.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
+--	local nx,ny = ssk.math2d.angle2Vector( anArrow2.angle - 90)
+--	nx,ny = ssk.math2d.scale(nx, ny, 15)
+--	nx,ny = ssk.math2d.add( anArrow2.cx, anArrow2.cy, nx, ny)
+--	anArrow3 = ssk.display.arrow( layers.content, anArrow2.cx, anArrow2.cy, nx, ny )
 
-	local A_vLen = ssk.m2d.length(anArrow1.vx, anArrow1.vy)
+	local A_vLen = ssk.math2d.length(anArrow1.vx, anArrow1.vy)
 	local A_pps  = A_vLen / aCircle.moveTime -- pixels / seconds
 	aCircle.pps = round(A_pps,0)
 
-	local B_vLen = ssk.m2d.length(anArrow2.vx, anArrow2.vy)
+	local B_vLen = ssk.math2d.length(anArrow2.vx, anArrow2.vy)
 	local B_pps  = B_vLen / aPoint.moveTime -- pixels / seconds
 	aPoint.pps = round(B_pps,0)
 

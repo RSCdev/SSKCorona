@@ -40,9 +40,9 @@ tiles.createTile = function(group, gx, gy, tileSize, imgSrc, colorsTable, stroke
 
 	local theTile
 	if(imgSrc == nil) then
-		theTile = ssk.proto.rect(group , curX, curY, { size = tileSize, fill = color, stroke = strokeColor } ) 
+		theTile = ssk.display.rect(group , curX, curY, { size = tileSize, fill = color, stroke = strokeColor } ) 
 	else
-		theTile = ssk.proto.imageRect(group , curX, curY, imgSrc, { size = tileSize, fill = color } ) 
+		theTile = ssk.display.imageRect(group , curX, curY, imgSrc, { size = tileSize, fill = color } ) 
 	end
 
 	-- capture details for later

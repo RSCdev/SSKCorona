@@ -43,6 +43,9 @@ local onCategory
 local onSubCategory
 local onGo
 
+local onRG
+local onCorona
+
 ----------------------------------------------------------------------
 --	Scene Methods:
 -- scene:createScene( event )  - Called when the scene's view does not exist
@@ -56,17 +59,17 @@ local onGo
 ----------------------------------------------------------------------
 function scene:createScene( event )
 	screenGroup = self.view
-	backImage   = ssk.proto.backImage( screenGroup, "backImage.jpg", false ) 
+	backImage   = ssk.display.backImage( screenGroup, "backImage.jpg", false ) 
 
 	local tmpButton
 	local tmpTxt
 
 	-- Game Title
-	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "Super Starter Kit - Sampler", centerX, 30, { fontSize = 24 } )
+	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "SSKCorona - Sampler", centerX, 30, { fontSize = 24 } )
 	tmpTxt.x = tmpTxt.x + 20
 	local ts = sampleManager:getTotalSamples()
-	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "( " .. ts .. " examples made with SSK for Corona)", centerX, 60, { fontSize = 18, color = {0,0,0,255} } )
-	tmpTxt.x = tmpTxt.x + 30
+	tmpTxt = ssk.labels:presetLabel( screenGroup, "headerLabel", "( " .. ts .. " examples made with Super Starter Kit for Corona SDK)", centerX, 60, { fontSize = 16, color = {0,0,0,255} } )
+	tmpTxt.x = tmpTxt.x + 40
 
 	-- ==========================================
 	-- Buttons and Labels
@@ -115,14 +118,12 @@ function scene:createScene( event )
 	--
 	-- RG Button
 	--
-	ssk.buttons:presetPush( screenGroup, "RGButton", 30, h-30, 40, 40, 
-	                    "", onRG  )
+	ssk.buttons:presetPush( screenGroup, "RGButton", 30, h-30, 40, 40, "", onRG  )
 
 	--
 	-- Corona Badge/Button
 	--
-	ssk.buttons:presetPush( screenGroup, "CoronaButton", 40, 40, 75, 72, 
-	                    "", onRG  )
+	ssk.buttons:presetPush( screenGroup, "CoronaButton", 40, 40, 75, 72, "", onCorona  )
 
 	--
 	-- Version Label
@@ -288,6 +289,16 @@ onGo = function ( event )
 
 	local samplePath = "generic_scene"
 	storyboard.gotoScene( samplePath, options  )	
+	return true
+end
+
+onRG = function(event)
+	system.openURL( "http://developer.coronalabs.com/code/sskcorona"  )
+	return true
+end
+
+onCorona = function(event)
+	system.openURL( "http://developer.coronalabs.com/"  )
 	return true
 end
 

@@ -116,7 +116,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scrollers", 
 			{ "scroll3", "scroll2", "scroll1" },
@@ -126,9 +126,9 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	--backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
+	--backImage = ssk.display.backImage( layers.background, "protoBack.png") 
 	backImage = display.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons
@@ -184,14 +184,14 @@ function createSprite( x, y, scale )
 end
 
 function createPlayer( x, y, w, h )
-	local player = ssk.proto.imageRect( layers.content, x, y,imagesDir .. "AriFeldman/enemyPlaneBlue.png",
+	local player = ssk.display.imageRect( layers.content, x, y,imagesDir .. "AriFeldman/enemyPlaneBlue.png",
 										{ width = w, height = h, myName = "thePlayer" },
 		{ isFixedRotation = false,  colliderName = "player", calculator= myCC } ) 
 	return player
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end

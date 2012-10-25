@@ -84,14 +84,14 @@ function public:onAttach( obj, params )
 
 		elseif(phase == "moved") then
 
-			local vx,vy   = ssk.m2d.sub( touchX, touchY, self.dpadX, self.dpadY)
-			local vlen = ssk.m2d.length(vx,vy)
+			local vx,vy   = ssk.math2d.sub( touchX, touchY, self.dpadX, self.dpadY)
+			local vlen = ssk.math2d.length(vx,vy)
 
 			-- 1. Check to see if move needs to occur
 			if(vlen > deadSpotRadius) then
-				local mx,my = ssk.m2d.normalize(vx,vy)
-				local mx,my = ssk.m2d.screen2Cartesian(mx,my)
-				local angle = -ssk.m2d.vector2Angle(mx,my)
+				local mx,my = ssk.math2d.normalize(vx,vy)
+				local mx,my = ssk.math2d.screen2Cartesian(mx,my)
+				local angle = -ssk.math2d.vector2Angle(mx,my)
 				print(angle)					
 				dpadObj.rotation = angle
 				self.moveObj.rotation = angle

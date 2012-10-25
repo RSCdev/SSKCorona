@@ -97,7 +97,7 @@ function gameLogic:createScene( screenGroup )
 		for j = -18, 18 do
 		
 			local tmpBlock
-			local tmpBlock = ssk.proto.imageRect( layers.scroller, 
+			local tmpBlock = ssk.display.imageRect( layers.scroller, 
 			   screenLeft - size/2 + i * size, screenTop-size/2 + j * size,
 			   imagesDir .. "mudground.png", 
 				{ size = size, myName = "aGroundBlock", } ) 
@@ -108,7 +108,7 @@ function gameLogic:createScene( screenGroup )
 
 	-- create Player
 	local playerSize = 36
-	thePlayer  = ssk.proto.imageRect( layers.content, 
+	thePlayer  = ssk.display.imageRect( layers.content, 
 	    centerX, centerY, 
 		imagesDir .. "joker.png",
 		{ size = playerSize, myName = "thePlayer" } ) 
@@ -143,7 +143,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"scroller", 
 		"content",
@@ -152,8 +152,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons

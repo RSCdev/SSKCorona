@@ -134,7 +134,7 @@ end
 
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -142,8 +142,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	-- Add generic direction and input buttons
@@ -448,9 +448,9 @@ createTile = function(group, gx, gy, tileSize, imgSrc, tileTouchCB)
 
 	local theTile
 	if(imgSrc == nil) then
-		theTile = ssk.proto.rect(group , curX, curY, { size = tileSize, fill = color, stroke = strokeColor } ) 
+		theTile = ssk.display.rect(group , curX, curY, { size = tileSize, fill = color, stroke = strokeColor } ) 
 	else
-		theTile = ssk.proto.imageRect(group , curX, curY, imgSrc, { size = tileSize, fill = color } ) 
+		theTile = ssk.display.imageRect(group , curX, curY, imgSrc, { size = tileSize, fill = color } ) 
 	end
 
 	-- capture details for later

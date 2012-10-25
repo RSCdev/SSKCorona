@@ -12,16 +12,23 @@
 -- Credit?:  Mentioning SSK and/or Roaming Gamer, LLC. in your credits is not required, but it would be nice.  Thanks!
 --
 -- =============================================================
--- Last Modified: 29 AUG 2012
+-- Last Modified: 24 OCT 2012
 -- =============================================================
 
--- ======================================================================
--- io - File Exists Check
---
--- system.DocumentsDirectory should be used for files that need to persist between application sessions.
--- system.TemporaryDirectory is a temporary directory. Files written to this directory are not guaranteed to exist in subsequent application sessions. They may or may not exist.
--- system.ResourceDirectory is the directory where all application assets exist. Note: you should never create, modify, or add files to this directory (see Beware Security Violations).
--- ======================================================================
+--[[
+h ssk.io.exists
+d Checks if file exists.
+s ssk.exists( fileName [, base ] )
+s * fileName - Name of file, optionally including subdirectory path.
+s * path - (optional) System base path: 
+s ** system.ResourceDirectory - (default) The directory where all application assets exist. Note: you should never create, modify, or add files to this directory.
+s ** system.DocumentsDirectory - Used for files that need to persist between application sessions.
+s ** system.TemporaryDirectory - A temporary directory. Files written to this directory are not guaranteed to exist in subsequent application sessions. They may or may not exist.
+r ''true'' if file exists, ''false'' otherwise.
+e if( ssk.io.exists( "playerStats.txt", system.DocumentsDirectory ) then
+e    ... some work here
+e end
+--]]
 function io.exists( fileName, base )
 	local fileName = fileName
 	if( base ) then

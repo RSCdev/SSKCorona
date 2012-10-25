@@ -88,8 +88,8 @@ function public:onAttach( obj, params )
 
 		elseif(phase == "moved") then
 
-			local vx,vy   = ssk.m2d.sub( touchX, touchY, self.dpadX, self.dpadY)
-			local vlen = ssk.m2d.length(vx,vy)
+			local vx,vy   = ssk.math2d.sub( touchX, touchY, self.dpadX, self.dpadY)
+			local vlen = ssk.math2d.length(vx,vy)
 				
 			-- 1. Check to see if virtual dpad needs dragging
 			if(vlen > (touchRadius * 0.9) ) then					
@@ -97,7 +97,7 @@ function public:onAttach( obj, params )
 				dprint(2,"self.dpadX,self.dpadY",self.dpadX,self.dpadY)
 				dprint(2,"0 - vx,vy",vx,vy)
 
-				local nx,ny = ssk.m2d.normalize(vx, vy)
+				local nx,ny = ssk.math2d.normalize(vx, vy)
 				
 				if(debugLevel > 1) then
 					nx = round(nx,4)
@@ -105,7 +105,7 @@ function public:onAttach( obj, params )
 					dprint(2,"1 - nx,ny",nx,ny)
 				end
 
-				nx,ny = ssk.m2d.scale(nx,ny,touchRadius * 0.5 )
+				nx,ny = ssk.math2d.scale(nx,ny,touchRadius * 0.5 )
 				
 				if(debugLevel > 1) then
 					nx = round(nx,4)
@@ -113,7 +113,7 @@ function public:onAttach( obj, params )
 					dprint(2,"2 - nx,ny",nx,ny)
 				end
 	
-				nx,ny = ssk.m2d.sub(vx,vy,nx,ny)
+				nx,ny = ssk.math2d.sub(vx,vy,nx,ny)
 				
 				if(debugLevel > 1) then
 					dprint(2,"3 - nx,ny",nx,ny,NL)
@@ -127,14 +127,14 @@ function public:onAttach( obj, params )
 					dpadObj.y = self.dpadY
 				end
 
-				vx,vy = ssk.m2d.sub( touchX, touchY, self.dpadX, self.dpadY )
-			    vlen = ssk.m2d.length(vx,vy)
+				vx,vy = ssk.math2d.sub( touchX, touchY, self.dpadX, self.dpadY )
+			    vlen = ssk.math2d.length(vx,vy)
 			end
 
 			-- 2. Check to see if move needs to occur
 			if(vlen > deadSpotRadius) then
-				local mx,my = ssk.m2d.normalize(vx,vy)
-				mx,my = ssk.m2d.scale(mx,my,moveSpeed)
+				local mx,my = ssk.math2d.normalize(vx,vy)
+				mx,my = ssk.math2d.scale(mx,my,moveSpeed)
 				self.moveObj:setLinearVelocity(-mx,-my)
 
 			else

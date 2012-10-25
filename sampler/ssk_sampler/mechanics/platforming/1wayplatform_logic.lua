@@ -120,7 +120,7 @@ createCollisionCalculator = function()
 end
 
 createLayers = function( group )
-	layers = ssk.proto.quickLayers( group, 
+	layers = ssk.display.quickLayers( group, 
 		"background", 
 		"content",
 		"interfaces" )
@@ -128,8 +128,8 @@ end
 
 addInterfaceElements = function()
 	-- Add background and overlay
-	backImage = ssk.proto.backImage( layers.background, "protoBack.png") 
-	overlayImage = ssk.proto.backImage( layers.interfaces, "protoOverlay.png") 
+	backImage = ssk.display.backImage( layers.background, "protoBack.png") 
+	overlayImage = ssk.display.backImage( layers.interfaces, "protoOverlay.png") 
 	overlayImage.isVisible = true
 
 	local tmpButton
@@ -144,7 +144,7 @@ createGround = function()
 	local width = screenWidth/ 10
 	for i = 1, 10 do
 		local tmpBlock
-		local tmpBlock = ssk.proto.rect( layers.content, screenLeft - width/2 + i * width, screenBot-10,
+		local tmpBlock = ssk.display.rect( layers.content, screenLeft - width/2 + i * width, screenBot-10,
 			{ width = width, height = 20, fill = _GREEN_, stroke = _WHITE_, strokeWidth = 2,
 			  size = size, myName = "aGroundBlock", } ,
 			{ isFixedRotation = false, friction = 1.0, bounce = 0.0, 
@@ -157,7 +157,7 @@ createGround = function()
 end
 
 createPlayer = function ( x, y, size )
-	player  = ssk.proto.rect( layers.content, centerX, screenBot-20-size, 
+	player  = ssk.display.rect( layers.content, centerX, screenBot-20-size, 
 		{ size = size, myName = "thePlayer", fill = _BLUE_, stroke = _WHITE_, strokeWidth = 2, },
 		{ isFixedRotation = false, friction = 1.0, bounce = 0.0, 
 		  linearDamping=0.45, bodyType = "dynamic",
@@ -166,7 +166,7 @@ createPlayer = function ( x, y, size )
 end
 
 createPlatform = function ( x, y, width, height )
-	local platform  = ssk.proto.rect( layers.content, x, y, 
+	local platform  = ssk.display.rect( layers.content, x, y, 
 		{ width = width, height = height, myName = "aPlatform", fill = _YELLOW_, stroke = _WHITE_, strokeWidth = 2, },
 		{ isFixedRotation = false, friction = 0.0, bounce = 0.0, 
 		  linearDamping=0.45, bodyType = "static", 
@@ -184,7 +184,7 @@ createPlatform = function ( x, y, width, height )
 end
 
 createSky = function ( x, y, width, height  )
-	local sky  = ssk.proto.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
+	local sky  = ssk.display.imageRect( layers.background, x, y, imagesDir .. "starBack_320_240.png",
 		{ width = width, height = height, myName = "theSky" } )
 	return sky
 end

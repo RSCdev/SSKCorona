@@ -51,7 +51,7 @@ local gameLogic = {}
 
 function createBall( x, y, radius, contentLayer, trash )
 
-	local obj = ssk.proto.circle( contentLayer, x, y, 
+	local obj = ssk.display.circle( contentLayer, x, y, 
 		{ fill = _YELLOW_, stroke = _BRIGHTORANGE_, strokeWidth = 2, radius = radius, myName = "theBall" },
 		{ isFixedRotation = true, bounce=1.0,  friction=0.0, calculator= myCC, colliderName = "ball"} )
 
@@ -70,7 +70,7 @@ function createPaddle( x, y, size, contentLayer, trash )
 	local triangleShape = { halfSize, -halfSize, halfSize, halfSize, -halfSize, halfSize }
 
 
-	local obj = ssk.proto.imageRect( contentLayer, x, y, imagesDir .. "redTriangle.png",
+	local obj = ssk.display.imageRect( contentLayer, x, y, imagesDir .. "redTriangle.png",
 		{ size = size, myName = "aPaddle" },
 		{ bodyType = "kinematic", isFixedRotation = true, bounce=1.0, friction=0.0, 
 		  calculator= myCC, colliderName = "paddle", shape = triangleShape} )
@@ -82,7 +82,7 @@ end
 
 function createBlock( x, y, size, contentLayer, trash)
 
-	local block  = ssk.proto.rect( contentLayer, x, y,
+	local block  = ssk.display.rect( contentLayer, x, y,
 		{ fill = _YELLOW_, size = size, myName = "aBlock" },
 		{ bodyType = "kinematic", isFixedRotation = true, bounce=1.0, friction=0.0, 
 		  calculator= myCC, colliderName = "block"} )
@@ -109,13 +109,13 @@ function gameLogic:createScene( screenGroup )
 	myCC:dump()
 
 	-- 2. Set up any rendering layers we need
-	layers = ssk.proto.quickLayers( screenGroup, 
+	layers = ssk.display.quickLayers( screenGroup, 
 		"background", 
 		"contents",
 		"interfaces" )
 
 	-- 3. Add a background
-	backImage = ssk.proto.backImage( layers.background, "starBack_380_570.png") 
+	backImage = ssk.display.backImage( layers.background, "starBack_380_570.png") 
 
 	-- 4. Add the show/hide button for 'unveiling' hidden parts of scene/mechanics
 	--ssk.buttons:presetPush( layers.interfaces, "blueGradient", 64, 20 , 120, 30, "Show Details", onShowHide )
