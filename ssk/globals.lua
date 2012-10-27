@@ -28,7 +28,7 @@
 _G.debugLevel = 1
 
 -- Version details and flags
-_G.isTutorialDistro = false -- I can't distribute some 'paid' assets with the kit, so this
+_G.isTutorialDistro = true -- I can't distribute some 'paid' assets with the kit, so this
                          -- flag is used to select alternative assets for the source distro version.
 _G.liteVersion = false
 _G.releaseDate  = "24 OCT 2012"

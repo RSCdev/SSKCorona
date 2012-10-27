@@ -15,7 +15,7 @@
 -- Last Modified: 29 AUG 2012
 -- =============================================================
 
---local debugLevel = 1 -- Comment out to get global debugLevel from main.cs
+--local debugLevel = 2 -- Comment out to get global debugLevel from main.cs
 local dp = ssk.debugprinter.newPrinter( debugLevel )
 local dprint = dp.print
 
@@ -175,14 +175,14 @@ end
 
 exampleSelector = function( event )
 	currentExample = tonumber(event.target:getText())
-	--print( event.phase .. SPC .. "example: " .. currentExample )
+	--dprint(2, event.phase .. SPC .. "example: " .. currentExample )
 	stepButton1:toggle()
 end
 
 
 stepSelector = function( event )
 	local currentStep = tonumber( event.target:getText() )
-	--print( event.phase .. SPC .. "step: " .. currentStep )
+	--dprint(2, event.phase .. SPC .. "step: " .. currentStep )
 
 	if(event.phase == "ended") then
 		local curCB = ex_step[currentExample][currentStep]
@@ -202,7 +202,7 @@ clearLabels = function()
 		speedLabel2:removeSelf()
 
 		if(collisionLabel) then
-			print("remove")
+			dprint(2,"remove")
 			collisionLabel:removeSelf()
 			collisionLabel = nil
 
@@ -220,7 +220,7 @@ end
 ---------------------- 1
 ---------------------- 1
 ex_step[1][1] = function ()
-	--print("Ex 1 Step 1" )
+	dprint(2,"Ex 1 Step 1" )
 
 	clearLabels()
 
@@ -268,43 +268,43 @@ ex_step[1][2] = function(currentExample)
 	local curSetup = ex_step[currentExample][1]
 	curSetup()
 
-	--print("Ex 1 Step 2" )
+	dprint(2,"Ex 1 Step 2" )
 
 	-- Step 1 -> Set up varibles for calculations
 	local Pa = { x = aCircle.x , y = aCircle.y }
 	local Pb = { x = aPoint.x  , y = aPoint.y }
 
-	print("Pa = ", Pa.x, Pa.y)
-	print("Pb = ", Pb.x, Pb.y,NL)
+	dprint(2,"Pa = ", Pa.x, Pa.y)
+	dprint(2,"Pb = ", Pb.x, Pb.y,NL)
 
-	local Va = ssk.math2d.angle2Vector( anArrow1.angle )
+	local Va = ssk.math2d.angle2Vector( anArrow1.angle, true )
 	Va = ssk.math2d.scale(Va, aCircle.pps)
 	Va.x = round(Va.x, 4)
 	Va.y = round(Va.y, 4)
-	print("Va = ", Va.x, Va.y)
+	dprint(2,"Va = ", Va.x, Va.y)
 
-	local Vb = ssk.math2d.angle2Vector( anArrow2.angle )
+	local Vb = ssk.math2d.angle2Vector( anArrow2.angle, true )
 	Vb = ssk.math2d.scale(Vb, aPoint.pps)
 	Vb.x = round(Vb.x, 4)
 	Vb.y = round(Vb.y, 4)
 
-	print("Vb = ", Vb.x, Vb.y,NL)
+	dprint(2,"Vb = ", Vb.x, Vb.y,NL)
 	
 	local Ra = aCircle.radius
 	local Rb = aPoint.radius
 
-	print("Ra = ", Ra)
-	print("Rb = ", Rb,NL)
+	dprint(2,"Ra = ", Ra)
+	dprint(2,"Rb = ", Rb,NL)
 
     local Pab = ssk.math2d.sub(Pb, Pa)
 	Pab.x = round(Pab.x, 4)
 	Pab.y = round(Pab.y, 4)
-	print("Pab = ", Pab.x, Pab.y,NL)
+	dprint(2,"Pab = ", Pab.x, Pab.y,NL)
 
 	local Vab = ssk.math2d.sub(Vb, Va)
 	Vab.x = round(Vab.x, 4)
 	Vab.y = round(Vab.y, 4)
-	print("Vab = ", Vab.x, Vab.y,NL)
+	dprint(2,"Vab = ", Vab.x, Vab.y,NL)
 
 
 	-- Step 2 -> Set up functions for quadratic roots and discriminant
@@ -321,7 +321,7 @@ ex_step[1][2] = function(currentExample)
 		local Rab2 = (Ra + Rb)
 
 		Rab2 = Rab2 * Rab2
-		print("Rab2 = ", Rab2)
+		dprint(2,"Rab2 = ", Rab2)
 
 		return ssk.math2d.dot( Pab, Pab ) - Rab2
 	end
@@ -335,7 +335,7 @@ ex_step[1][2] = function(currentExample)
 		local discrminant_square_root = math.sqrt(discrminant)
 		local t0 = (-b - discrminant_square_root ) / (2 * a)
 		local t1 = (-b + discrminant_square_root ) / (2 * a)
-		print("Dual intersection times: ", t0, t1)
+		dprint(2,"Dual intersection times: ", t0, t1)
 		if(t0 < t1) then
 			return t0
 		end
@@ -356,11 +356,11 @@ ex_step[1][2] = function(currentExample)
 	    local a = root_a()
 		local b = root_b()
 		local c = root_c()
-		print("")
+		dprint(2,"")
 
-		print("root_a = ", a)
-		print("root_b = ", b)
-		print("root_c = ", c, NL)
+		dprint(2,"root_a = ", a)
+		dprint(2,"root_b = ", b)
+		dprint(2,"root_c = ", c, NL)
 
 		local dVal = (b * b) - 4 * a * c
 		
@@ -397,13 +397,13 @@ ex_step[1][2] = function(currentExample)
 	--           update labels
 	local dVal,t,colX,colY = discriminant()
 	if(dVal < 0) then
-		print( dVal .. " => no intersection")
+		dprint(2, dVal .. " => no intersection")
 		collisionLabel = ssk.labels:presetLabel( layers.interfaces, "default", 
 		                                      "No Intersection!", 
 											  centerX, 20, { fontSize = 16, textColor = _RED_ }  )
 
 	elseif(dVal == 0) then
-		print( dVal .. " => single intersection @ " .. t .. " seconds")		
+		dprint(2, dVal .. " => single intersection @ " .. t .. " seconds")		
 		collisionLabel = ssk.labels:presetLabel( layers.interfaces, "default", 
 		                                      "Single Intersection @ " .. t .. " seconds", 
 											  centerX, 20, { fontSize = 16, textColor = _GREEN_ }  )
@@ -413,7 +413,7 @@ ex_step[1][2] = function(currentExample)
 											 stroke = _GREEN_, strokeWidth = 2 } )
 
 	else
-		print( dVal .. " => two intersections @ " .. t .. " seconds")		
+		dprint(2, dVal .. " => two intersections @ " .. t .. " seconds")		
 
 		collisionLabel = ssk.labels:presetLabel( layers.interfaces, "default", 
 		                                      "Dual Intersection, first at @ " .. t .. " seconds", 
@@ -429,7 +429,7 @@ ex_step[1][2] = function(currentExample)
 end
 
 ex_step[1][3] = function ()
-	print("Ex 1 Step 3" )
+	dprint(2,"Ex 1 Step 3" )
 	local avx, avy = anArrow1.vx, anArrow1.vy
 	local vLen = ssk.math2d.length(avx, avy)
 	local A_endX = aCircle.x + avx
@@ -455,7 +455,7 @@ end
 ---------------------- 2
 ---------------------- 2
 ex_step[2][1] = function ()
-	--print("Ex 2 Step 1" )
+	dprint(2,"Ex 2 Step 1" )
 
 	clearLabels()
 
@@ -505,7 +505,7 @@ ex_step[2][3] = ex_step[1][3]
 ---------------------- 3
 ---------------------- 3
 ex_step[3][1] = function ()
-	--print("Ex 3 Step 1" )
+	dprint(2,"Ex 3 Step 1" )
 
 	clearLabels()
 
@@ -555,7 +555,7 @@ ex_step[3][3] = ex_step[1][3]
 ---------------------- 4
 ---------------------- 4
 ex_step[4][1] = function ()
-	--print("Ex 4 Step 1" )
+	dprint(2,"Ex 4 Step 1" )
 
 	clearLabels()
 
@@ -606,7 +606,7 @@ ex_step[4][3] = ex_step[1][3]
 ---------------------- 5
 ---------------------- 5
 ex_step[5][1] = function ()
-	--print("Ex 5 Step 1" )
+	dprint(2,"Ex 5 Step 1" )
 
 	clearLabels()
 
@@ -656,7 +656,7 @@ ex_step[5][3] = ex_step[1][3]
 ---------------------- 6
 ---------------------- 6
 ex_step[6][1] = function ()
-	--print("Ex 5 Step 1" )
+	dprint(2,"Ex 5 Step 1" )
 
 	clearLabels()
 

@@ -28,7 +28,7 @@ end
 -- Determine if an object is in fact a displayObject
 -- 
 function _G.isDisplayObject( obj )
-	if( obj._class and obj._proxy) then return true end
+	if( obj and obj._class and obj._proxy) then return true end
 	return false
 end
 

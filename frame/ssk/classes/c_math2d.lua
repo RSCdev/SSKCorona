@@ -79,7 +79,7 @@ local math2do = {}
 -- **** 
 -- **** Vector Addition
 -- **** 
-function math2do.add( ... ) -- ( objA, objB [, defaultRet] ) or ( x1, y1, x2, y2, [, altRet]  )
+function math2do.add( ... ) -- ( objA, objB [, altRet] ) or ( x1, y1, x2, y2, [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		local x,y = arg[1] + arg[3], arg[2] + arg[4]
 
@@ -103,7 +103,7 @@ end
 -- **** Vector Subtraction
 -- **** 
 --EFM change me to a - b order
-function math2do.sub( ... ) -- ( objA, objB [, defaultRet] ) or ( x1, y1, x2, y2, [, altRet]  )
+function math2do.sub( ... ) -- ( objA, objB [, altRet] ) or ( x1, y1, x2, y2, [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		local x,y = arg[3] - arg[1], arg[4] - arg[2]
 
@@ -127,24 +127,15 @@ end
 -- **** 
 -- **** Vector dot Product
 -- **** 
-function math2do.dot( ... ) -- ( objA, objB [, defaultRet] ) or ( x1, y1, x2, y2, [, altRet]  )
+function math2do.dot( ... ) -- ( objA, objB ) or ( x1, y1, x2, y2 )
+	local retVal = 0
 	if( type(arg[1]) == "number" ) then
-		local x,y = arg[1] * arg[3], arg[2] * arg[4]
-
-		if(arg[5]) then
-			return { x=x, y=y }
-		else
-			return x,y
-		end
+		retVal = arg[1] * arg[3] + arg[2] * arg[4]
 	else
-		local x,y = arg[1].x * arg[2].x, arg[1].y * arg[2].y
-			
-		if(arg[3]) then
-			return x,y
-		else
-			return { x=x, y=y }
-		end
+		retVal = arg[1].x * arg[2].x + arg[1].y * arg[2].y
 	end
+
+	return retVal
 end
 
 -- **** 
@@ -176,7 +167,7 @@ end
 -- **** 
 -- **** Vector scale
 -- **** 
-function math2do.scale( ... ) -- ( objA, scale [, defaultRet] ) or ( x1, y1, scale, [, altRet]  )
+function math2do.scale( ... ) -- ( objA, scale [, altRet] ) or ( x1, y1, scale, [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		local x,y = arg[1] * arg[3], arg[2] * arg[3]
 
@@ -199,11 +190,10 @@ end
 -- **** 
 -- **** Vector normalize
 -- **** 
-function math2do.normalize( ... ) -- ( objA [, defaultRet] ) or ( x1, y1 [, altRet]  )
+function math2do.normalize( ... ) -- ( objA [, altRet] ) or ( x1, y1 [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		local len = math2do.length( arg[1], arg[2], false )
 		local x,y = arg[1]/len,arg[2]/len
-		print(x,y)
 
 		if(arg[3]) then
 			return { x=x, y=y }
@@ -226,7 +216,7 @@ end
 -- **** 
 -- **** Vector normals
 -- **** 
-function math2do.normals( ... ) -- ( objA [, defaultRet] ) or ( x1, y1 [, altRet]  )
+function math2do.normals( ... ) -- ( objA [, altRet] ) or ( x1, y1 [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		local nx1,ny1,nx2,ny2 = -arg[1], arg[2], arg[1], -arg[2]
 
@@ -278,7 +268,7 @@ end
 -- **** 
 -- **** Cartesian to Screen Coordinates (and viceversa)
 -- **** 
-function math2do.cartesian2Screen( ... ) -- ( objA [, defaultRet] ) or ( x1, y1 [, altRet]  )
+function math2do.cartesian2Screen( ... ) -- ( objA [, altRet] ) or ( x1, y1 [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		if(arg[3]) then
 			return { x=arg[1], y=-arg[2] }
@@ -293,7 +283,7 @@ function math2do.cartesian2Screen( ... ) -- ( objA [, defaultRet] ) or ( x1, y1 
 		end
 	end
 end
-function math2do.screen2Cartesian( ... ) -- ( objA [, defaultRet] ) or ( x1, y1 [, altRet]  )
+function math2do.screen2Cartesian( ... ) -- ( objA [, altRet] ) or ( x1, y1 [, altRet]  )
 	if( type(arg[1]) == "number" ) then
 		if(arg[3]) then
 			return { x=arg[1], y=-arg[2] }

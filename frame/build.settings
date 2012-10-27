@@ -2,14 +2,14 @@ settings = {
 
    orientation = {
 
---      default = "portrait",
-      default = "landscapeRight",
+      default = "portrait",
+--      default = "landscapeRight",
       
       supported = {
 
 --         "landscapeLeft", "landscapeRight", "portrait", "portraitUpsideDown",
---         "portrait",
-         "landscapeRight",
+--         "landscapeRight",
+         "portrait", 
 
       },
 
@@ -23,5 +23,9 @@ settings = {
 
          UIStatusBarHidden=true,
       },
+   },
+
+   androidPermissions = {
+      "android.permission.INTERNET",
    },
 }
